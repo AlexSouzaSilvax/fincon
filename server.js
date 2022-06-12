@@ -15,4 +15,4 @@ app.get("/*", function (req, res) {
   res.sendFile("index.html", { root: "dist/ fincon /" });
 });
 
-app.listen(processo.env.PORT || 8080);
+app.listen(process.env.PORT || 8080);
