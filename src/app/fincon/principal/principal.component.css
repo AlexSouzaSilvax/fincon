@@ -1,0 +1,16 @@
+mat-card-title,
+mat-card-content {
+  display: flex;
+  justify-content: center;
+}
+
+mat-card-title {
+  color: #f1f1f1;
+}
+
+.mat-card  {
+  background-color: #1461a9;
+  box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.0)!important;
+  border-radius: 0px;
+  height: 2vh !important;
+}
