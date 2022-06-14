@@ -17,7 +17,7 @@ mat-card-content {
 
 mat-card-title {
   margin: 20px !important;
-  color: #f1f1f1;
+  color: #093a68;
 }
 
 .error {
@@ -33,6 +33,7 @@ mat-card-title {
 }
 
 .mat-card  {
-  background-color: #1461a9;
+
   box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.0)!important;
 }
+
