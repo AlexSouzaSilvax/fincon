@@ -3,33 +3,20 @@
   <mat-card-content>
     <form [formGroup]="form" (ngSubmit)="submit()">
       <p>
-        <mat-form-field>
-          <input
-            type="text"
-            matInput
-            placeholder="usuario"
-            formControlName="username"
-          />
+        <mat-form-field class="example-full-width divInput" appearance="outline">
+          <mat-label class="labelInput">usuario</mat-label>
+          <input class="input" matInput placeholder="" value="">
         </mat-form-field>
       </p>
-
       <p>
-        <mat-form-field>
-          <input
-            type="password"
-            matInput
-            placeholder="senha"
-            formControlName="password"
-          />
+        <mat-form-field class="example-full-width" appearance="outline">
+          <mat-label class="labelInput">senha</mat-label>
+          <input class="input" matInput placeholder="" value="">
         </mat-form-field>
-      </p>
-
-      <p *ngIf="error" class="error">
-        {{ error }}
       </p>
 
       <div class="button">
-        <button type="submit" mat-button>Login</button>
+        <button mat-raised-button style="background-color: white; color: #1461a9;">Login</button>
       </div>
     </form>
   </mat-card-content>
