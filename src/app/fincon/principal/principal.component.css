@@ -31,7 +31,7 @@ mat-card-title {
 }
 
 .segundo {
-  background-color: yellow;
+ /* background-color: yellow;*/
   width: 100%;
 }
 .terceiro {
@@ -61,3 +61,4 @@ mat-card-title {
   color: #444;
   padding: 10px;
 }
+
