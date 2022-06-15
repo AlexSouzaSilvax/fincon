@@ -13,7 +13,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSortModule } from '@angular/material/sort';
-
+import { MatDividerModule } from '@angular/material/divider';
 
 @NgModule({
   exports: [
@@ -28,7 +28,8 @@ import { MatSortModule } from '@angular/material/sort';
     MatInputModule,
     MatSelectModule,
     MatSnackBarModule,
-    MatSortModule
+    MatSortModule,
+    MatDividerModule
   ],
 })
 export class AppMaterialModule {}
