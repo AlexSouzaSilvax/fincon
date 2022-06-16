@@ -92,5 +92,8 @@
       }
     }
   },
-  "defaultProject": "fincon"
+  "defaultProject": "fincon",
+  "cli": {
+    "analytics": false
+  }
 }
