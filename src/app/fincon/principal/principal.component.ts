@@ -9,7 +9,7 @@ import {
   _numberToReal,
   _formatData,
 } from '../../shared/Util';
-import { first, tap } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'principal',

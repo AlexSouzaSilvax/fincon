@@ -158,7 +158,9 @@
         <th mat-header-cell *matHeaderCellDef style="text-align: center">
           Valor
         </th>
-        <td mat-cell *matCellDef="let lancamento" style="text-align: center; color: red;">
+        <td *matCellDef="let lancamento" ng-class="{'tdValorEntrada':lancamento.tipo_lancamento=='ENTRADA','red': lancamento.tipo_lancamento=='SAIDA'}" >{{lancamento.tipo_lancamento}}</td>
+        <td mat-cell *matCellDef="let lancamento" style="text-align: center;"  >
+                                                         
           {{ numberToReal(lancamento.valor) }}
         </td>
       </ng-container>
