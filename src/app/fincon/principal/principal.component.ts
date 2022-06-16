@@ -20,6 +20,7 @@ export class PrincipalComponent implements OnInit {
   lancamentos$!: Observable<LancamentoListaDTO[]>;
   dataSource = this.lancamentos$;
   totalEntrada$: string;
+  totalSaida$: string;
 
   displayedColumns: string[] = [
     'descricao',
@@ -31,15 +32,13 @@ export class PrincipalComponent implements OnInit {
 
   constructor(private lancamentosService: FinconService) {
     this.totalEntrada$ = '';
-    this.onLancamentos();    
+    this.totalSaida$ = '';
+    this.onLancamentos();
   }
 
   onLancamentos() {
     this.lancamentos$ = this.lancamentosService.listMain('6', '2022').pipe(
-      tap((l) => {      
-        l.length;  
-        this.totalEntrada$ = this.numberToReal(this.somaValores(l));
-      }),
+      tap((l) => this.somaValores(l)),
       catchError((error) => {
         this.onError('Erro ao carregar cursos');
         return of([]);
@@ -47,13 +46,19 @@ export class PrincipalComponent implements OnInit {
     );
   }
 
-  somaValores(param: Array<LancamentoListaDTO>) {
-    var soma: any = 0;
-    for (var i = 0; i < param.length; i++) {
-      console.log('TIPO_LANCAMENTO= ' + param[i].tipo_lancamento); //SAIDA //ENTRADA
-      soma += param[i].valor;
+  somaValores(lancamentos: Array<LancamentoListaDTO>) {
+    var somaEntradas: any = 0;
+    var somaSaidas: any = 0;
+    for (var i = 0; i < lancamentos.length; i++) {
+      if (lancamentos[i].tipo_lancamento == 'SAIDA') {
+        somaSaidas += lancamentos[i].valor;
+      }
+      if (lancamentos[i].tipo_lancamento == 'ENTRADA') {
+        somaEntradas += lancamentos[i].valor;
+      }
     }
-    return soma;
+    this.totalEntrada$ = this.numberToReal(somaEntradas);
+    this.totalSaida$ = this.numberToReal(somaSaidas);
   }
 
   onError(errorMsg: string) {
