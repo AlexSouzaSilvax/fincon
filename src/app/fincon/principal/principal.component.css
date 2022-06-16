@@ -31,7 +31,7 @@ mat-card-title {
 }
 
 .segundo {
- /* background-color: yellow;*/
+  /* background-color: yellow;*/
   width: 100%;
 }
 .terceiro {
@@ -61,4 +61,65 @@ mat-card-title {
   color: #444;
   padding: 10px;
 }
+
+.divCardTotais {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 80%;
+}
+
+.cardTotais {
+  margin: 10px !important;
+  height: 60px !important;
+  background-color: white;
+  border-radius: 4px;
+  width: 150px;
+  min-width: 136px !important;
+}
+
+.titleCardTotais {
+  font-size: 14px;
+  color: #909090;
+  width: 80%;
+}
+
+.valorCardTotais {
+  margin-top: 5px !important;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 500;
+  color: #444;
+}
+
+.divTable {
+  margin-top: 160px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+table {
+  width: 100%;
+}
+
+@media only screen and (max-width: 750px) {
+  .divCardTotais {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+  .cardTotais {
+    width: 200px;
+  }
+  .divTable {
+    margin-top: 500px;
+  }
+  
+}
+
+
+
 
