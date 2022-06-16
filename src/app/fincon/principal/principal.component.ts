@@ -1,36 +1,15 @@
 import { Input, Component, Output, EventEmitter, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
-import { Lancamento } from '../model/LancamentoListaDTO';
-
-const ELEMENT_DATA: Lancamento[] = [
-  {
-    id: '',
-    descricao: 'Capinha iPhone',
-    valor: 10.0,
-    pago: false,
-    tipo_pagamento: 'Crédito',
-    data_lancamento: '10/06/2022',
-    tipo_lancamento: 'Saída',
-  },
-  {
-    id: '',
-    descricao: 'Pelicula iPhone',
-    valor: 25.0,
-    pago: false,
-    tipo_pagamento: 'Crédito',
-    data_lancamento: '10/06/2022',
-    tipo_lancamento: 'Saída',
-  },
-  {
-    id: '',
-    descricao: 'Ferias 1/320',
-    valor: 18.99,
-    pago: false,
-    tipo_pagamento: 'Crédito',
-    data_lancamento: '10/05/2022',
-    tipo_lancamento: 'Saída',
-  }
-];
+import { Observable, of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { Lancamento } from '../model/Lancamento';
+import { LancamentoListaDTO } from '../model/LancamentoListaDTO';
+import { FinconService } from '../services/fincon.service';
+import {
+  _changePagamento,
+  _numberToReal,
+  _formatData,
+} from '../../shared/Util';
+import { first, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'principal',
@@ -38,43 +17,71 @@ const ELEMENT_DATA: Lancamento[] = [
   styleUrls: ['./principal.component.css'],
 })
 export class PrincipalComponent implements OnInit {
-  form: FormGroup = new FormGroup({
-    username: new FormControl(''),
-    password: new FormControl(''),
-  });
+  lancamentos$!: Observable<LancamentoListaDTO[]>;
+  dataSource = this.lancamentos$;
+  totalEntrada$: string;
+  totalSaida$: string;
 
   displayedColumns: string[] = [
     'descricao',
     'valor',
     'tipo_pagamento',
     'data_lancamento',
-    'actions'
+    'actions',
   ];
-  dataSource = ELEMENT_DATA;
 
-  constructor() {}
+  constructor(private lancamentosService: FinconService) {
+    this.totalEntrada$ = '';
+    this.totalSaida$ = '';
+    this.onLancamentos();
+  }
+
+  onLancamentos() {
+    this.lancamentos$ = this.lancamentosService.listMain('6', '2022').pipe(
+      tap((l) => this.somaValores(l)),
+      catchError((error) => {
+        this.onError('Erro ao carregar cursos');
+        return of([]);
+      })
+    );
+  }
+
+  somaValores(lancamentos: Array<LancamentoListaDTO>) {
+    var somaEntradas: any = 0;
+    var somaSaidas: any = 0;
+    for (var i = 0; i < lancamentos.length; i++) {
+      if (lancamentos[i].tipo_lancamento == 'SAIDA') {
+        somaSaidas += lancamentos[i].valor;
+      }
+      if (lancamentos[i].tipo_lancamento == 'ENTRADA') {
+        somaEntradas += lancamentos[i].valor;
+      }
+    }
+    this.totalEntrada$ = this.numberToReal(somaEntradas);
+    this.totalSaida$ = this.numberToReal(somaSaidas);
+  }
+
+  onError(errorMsg: string) {
+    console.log(errorMsg);
+  }
 
   ngOnInit(): void {}
 
-  submit() {
-    if (this.form.valid) {
-      this.submitEM.emit(this.form.value);
-    }
+  onAdd() {}
+
+  onEdit(pLancamento: Lancamento) {}
+
+  onClickDelete(_id: string) {}
+
+  changePagamento(param: string) {
+    return _changePagamento(param);
   }
 
-  onAdd() {
-    
+  numberToReal(param: number) {
+    return _numberToReal(param);
   }
 
-  onEdit(pLancamento: Lancamento) {
-    
+  formatData(data: string) {
+    return _formatData(data);
   }
-
-  onClickDelete(_id: string) {
-    
-  }
-
-  @Input() error: string | null | undefined;
-
-  @Output() submitEM = new EventEmitter();
 }
