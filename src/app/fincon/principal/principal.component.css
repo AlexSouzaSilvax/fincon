@@ -76,6 +76,8 @@ mat-card-title {
   border-radius: 4px;
   width: 150px;
   min-width: 136px !important;
+
+  
 }
 
 .titleCardTotais {
@@ -102,6 +104,14 @@ mat-card-title {
 
 table {
   width: 100%;
+}
+
+.tdValorEntrada {
+  color: '#33cc95' !important;
+}
+
+.tdValorSaida {
+  color: '#cc3333' !important;
 }
 
 @media only screen and (max-width: 750px) {
