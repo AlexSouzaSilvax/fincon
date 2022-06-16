@@ -4,22 +4,28 @@ import { Lancamento } from '../model/LancamentoListaDTO';
 
 const ELEMENT_DATA: Lancamento[] = [
   {
+    id: '',
     descricao: 'Capinha iPhone',
     valor: 10.0,
+    pago: false,
     tipo_pagamento: 'Crédito',
     data_lancamento: '10/06/2022',
     tipo_lancamento: 'Saída',
   },
   {
+    id: '',
     descricao: 'Pelicula iPhone',
     valor: 25.0,
+    pago: false,
     tipo_pagamento: 'Crédito',
     data_lancamento: '10/06/2022',
     tipo_lancamento: 'Saída',
   },
   {
+    id: '',
     descricao: 'Ferias 1/320',
     valor: 18.99,
+    pago: false,
     tipo_pagamento: 'Crédito',
     data_lancamento: '10/05/2022',
     tipo_lancamento: 'Saída',
