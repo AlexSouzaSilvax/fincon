@@ -1,4 +1,4 @@
-export interface Lancamento {
+export interface LancamentoListaDTO {
   id: String,
   descricao: String;
   valor: Number;
