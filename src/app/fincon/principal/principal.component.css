@@ -106,6 +106,14 @@ table {
   width: 100%;
 }
 
+.tdValorEntrada {
+  color: #33cc95 !important;
+}
+
+.tdValorSaida {
+  color: #cc3333 !important;
+}
+
 @media only screen and (max-width: 750px) {
   .divCardTotais {
     display: flex;

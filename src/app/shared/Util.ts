@@ -30,6 +30,8 @@ export function _changePagamento(param: string) {
       return 'Crédito';
     case 'BOLETO': //4
       return 'Boleto';
+      case 'TED': //5
+      return 'Transferência';
   }
   return param;
 }
