@@ -21,6 +21,7 @@ export class PrincipalComponent implements OnInit {
   dataSource = this.lancamentos$;
   totalEntrada$: string;
   totalSaida$: string;
+  saldo$: string;
 
   displayedColumns: string[] = [
     'descricao',
@@ -33,6 +34,7 @@ export class PrincipalComponent implements OnInit {
   constructor(private lancamentosService: FinconService) {
     this.totalEntrada$ = '';
     this.totalSaida$ = '';
+    this.saldo$ = '';
     this.onLancamentos();
   }
 
@@ -59,6 +61,7 @@ export class PrincipalComponent implements OnInit {
     }
     this.totalEntrada$ = this.numberToReal(somaEntradas);
     this.totalSaida$ = this.numberToReal(somaSaidas);
+    this.saldo$ = this.numberToReal(somaEntradas - somaSaidas);
   }
 
   onError(errorMsg: string) {
