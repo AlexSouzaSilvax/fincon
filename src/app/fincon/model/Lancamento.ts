@@ -1,6 +1,7 @@
 export interface Lancamento {
   id: Number;
   descricao: String;
+  categoria: String;
   valor: Number;
   mensal: Boolean;
   pago: Boolean;
