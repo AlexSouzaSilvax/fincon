@@ -9,6 +9,7 @@ import { first, tap } from 'rxjs/operators';
 })
 export class FinconService {
   private API = 'https://api-fincon.herokuapp.com/api/lancamentos';
+  //private API = 'http://localhost:8080/api/lancamentos';
 
   constructor(private httpClient: HttpClient) {}
 
@@ -20,7 +21,25 @@ export class FinconService {
       .pipe(
         first()
         //delay(1500),
-        //,tap((courses) => console.log(courses))
+        //,tap((l) => console.log(l))
       );
+  }
+
+  save(record: Lancamento) {
+    if (record.id) {
+      return this.httpClient
+        .post<Lancamento>(`${this.API}/update`, record)
+        .pipe(first());
+    } else {
+      return this.httpClient
+        .post<Lancamento>(`${this.API}/create`, record)
+        .pipe(first());
+    }
+  }
+
+  delete(id: string) {
+    return this.httpClient
+      .post<String>(`${this.API}/delete`, id)
+      .pipe(first());
   }
 }

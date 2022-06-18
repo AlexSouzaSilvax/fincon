@@ -18,20 +18,12 @@ export function _formatData(data: string) {
   return 'Não informado';
 }
 
-export function _changePagamento(param: string) {
-  switch (param) {
-    case 'DINHEIRO': //0
-      return 'Dinheiro';
-    case 'PIX': //1
-      return 'Pix';
-    case 'DEBITO': //2
-      return 'Débito';
-    case 'CREDITO': //3
-      return 'Crédito';
-    case 'BOLETO': //4
-      return 'Boleto';
-      case 'TED': //5
-      return 'Transferência';
+export function _changeIsPago(pago: boolean) {
+  var p = '';
+  if (pago) {
+    p = 'Pago';
+  } else {
+    p = 'Não Pago';
   }
-  return param;
+  return p;
 }
