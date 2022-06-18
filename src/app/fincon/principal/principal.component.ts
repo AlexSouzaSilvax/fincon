@@ -96,7 +96,7 @@ export class PrincipalComponent implements OnInit {
 
   private onSuccess(actionMessage: string) {
     this.snackbar.open(actionMessage, '', { duration: 5000 });
-    this.onLancamentos();
+    this.onLancamentos();//  alterar para apenas manipular a lista,  no caso remover o item selecionado
   }
 
   onClickDelete(id: string) {
