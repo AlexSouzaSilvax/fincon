@@ -1,33 +1,30 @@
 import { Input, Component, Output, EventEmitter, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
-  selector: 'login',
+  selector: 'fincon',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
 })
-
 export class LoginComponent implements OnInit {
-
   form: FormGroup = new FormGroup({
     username: new FormControl(''),
     password: new FormControl(''),
   });
 
-  constructor() { }
+  constructor(private router: Router, private route: ActivatedRoute) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   submit() {
     if (this.form.valid) {
       this.submitEM.emit(this.form.value);
+      this.router.navigate(['principal'], { relativeTo: this.route });
     }
   }
 
   @Input() error: string | null | undefined;
 
   @Output() submitEM = new EventEmitter();
-
-
 }
