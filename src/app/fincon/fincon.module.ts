@@ -7,11 +7,14 @@ import { PrincipalComponent } from './principal/principal.component';
 import { AppMaterialModule } from '../shared/app-material/app-material.module';
 import { SharedModule } from '../shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { NovoComponent } from './novo/novo.component';
+import { HeaderComponent } from '../shared/components/header/header.component';
 
 @NgModule({
   declarations: [
     LoginComponent,
-    PrincipalComponent
+    PrincipalComponent,
+    NovoComponent
   ],
   imports: [
     CommonModule,
