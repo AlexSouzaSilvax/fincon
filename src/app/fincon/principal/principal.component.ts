@@ -10,7 +10,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ErrorDialogComponent } from '../../shared/components/error-dialog/error-dialog.component';
 import { ConfirmDialogComponent } from '../../shared/components/confirm-dialog/confirm-dialog.component';
 import { Location } from '@angular/common';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
@@ -41,6 +41,7 @@ export class PrincipalComponent implements OnInit {
     public dialog: MatDialog,
     private location: Location,
     private router: Router,
+    private route: ActivatedRoute,
     private snackbar: MatSnackBar
   ) {
     this.totalEntrada$ = '';
@@ -130,6 +131,10 @@ export class PrincipalComponent implements OnInit {
         this.onError('delete error');
       }
     );    
+  }
+
+  novo() {
+    this.router.navigate(['novo'], { relativeTo: this.route });
   }
 
   numberToReal(param: number) {
