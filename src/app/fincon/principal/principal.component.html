@@ -110,9 +110,9 @@
                 src="../../../assets/icons/moneyWhite.svg"
               />
             </div>
-            <mat-card-subtitle class="valorCardTotais" style="color: white"
-              >R$ XX.XXX,XX</mat-card-subtitle
-            >
+            <mat-card-subtitle class="valorCardTotais" style="color: white">{{
+              poupanca$
+            }}</mat-card-subtitle>
           </mat-card>
         </div>
       </div>
@@ -132,8 +132,22 @@
 </div>
 
 <div class="divTable" *ngIf="lancamentos$ | async as lancamentos; else loading">
-  <div *ngIf="lancamentos$ == null; else table">
-    <p>Nenhum lançamento encontrado</p>
+  <div
+    *ngIf="lancamentos.length <= 0; else table"
+    style="
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 100px;
+    "
+  >
+    <img
+      src="../../../assets/caixa-vazia.png"
+      style="width: 80px; height: 80px"
+    />
+    <p style="color: #646464; font-size: 14px; margin-top: 10px">
+      Nenhum lançamento encontrado
+    </p>
   </div>
 
   <ng-template #table>
@@ -237,9 +251,11 @@
             "
           >
             <button mat-icon-button aria-label="Editar">
-              <mat-icon 
-              style="color: #4280ba !important"
-              (click)="onEdit(lancamento)">edit</mat-icon>
+              <mat-icon
+                style="color: #4280ba !important"
+                (click)="onEdit(lancamento)"
+                >edit</mat-icon
+              >
             </button>
 
             <button mat-icon-button aria-label="Remover">
@@ -261,7 +277,11 @@
 </div>
 
 <ng-template #loading>
-  <div class="loading-spinner">
+  <div
+    *ngIf="load == true"
+    style="display: flex; justify-content: center; margin-top: 200px"
+    class="loading-spinner"
+  >
     <mat-spinner></mat-spinner>
   </div>
 </ng-template>
