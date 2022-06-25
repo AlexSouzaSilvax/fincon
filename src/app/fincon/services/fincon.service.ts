@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Lancamento } from '../model/Lancamento';
 import { LancamentoListaDTO } from '../model/LancamentoListaDTO';
 import { first, tap } from 'rxjs/operators';
+import { LancamentoSaveDTO } from '../model/LancamentoSaveDTO';
 
 @Injectable({
   providedIn: 'root',
@@ -25,14 +26,14 @@ export class FinconService {
       );
   }
 
-  save(record: Lancamento) {
+  save(record: LancamentoSaveDTO) {
     if (record.id) {
       return this.httpClient
-        .post<Lancamento>(`${this.API}/update`, record)
+        .post<LancamentoSaveDTO>(`${this.API}/update`, record)
         .pipe(first());
     } else {
       return this.httpClient
-        .post<Lancamento>(`${this.API}/create`, record)
+        .post<LancamentoSaveDTO>(`${this.API}/create`, record)
         .pipe(first());
     }
   }
