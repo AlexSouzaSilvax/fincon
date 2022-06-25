@@ -15,3 +15,17 @@ html {
   stroke: #2b70b1 !important;
   stroke-width: 2% !important;
 }
+
+.mat-checkbox-checked.mat-accent .mat-checkbox-background {
+  background-color: #2b70b1 !important;
+}
+::ng-deep .mat-checkbox-ripple .mat-ripple-element {
+  background-color: #2b70b1 !important;
+}
+::ng-deep .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
+  background-color: #2b70b1 !important;
+}
+
+.mat-radio-group circle {
+  background-color: #2b70b1 !important;
+}

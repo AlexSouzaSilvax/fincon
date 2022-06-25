@@ -33,19 +33,62 @@
       </mat-form-field>
 
       <!-- Mensal -->
+      <div
+        style="
+          margin: 10px;
+          display: flex;
+          flex-direction: column;
+          margin-top: 10px;
+        "
+      >
+        <p>Mensal</p>
+        <mat-checkbox
+          color="primary"
+          style="margin-left: 15px; margin-top: -5px"
+          [disabled]="!selectTipoPagamento.value"
+          [formControl]="mensalSelect"
+        ></mat-checkbox>
+        <p style="font-size: 11px; color: #818181">
+          Será replicado este lançamento em 12 meses
+        </p>
+      </div>
     </div>
 
     <!-- Linha 2 -->
     <div class="example-container">
       <!-- Descrição -->
-      <mat-form-field hintLabel="Sua descrição aqui" appearance="fill">
-        <mat-label>descrição</mat-label>
-        <input matInput #input placeholder="" />
+      <mat-form-field appearance="fill">
+        <mat-label>Descrição</mat-label>
+        <input matInput #input />
       </mat-form-field>
 
       <!-- Valor -->
+      <mat-form-field appearance="fill">
+        <mat-label>Valor</mat-label>
+        <input matInput #input currencyMask [options]="optionsInput" />
+      </mat-form-field>
 
       <!-- Pago -->
+      <div style="margin: 10px">
+        <label id="example-radio-group-label" style="margin-left: 40px"
+          >Pago</label
+        >
+        <mat-radio-group
+          aria-labelledby="example-radio-group-label"
+          class="example-radio-group"
+        >
+          <div style="display: flex !important; flex-direction: row !important">
+            <mat-radio-button
+              color="primary"
+              class="example-radio-button"
+              *ngFor="let season of seasons"
+              [value]="season"
+            >
+              {{ season }}
+            </mat-radio-button>
+          </div>
+        </mat-radio-group>
+      </div>
     </div>
 
     <!-- Linha 3 -->
@@ -57,20 +100,20 @@
           <mat-option
             *ngFor="let pagamento of tipoPagamentos"
             [value]="pagamento.value"
+            (click)="fucntionSelectTipoPagamento(pagamento.value)"
           >
             {{ pagamento.valueText }}
           </mat-option>
         </mat-select>
       </mat-form-field>
 
-      <p>
-        <mat-checkbox [formControl]="disableSelect">Disable select</mat-checkbox>
-      </p>
-
       <!-- Parcelas -->
-      <mat-form-field appearance="fill">
+      <mat-form-field
+        hintLabel="Este lançamento será replicado a quantidade de parcelas selecionada"
+        appearance="fill"
+      >
         <mat-label>Parcelas</mat-label>
-        <mat-select [disabled]="disableSelect.value">
+        <mat-select [disabled]="selectTipoPagamento.value">
           <mat-option
             *ngFor="let parcela of qtdParcelas"
             [value]="parcela.value"
@@ -81,14 +124,57 @@
       </mat-form-field>
 
       <!-- Data de Vencimento -->
+      <mat-form-field appearance="fill">
+        <mat-label>Data de Vencimento</mat-label>
+        <input matInput #input type="date" />
+      </mat-form-field>
     </div>
 
     <!-- Linha 4 -->
-    <div class="example-container"></div>
+    <div class="example-container" style="margin-top: 15px">
+      <!-- Mês/Ano Referência -->
+      <mat-form-field appearance="fill">
+        <mat-label>Mês Referência</mat-label>
+        <input matInput #input type="number" />
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Ano Referência</mat-label>
+        <input matInput #input type="number" />
+      </mat-form-field>
+
+      <!-- Data Prevista Pagamento -->
+      <mat-form-field appearance="fill">
+        <mat-label>Data Prevista de Pagamento</mat-label>
+        <input matInput #input type="date" />
+      </mat-form-field>
+    </div>
+    
     <!-- Linha 5 -->
-    <div class="example-container"></div>
+    <div class="example-container" style="width: 100%">
+      <!-- Observação -->
+      <mat-form-field
+        style="width: 100%"
+        class="example-full-width"
+        appearance="fill"
+      >
+        <mat-label>Observação</mat-label>
+        <textarea matInput placeholder=""></textarea>
+      </mat-form-field>
+    </div>
+    
     <!-- Linha 6 -->
-    <div class="example-container"></div>
+    <div class="example-container" style="margin: 10px; justify-content: center;">
+      
+      <!-- voltar -->
+      <button mat-raised-button (click)="onVoltar()" style="background-color: transparent !important; color: #808080">Voltar</button>
+      
+      <!-- Salvar -->
+        <button mat-raised-button (click)="onSubmit()" style="margin-left: 10px; background-color: #1461a9 !important; color: white">
+          Salvar
+        </button>
+
+    </div>
   </div>
 
   <div class="terceiro"></div>
