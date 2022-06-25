@@ -1,1 +1,95 @@
 <header-component></header-component>
+
+<div class="lancamento">
+  <div class="primeiro"></div>
+
+  <div class="segundo">
+    <!-- Linha 1 -->
+    <div class="example-container">
+      <!-- Tipo Lançamento -->
+      <mat-form-field appearance="fill">
+        <mat-label>* Tipo Lançamento</mat-label>
+        <mat-select>
+          <mat-option
+            *ngFor="let lancamento of lancamentos"
+            [value]="lancamento.value"
+          >
+            {{ lancamento.valueText }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- Categoria -->
+      <mat-form-field appearance="fill">
+        <mat-label>Categoria</mat-label>
+        <mat-select>
+          <mat-option
+            *ngFor="let categoria of categorias"
+            [value]="categoria.value"
+          >
+            {{ categoria.valueText }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- Mensal -->
+    </div>
+
+    <!-- Linha 2 -->
+    <div class="example-container">
+      <!-- Descrição -->
+      <mat-form-field hintLabel="Sua descrição aqui" appearance="fill">
+        <mat-label>descrição</mat-label>
+        <input matInput #input placeholder="" />
+      </mat-form-field>
+
+      <!-- Valor -->
+
+      <!-- Pago -->
+    </div>
+
+    <!-- Linha 3 -->
+    <div class="example-container">
+      <!-- Tipo Pagamentos -->
+      <mat-form-field appearance="fill">
+        <mat-label>Tipo de Pagamento</mat-label>
+        <mat-select [(value)]="tipoPagamentoSelecionado">
+          <mat-option
+            *ngFor="let pagamento of tipoPagamentos"
+            [value]="pagamento.value"
+          >
+            {{ pagamento.valueText }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <p>
+        <mat-checkbox [formControl]="disableSelect">Disable select</mat-checkbox>
+      </p>
+
+      <!-- Parcelas -->
+      <mat-form-field appearance="fill">
+        <mat-label>Parcelas</mat-label>
+        <mat-select [disabled]="disableSelect.value">
+          <mat-option
+            *ngFor="let parcela of qtdParcelas"
+            [value]="parcela.value"
+          >
+            {{ parcela.valueText }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- Data de Vencimento -->
+    </div>
+
+    <!-- Linha 4 -->
+    <div class="example-container"></div>
+    <!-- Linha 5 -->
+    <div class="example-container"></div>
+    <!-- Linha 6 -->
+    <div class="example-container"></div>
+  </div>
+
+  <div class="terceiro"></div>
+</div>

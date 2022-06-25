@@ -38,8 +38,6 @@ export class FinconService {
   }
 
   delete(id: string) {
-    return this.httpClient
-      .post<String>(`${this.API}/delete`, id)
-      .pipe(first());
+    return this.httpClient.post<String>(`${this.API}/delete`, id).pipe(first());
   }
 }
