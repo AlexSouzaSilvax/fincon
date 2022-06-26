@@ -3,13 +3,18 @@ import { CommonModule } from '@angular/common';
 
 import { FinconRoutingModule } from './fincon-routing.module';
 import { LoginComponent } from './login/login.component';
+import { PrincipalComponent } from './principal/principal.component';
 import { AppMaterialModule } from '../shared/app-material/app-material.module';
 import { SharedModule } from '../shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { NovoComponent } from './novo/novo.component';
+import { HeaderComponent } from '../shared/components/header/header.component';
 
 @NgModule({
   declarations: [
-    LoginComponent
+    LoginComponent,
+    PrincipalComponent,
+    NovoComponent
   ],
   imports: [
     CommonModule,

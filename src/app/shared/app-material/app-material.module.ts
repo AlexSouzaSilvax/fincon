@@ -13,8 +13,11 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSortModule } from '@angular/material/sort';
-
-
+import { MatDividerModule } from '@angular/material/divider';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { CurrencyMaskModule } from "ng2-currency-mask";
+import { MatRadioModule } from '@angular/material/radio';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 @NgModule({
   exports: [
     MatTableModule,
@@ -28,7 +31,12 @@ import { MatSortModule } from '@angular/material/sort';
     MatInputModule,
     MatSelectModule,
     MatSnackBarModule,
-    MatSortModule
+    MatSortModule,
+    MatDividerModule,
+    MatCheckboxModule,
+    CurrencyMaskModule,
+    MatRadioModule,
+    MatProgressBarModule
   ],
 })
 export class AppMaterialModule {}

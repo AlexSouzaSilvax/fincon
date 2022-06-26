@@ -2,8 +2,10 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
-  { path: '', pathMatch: 'full', redirectTo: 'login' },
-  { path: 'login', loadChildren: () => import('./fincon/fincon.module').then(m => m.FinconModule) }
+  { path: '', pathMatch: 'full', redirectTo: 'fincon' },
+  { path: 'fincon', loadChildren: () => import('./fincon/fincon.module').then(m => m.FinconModule) },
+  { path: 'principal', loadChildren: () => import('./fincon/fincon.module').then(m => m.FinconModule) },
+  { path: 'novo', loadChildren: () => import('./fincon/fincon.module').then(m => m.FinconModule) }
 ];
 
 @NgModule({
