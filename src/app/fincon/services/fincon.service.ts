@@ -26,14 +26,14 @@ export class FinconService {
       );
   }
 
-  save(record: LancamentoSaveDTO) {
+  save(record: Lancamento) {
     if (record.id) {
       return this.httpClient
-        .post<LancamentoSaveDTO>(`${this.API}/update`, record)
+        .post<Lancamento>(`${this.API}/update`, record)
         .pipe(first());
     } else {
       return this.httpClient
-        .post<LancamentoSaveDTO>(`${this.API}/create`, record)
+        .post<Lancamento>(`${this.API}/create`, record)
         .pipe(first());
     }
   }
