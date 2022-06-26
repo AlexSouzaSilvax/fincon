@@ -36,28 +36,28 @@ export const listaTipoLancamentos: ModelComboBox[] = [
 ];
 
 export const listaCategorias: ModelComboBox[] = [
-  { value: 1, valueText: 'Alimentação' },
-  { value: 2, valueText: 'Assinaturas/Serviços' },
-  { value: 3, valueText: 'Bares/Restaurantes' },
-  { value: 4, valueText: 'Casa' },
-  { value: 5, valueText: 'Compras' },
-  { value: 6, valueText: 'Cuidados Pessoais' },
-  { value: 7, valueText: 'Dívidas/Emprestimos' },
-  { value: 8, valueText: 'Educação' },
-  { value: 9, valueText: 'Família' },
-  { value: 10, valueText: 'Impostos/Taxas' },
-  { value: 11, valueText: 'Investimentos' },
-  { value: 12, valueText: 'Lazer' },
-  { value: 13, valueText: 'Mercado' },
-  { value: 14, valueText: 'Outros' },
-  { value: 15, valueText: 'Presentes/Doações' },
-  { value: 16, valueText: 'Roupas' },
-  { value: 17, valueText: 'Saúde' },
-  { value: 18, valueText: 'Trabalho' },
-  { value: 19, valueText: 'Transporte' },
-  { value: 20, valueText: 'Viagem' },
-  { value: 21, valueText: 'Combustível' },
-  { value: 22, valueText: 'Poupança' },
+  { value: 0, valueText: 'Alimentação' },
+  { value: 1, valueText: 'Assinaturas/Serviços' },
+  { value: 2, valueText: 'Bares/Restaurantes' },
+  { value: 3, valueText: 'Casa' },
+  { value: 4, valueText: 'Compras' },
+  { value: 5, valueText: 'Cuidados Pessoais' },
+  { value: 6, valueText: 'Dívidas/Emprestimos' },
+  { value: 7, valueText: 'Educação' },
+  { value: 8, valueText: 'Família' },
+  { value: 9, valueText: 'Impostos/Taxas' },
+  { value: 10, valueText: 'Investimentos' },
+  { value: 11, valueText: 'Lazer' },
+  { value: 12, valueText: 'Mercado' },
+  { value: 13, valueText: 'Outros' },
+  { value: 14, valueText: 'Presentes/Doações' },
+  { value: 15, valueText: 'Roupas' },
+  { value: 16, valueText: 'Saúde' },
+  { value: 17, valueText: 'Trabalho' },
+  { value: 18, valueText: 'Transporte' },
+  { value: 19, valueText: 'Viagem' },
+  { value: 20, valueText: 'Combustível' },
+  { value: 21, valueText: 'Poupança' },
 ];
 
 export const listaTipoPagamentos: ModelComboBox[] = [
@@ -86,3 +86,20 @@ export const listaParcelas: ModelComboBox[] = [
   { value: 48, valueText: '48x' },
   { value: 70, valueText: '70x' },
 ];
+
+export function changeData(data: String) {
+  if (data.length <= 10) {
+    var d = new Date();
+    var newData =
+      data +
+      'T' +
+      ('00' + d.getHours()).slice(-2) +
+      ':' +
+      ('00' + d.getMinutes()).slice(-2) +
+      ':' +
+      ('00' + d.getSeconds()).slice(-2) +
+      '.000';
+    return newData;
+  }
+  return data;
+}
