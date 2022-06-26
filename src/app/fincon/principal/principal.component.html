@@ -63,7 +63,11 @@
             }}</mat-card-subtitle>
           </mat-card>
 
-          <mat-card class="cardTotais" style="background-color: #4280ba">
+          <mat-card
+            class="cardTotais  {{
+              saldoPositivo ? 'cardTotaisPositivo' : 'cardTotaisNegativo'
+            }}"
+          >
             <div
               style="
                 display: flex;
@@ -89,7 +93,7 @@
             }}</mat-card-subtitle>
           </mat-card>
 
-          <mat-card class="cardTotais" style="background-color: #33cc95">
+          <mat-card class="cardTotais" style="background-color: #4280ba">
             <div
               style="
                 display: flex;

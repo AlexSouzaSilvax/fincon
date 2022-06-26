@@ -28,6 +28,8 @@ export class PrincipalComponent implements OnInit {
 
   load: boolean = false;
 
+  saldoPositivo: boolean;
+
   displayedColumns: string[] = [
     'id',
     'categoria',
@@ -51,6 +53,7 @@ export class PrincipalComponent implements OnInit {
     this.totalSaida$ = '';
     this.saldo$ = '';
     this.poupanca$ = '';
+    this.saldoPositivo = true;
     this.onLancamentos();
   }
 
@@ -85,6 +88,11 @@ export class PrincipalComponent implements OnInit {
     this.totalSaida$ = this.numberToReal(somaSaidas);
     this.saldo$ = this.numberToReal(somaEntradas - somaSaidas);
     this.poupanca$ = this.numberToReal(somaPoupanca);
+    if (somaEntradas < somaSaidas) {
+      this.saldoPositivo = false;
+    } else {
+      this.saldoPositivo = true;
+    }
   }
 
   onError(errorMsg: string) {

@@ -77,7 +77,6 @@ mat-card-title {
   width: 150px;
   min-width: 136px !important;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
-  
 }
 
 .titleCardTotais {
@@ -114,6 +113,14 @@ table {
   color: #cc3333 !important;
 }
 
+.cardTotaisPositivo {
+  background-color: #33cc95;
+}
+
+.cardTotaisNegativo {
+  background-color: #cc3333;
+}
+
 @media only screen and (max-width: 750px) {
   .divCardTotais {
     display: flex;
@@ -127,9 +134,4 @@ table {
   .divTable {
     margin-top: 500px;
   }
-  
 }
-
-
-
-
