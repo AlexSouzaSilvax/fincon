@@ -32,7 +32,7 @@
 
         <!-- Categoria -->
         <mat-form-field appearance="fill">
-          <mat-label>Categoria</mat-label>
+          <mat-label>* Categoria</mat-label>
           <mat-select formControlName="categoria">
             <mat-option
               *ngFor="let categoria of categorias"
@@ -61,7 +61,7 @@
             formControlName="mensal"
           ></mat-checkbox>
           <p style="font-size: 11px; color: #818181">
-            Será replicado este lançamento em 12 meses
+            Será replicado este lançamento em 6 meses
           </p>
         </div>
       </div>
@@ -70,13 +70,13 @@
       <div class="example-container">
         <!-- Descrição -->
         <mat-form-field appearance="fill">
-          <mat-label>Descrição</mat-label>
+          <mat-label>* Descrição</mat-label>
           <input matInput #input formControlName="descricao" />
         </mat-form-field>
 
         <!-- Valor -->
         <mat-form-field appearance="fill">
-          <mat-label>Valor</mat-label>
+          <mat-label>* Valor</mat-label>
           <input matInput #input currencyMask [options]="optionsInput" formControlName="valor" />
         </mat-form-field>
 
@@ -149,12 +149,12 @@
       <div class="example-container" style="margin-top: 15px">
         <!-- Mês/Ano Referência -->
         <mat-form-field appearance="fill">
-          <mat-label>Mês Referência</mat-label>
+          <mat-label>* Mês Referência</mat-label>
           <input matInput #input type="number" formControlName="mes_referencia" />
         </mat-form-field>
 
         <mat-form-field appearance="fill">
-          <mat-label>Ano Referência</mat-label>
+          <mat-label>* Ano Referência</mat-label>
           <input matInput #input type="number" formControlName="ano_referencia" />
         </mat-form-field>
 
