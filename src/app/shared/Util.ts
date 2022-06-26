@@ -104,3 +104,17 @@ export function changeData(data: String) {
   }
   return data;
 }
+
+export function findTipo(valueText: String, lista: ModelComboBox[]) {
+  let value;
+  lista.forEach((e) => {
+    if (e.valueText == valueText) {
+      value = e.value;
+    }
+  });
+  return value;
+}
+
+export function formatDataInput(data: String) {
+  return data.substring(0, 10);
+}
