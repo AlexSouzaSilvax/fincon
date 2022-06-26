@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {
+  changeData,
   listaCategorias,
   listaParcelas,
   listaTipoLancamentos,
@@ -12,6 +13,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FinconService } from '../services/fincon.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { LancamentoSaveDTO } from '../model/LancamentoSaveDTO';
+import { Lancamento } from '../model/Lancamento';
 
 @Component({
   selector: 'app-novo',
@@ -48,7 +50,7 @@ export class NovoComponent implements OnInit {
   form: FormGroup;
 
   actionMessage!: String;
-  lancamento: LancamentoSaveDTO | undefined;
+  lancamento!: Lancamento;
 
   constructor(
     private location: Location,
@@ -89,6 +91,8 @@ export class NovoComponent implements OnInit {
   }
 
   onSubmit() {
+    this.lancamento = this.form.value;
+
     //valida campos
     this.load = true; // ativa load
     this.disabledSalvar = true; // inativa botao salvar
@@ -97,7 +101,17 @@ export class NovoComponent implements OnInit {
     if (this.lancamento?.id != null) {
       this.actionMessage = 'Atualizado';
     }
-    this.service.save(this.form.value).subscribe(
+
+    this.lancamento.data_vencimento = changeData(
+      this.lancamento.data_vencimento
+    );
+    this.lancamento.data_prevista_pagamento = changeData(
+      this.lancamento.data_prevista_pagamento
+    );
+
+    console.log(this.lancamento);
+
+    this.service.save(this.lancamento).subscribe(
       (result) => this.onSuccess(result, this.actionMessage),
       (error) => this.onError(this.actionMessage)
     );
@@ -107,7 +121,7 @@ export class NovoComponent implements OnInit {
 
   private onSuccess(result: LancamentoSaveDTO, actionMessage: String) {
     if (result.id != null) {
-      this.snackbar.open(`${result.id} ${actionMessage} com sucesso`, '', {
+      this.snackbar.open(`${actionMessage} com sucesso`, '', {
         duration: 5000,
       });
     }

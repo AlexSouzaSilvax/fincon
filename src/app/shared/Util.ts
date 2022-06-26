@@ -88,18 +88,19 @@ export const listaParcelas: ModelComboBox[] = [
 ];
 
 export function changeData(data: String) {
-  if (data.length <= 10) {
-    var d = new Date();
-    var newData =
-      data +
-      'T' +
-      ('00' + d.getHours()).slice(-2) +
-      ':' +
-      ('00' + d.getMinutes()).slice(-2) +
-      ':' +
-      ('00' + d.getSeconds()).slice(-2) +
-      '.000';
-    return newData;
+  if (data) {
+    if (data.length <= 10) {
+      var d = new Date();
+      var newData =
+        data +
+        'T' +
+        ('00' + d.getHours()).slice(-2) +
+        ':' +
+        ('00' + d.getMinutes()).slice(-2) +
+        ':' +
+        ('00' + d.getSeconds()).slice(-2);
+      return newData;
+    }
   }
   return data;
 }
