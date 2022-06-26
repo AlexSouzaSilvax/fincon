@@ -65,8 +65,8 @@
 
           <mat-card
             class="cardTotais  {{
-              saldoPositivo ? 'cardTotaisPositivo' : 'cardTotaisNegativo'
-            }}"
+              saldoPositivo ? 'cardTotaisPositivo' : 'cardTotaisNegativo' 
+            }} {{saldoPositivo == null ? 'cardTotaisNull' : null }}"
           >
             <div
               style="
