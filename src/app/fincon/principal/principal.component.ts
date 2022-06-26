@@ -28,7 +28,7 @@ export class PrincipalComponent implements OnInit {
 
   load: boolean = false;
 
-  saldoPositivo: boolean;
+  saldoPositivo: any = null;
 
   displayedColumns: string[] = [
     'id',
@@ -52,8 +52,7 @@ export class PrincipalComponent implements OnInit {
     this.totalEntrada$ = '';
     this.totalSaida$ = '';
     this.saldo$ = '';
-    this.poupanca$ = '';
-    this.saldoPositivo = true;
+    this.poupanca$ = '';    
     this.onLancamentos();
   }
 
@@ -110,7 +109,11 @@ export class PrincipalComponent implements OnInit {
     this.location.back();
   }
 
-  onEdit(pLancamento: Lancamento) {}
+  onEdit(pLancamento: Lancamento) {
+    this.router.navigate(['novo', { lancamento: JSON.stringify(pLancamento) }], {
+      relativeTo: this.route,
+    });
+  }
 
   private onSuccess(actionMessage: string) {
     this.snackbar.open(actionMessage, '', { duration: 5000 });
