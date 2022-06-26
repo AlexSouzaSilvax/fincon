@@ -80,8 +80,9 @@ export class NovoComponent implements OnInit {
 
   ngOnInit(): void {
     const routeParams = this.route.snapshot.paramMap;
-    if (routeParams.get('lancamento')) {
-      const param = JSON.parse(routeParams.get('lancamento'));
+    var paramLancamento = routeParams.get('lancamento');
+    if (paramLancamento) {
+      const param = JSON.parse(paramLancamento);
       if (param) {
         this.lancamento = param;
         this.form = this.formBuilder.group({
