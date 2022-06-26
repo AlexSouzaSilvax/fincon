@@ -24,6 +24,11 @@ export class PrincipalComponent implements OnInit {
   totalEntrada$: string;
   totalSaida$: string;
   saldo$: string;
+  poupanca$: string;
+
+  load: boolean = false;
+
+  saldoPositivo: boolean;
 
   displayedColumns: string[] = [
     'id',
@@ -47,22 +52,27 @@ export class PrincipalComponent implements OnInit {
     this.totalEntrada$ = '';
     this.totalSaida$ = '';
     this.saldo$ = '';
+    this.poupanca$ = '';
+    this.saldoPositivo = true;
     this.onLancamentos();
   }
 
   onLancamentos() {
+    this.load = true;
     this.lancamentos$ = this.lancamentosService.listMain('6', '2022').pipe(
       tap((l) => this.somaValores(l)),
       catchError((error) => {
-        this.onError('Erro ao carregar cursos');
-        return of([]);
+        this.onError('Não foi possível carregar os lançamentos');
+        return [];
       })
     );
   }
 
   somaValores(lancamentos: Array<LancamentoListaDTO>) {
+    this.load = false;
     var somaEntradas: any = 0;
     var somaSaidas: any = 0;
+    var somaPoupanca: any = 0;
     for (var i = 0; i < lancamentos.length; i++) {
       if (lancamentos[i].tipo_lancamento == 'Saída') {
         somaSaidas += lancamentos[i].valor;
@@ -70,18 +80,25 @@ export class PrincipalComponent implements OnInit {
       if (lancamentos[i].tipo_lancamento == 'Entrada') {
         somaEntradas += lancamentos[i].valor;
       }
+      if (lancamentos[i].categoria == 'Poupança') {
+        somaPoupanca += lancamentos[i].valor;
+      }
     }
     this.totalEntrada$ = this.numberToReal(somaEntradas);
     this.totalSaida$ = this.numberToReal(somaSaidas);
     this.saldo$ = this.numberToReal(somaEntradas - somaSaidas);
+    this.poupanca$ = this.numberToReal(somaPoupanca);
+    if (somaEntradas < somaSaidas) {
+      this.saldoPositivo = false;
+    } else {
+      this.saldoPositivo = true;
+    }
   }
 
   onError(errorMsg: string) {
-    this.dialog.open(ErrorDialogComponent, {
-      data: errorMsg,
-    });
-    this.snackbar.open(errorMsg, '', { duration: 5000 });
-    this.onLancamentos();
+    this.dialog.open(ErrorDialogComponent, { data: errorMsg });
+    //this.snackbar.open(errorMsg, '', { duration: 5000 });
+    this.load = false;
   }
 
   ngOnInit(): void {}
@@ -97,7 +114,7 @@ export class PrincipalComponent implements OnInit {
 
   private onSuccess(actionMessage: string) {
     this.snackbar.open(actionMessage, '', { duration: 5000 });
-    this.onLancamentos();//  alterar para apenas manipular a lista,  no caso remover o item selecionado
+    this.onLancamentos(); //  alterar para apenas manipular a lista,  no caso remover o item selecionado
   }
 
   onClickDelete(id: string) {
@@ -125,12 +142,12 @@ export class PrincipalComponent implements OnInit {
   onDelete(id: string) {
     this.lancamentosService.delete(id).subscribe(
       (result) => {
-        this.onSuccess('delete success');
+        this.onSuccess('Lançamento apagado com sucesso');
       },
       (error) => {
-        this.onError('delete error');
+        this.onError('Não foi possivel apagar este lançamento');
       }
-    );    
+    );
   }
 
   novo() {
