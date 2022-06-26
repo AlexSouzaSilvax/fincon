@@ -1,8 +1,39 @@
 /* You can add global styles to this file, and also import other style files */
 
 /*html, body { height: 100%; }*/
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
 
 html {
   background-color: #f1f1f1;
+}
+
+.mat-progress-spinner circle,
+.mat-spinner circle {
+  stroke: #2b70b1 !important;
+  stroke-width: 2% !important;
+}
+
+.mat-checkbox-checked.mat-accent .mat-checkbox-background {
+  background-color: #2b70b1 !important;
+}
+::ng-deep .mat-checkbox-ripple .mat-ripple-element {
+  background-color: #2b70b1 !important;
+}
+::ng-deep .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
+  background-color: #2b70b1 !important;
+}
+
+.mat-radio-group circle {
+  background-color: #2b70b1 !important;
+}
+
+.mat-progress-bar-fill::after {
+  background-color: #1461a9 !important;
+}
+
+.mat-progress-bar.mat-accent .mat-progress-bar-buffer {
+  background-color: #f1f1f1 !important;
 }

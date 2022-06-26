@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Lancamento } from '../model/Lancamento';
 import { LancamentoListaDTO } from '../model/LancamentoListaDTO';
 import { first, tap } from 'rxjs/operators';
+import { LancamentoSaveDTO } from '../model/LancamentoSaveDTO';
 
 @Injectable({
   providedIn: 'root',
@@ -38,8 +39,6 @@ export class FinconService {
   }
 
   delete(id: string) {
-    return this.httpClient
-      .post<String>(`${this.API}/delete`, id)
-      .pipe(first());
+    return this.httpClient.post<String>(`${this.API}/delete`, id).pipe(first());
   }
 }
