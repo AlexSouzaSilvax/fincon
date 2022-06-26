@@ -106,7 +106,7 @@ export function changeData(data: String) {
 }
 
 export function findTipo(valueText: String, lista: ModelComboBox[]) {
-  var value: any = null;
+  let value;
   lista.forEach((e) => {
     if (e.valueText == valueText) {
       value = e.value;

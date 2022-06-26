@@ -100,9 +100,11 @@ export class NovoComponent implements OnInit {
         mes_referencia: [this.lancamento?.mes_referencia],
         ano_referencia: [this.lancamento?.ano_referencia],
         observacao: [this.lancamento?.observacao],
-        
+
         data_vencimento: [formatDataInput(this.lancamento?.data_vencimento)],
-        data_prevista_pagamento: [formatDataInput(this.lancamento?.data_prevista_pagamento)],
+        data_prevista_pagamento: [
+          formatDataInput(this.lancamento?.data_prevista_pagamento),
+        ],
       });
       this.functionSelectTipoPagamento(this.lancamento.tipo_pagamento);
     }
@@ -139,6 +141,9 @@ export class NovoComponent implements OnInit {
     this.lancamento.data_prevista_pagamento = changeData(
       this.lancamento.data_prevista_pagamento
     );
+    this.lancamento.categoria = this.lancamento.categoria;
+    this.lancamento.tipo_lancamento = this.lancamento?.tipo_lancamento;
+    this.lancamento.tipo_pagamento = this.lancamento?.tipo_pagamento;
 
     this.service.save(this.lancamento).subscribe(
       (result) => this.onSuccess(result, this.actionMessage),
@@ -149,11 +154,9 @@ export class NovoComponent implements OnInit {
   }
 
   private onSuccess(result: LancamentoSaveDTO, actionMessage: String) {
-    if (result.id != null) {
-      this.snackbar.open(`${actionMessage} com sucesso`, '', {
-        duration: 5000,
-      });
-    }
+    this.snackbar.open(`${actionMessage} com sucesso`, '', {
+      duration: 5000,
+    });
   }
 
   private onError(actionMessage: String) {
