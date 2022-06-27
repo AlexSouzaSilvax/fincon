@@ -9,7 +9,8 @@ import { LancamentoSaveDTO } from '../model/LancamentoSaveDTO';
   providedIn: 'root',
 })
 export class FinconService {
-  private API = 'https://api-fincon.herokuapp.com/api/lancamentos';
+  private API = 'https://hml-api-fincon.herokuapp.com/api/lancamentos';
+  //private API = 'https://api-fincon.herokuapp.com/api/lancamentos';
   //private API = 'http://localhost:8080/api/lancamentos';
 
   constructor(private httpClient: HttpClient) {}
