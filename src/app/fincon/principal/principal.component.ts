@@ -56,12 +56,22 @@ export class PrincipalComponent implements OnInit {
     this.totalEntrada$ = '';
     this.totalSaida$ = '';
     this.saldo$ = '';
-    this.poupanca$ = '';    
+    this.poupanca$ = '';        
+  }
+  
+  ngOnInit(): void {
+    this.idUsuario = this.serviceLS.get('id');
+    if(this.idUsuario == null) {      
+      this.router.navigate([''], { relativeTo: this.route });
+    }
     this.onLancamentos();
   }
 
   onLancamentos() {
     this.load = true;
+    if(this.idUsuario == null) {
+      this.idUsuario = this.serviceLS.get('id');
+    }
     this.lancamentos$ = this.lancamentosService.listMain(this.idUsuario, '6', '2022').pipe(
       tap((l) => this.somaValores(l)),
       catchError((error) => {
@@ -102,13 +112,6 @@ export class PrincipalComponent implements OnInit {
     this.dialog.open(ErrorDialogComponent, { data: errorMsg });
     //this.snackbar.open(errorMsg, '', { duration: 5000 });
     this.load = false;
-  }
-
-  ngOnInit(): void {
-    this.idUsuario = this.serviceLS.get('id');
-    if(this.idUsuario == null) {      
-      this.router.navigate([''], { relativeTo: this.route });
-    }
   }
 
   onAdd() {}
