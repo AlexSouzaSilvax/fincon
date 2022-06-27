@@ -1,5 +1,8 @@
+import { Usuario } from "./Usuario";
+
 export interface Lancamento {
   id: Number;
+  usuario: Usuario;
   descricao: String;
   categoria: String;
   valor: Number;
