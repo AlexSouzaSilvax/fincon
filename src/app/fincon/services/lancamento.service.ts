@@ -11,10 +11,10 @@ import { API } from '../../shared/Util';
 export class LancamentoService {
   constructor(private httpClient: HttpClient) {}
 
-  listMain(mesReferencia: string, anoReferencia: string) {
+  listMain(idUsuario: string, mesReferencia: string, anoReferencia: string) {
     return this.httpClient
       .get<LancamentoListaDTO[]>(
-        `${API}/lancamentos/find-list-main?mes_referencia=${mesReferencia}&ano_referencia=${anoReferencia}`
+        `${API}/lancamentos/find-list-main?id_usuario=${idUsuario}&mes_referencia=${mesReferencia}&ano_referencia=${anoReferencia}`
       )
       .pipe(
         first()
@@ -23,14 +23,14 @@ export class LancamentoService {
       );
   }
 
-  save(record: Lancamento) {
+  save(idUsuario: string, record: Lancamento) {
     if (record.id) {
       return this.httpClient
-        .post<Lancamento>(`${API}/lancamentos/update`, record)
+        .post<Lancamento>(`${API}/lancamentos/update?id_usuario=${idUsuario}`, record)
         .pipe(first());
     } else {
       return this.httpClient
-        .post<Lancamento>(`${API}/lancamentos/create`, record)
+        .post<Lancamento>(`${API}/lancamentos/create?id_usuario=${idUsuario}`, record)
         .pipe(first());
     }
   }
