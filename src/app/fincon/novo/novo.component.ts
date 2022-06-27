@@ -12,7 +12,7 @@ import { ModelComboBox } from '../model/ModelComboBox';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FinconService } from '../services/fincon.service';
+import { LancamentoService } from '../services/lancamento.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { LancamentoSaveDTO } from '../model/LancamentoSaveDTO';
 import { Lancamento } from '../model/Lancamento';
@@ -57,7 +57,7 @@ export class NovoComponent implements OnInit {
   constructor(
     private location: Location,
     private formBuilder: FormBuilder,
-    private service: FinconService,
+    private service: LancamentoService,
     private snackbar: MatSnackBar,
     private route: ActivatedRoute
   ) {

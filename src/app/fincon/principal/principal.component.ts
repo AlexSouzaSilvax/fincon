@@ -3,7 +3,7 @@ import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Lancamento } from '../model/Lancamento';
 import { LancamentoListaDTO } from '../model/LancamentoListaDTO';
-import { FinconService } from '../services/fincon.service';
+import { LancamentoService } from '../services/lancamento.service';
 import { _numberToReal, _formatData, _changeIsPago } from '../../shared/Util';
 import { tap } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
@@ -42,7 +42,7 @@ export class PrincipalComponent implements OnInit {
   ];
 
   constructor(
-    private lancamentosService: FinconService,
+    private lancamentosService: LancamentoService,
     public dialog: MatDialog,
     private location: Location,
     private router: Router,
