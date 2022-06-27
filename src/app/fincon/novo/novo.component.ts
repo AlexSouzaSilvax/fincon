@@ -14,8 +14,8 @@ import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LancamentoService } from '../services/lancamento.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { LancamentoSaveDTO } from '../model/LancamentoSaveDTO';
 import { Lancamento } from '../model/Lancamento';
+import { LocalStorageService } from '../services/local-storage.service';
 
 @Component({
   selector: 'app-novo',
@@ -54,12 +54,16 @@ export class NovoComponent implements OnInit {
   actionMessage!: String;
   lancamento!: Lancamento;
 
+  idUsuario!: string;
+
   constructor(
     private location: Location,
     private formBuilder: FormBuilder,
     private service: LancamentoService,
     private snackbar: MatSnackBar,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private serviceLS: LocalStorageService,
+    private router: Router,
   ) {
     this.form = this.formBuilder.group({
       descricao: [],
@@ -79,6 +83,11 @@ export class NovoComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.idUsuario = this.serviceLS.get('id');
+    if (this.idUsuario == null) {
+      this.router.navigate([''], { relativeTo: this.route });
+    }
+
     const routeParams = this.route.snapshot.paramMap;
     var paramLancamento = routeParams.get('lancamento');
     if (paramLancamento) {
@@ -148,21 +157,17 @@ export class NovoComponent implements OnInit {
     this.lancamento.tipo_lancamento = this.lancamento?.tipo_lancamento;
     this.lancamento.tipo_pagamento = this.lancamento?.tipo_pagamento;
 
-    this.service.save(this.lancamento).subscribe(
-      (result) => this.onSuccess(result, this.actionMessage),
-      (error) => this.onError(this.actionMessage)
+    this.service.save(this.idUsuario, this.lancamento).subscribe(
+      (result) => this.onMessage(`${this.actionMessage} com sucesso`),
+      (error) => this.onMessage(`${this.actionMessage} erro`)
     );
     this.load = false; // inativa load
     this.disabledSalvar = false; // ativa botao salvar
   }
 
-  private onSuccess(result: LancamentoSaveDTO, actionMessage: String) {
-    this.snackbar.open(`${actionMessage} com sucesso`, '', {
+  private onMessage(actionMessage: String) {
+    this.snackbar.open(`${actionMessage}`, '', {
       duration: 5000,
     });
-  }
-
-  private onError(actionMessage: String) {
-    this.snackbar.open(`error ${actionMessage}`, '', { duration: 5000 });
   }
 }

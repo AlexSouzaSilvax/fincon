@@ -12,6 +12,7 @@ import { ConfirmDialogComponent } from '../../shared/components/confirm-dialog/c
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { LocalStorageService } from '../services/local-storage.service';
 
 @Component({
   selector: 'principal',
@@ -30,6 +31,8 @@ export class PrincipalComponent implements OnInit {
 
   saldoPositivo: any = null;
 
+  idUsuario!: string;
+
   displayedColumns: string[] = [
     'id',
     'categoria',
@@ -47,7 +50,8 @@ export class PrincipalComponent implements OnInit {
     private location: Location,
     private router: Router,
     private route: ActivatedRoute,
-    private snackbar: MatSnackBar
+    private snackbar: MatSnackBar,
+    private serviceLS: LocalStorageService
   ) {
     this.totalEntrada$ = '';
     this.totalSaida$ = '';
@@ -58,7 +62,7 @@ export class PrincipalComponent implements OnInit {
 
   onLancamentos() {
     this.load = true;
-    this.lancamentos$ = this.lancamentosService.listMain('6', '2022').pipe(
+    this.lancamentos$ = this.lancamentosService.listMain(this.idUsuario, '6', '2022').pipe(
       tap((l) => this.somaValores(l)),
       catchError((error) => {
         this.onError('Não foi possível carregar os lançamentos');
@@ -100,7 +104,12 @@ export class PrincipalComponent implements OnInit {
     this.load = false;
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.idUsuario = this.serviceLS.get('id');
+    if(this.idUsuario == null) {      
+      this.router.navigate([''], { relativeTo: this.route });
+    }
+  }
 
   onAdd() {}
 
