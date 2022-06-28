@@ -41,17 +41,24 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (this.serviceLS.get('id') != null) {
+      this.router.navigate(['principal'], { relativeTo: this.route });
+    }
+  }
 
   submit() {
-    this.usuarioAccess = { login: this.form.value.login.value, senha: this.form.value.senha.value };
+    this.usuarioAccess = {
+      login: this.form.value.login.value,
+      senha: this.form.value.senha.value,
+    };
 
     if (this.usuarioAccess.login != null && this.usuarioAccess.senha != null) {
       //load true
       this.load = true;
       //btn login off
-      this.btnLogin = true;      
-      
+      this.btnLogin = true;
+
       if (this.usuarioAccess) {
         this.service.access(this.usuarioAccess).subscribe(
           (result) => {
