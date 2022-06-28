@@ -33,9 +33,12 @@
             <input
               class="input"
               matInput
-              placeholder=""
-              formControlName="login"
+              [formControl]="login"
+              placeholder="seu login"
             />
+            <mat-error *ngIf="login.hasError('required')">
+              Login é <strong>obrigatório</strong>
+            </mat-error>
           </mat-form-field>
         </p>
         <p>
@@ -44,9 +47,13 @@
             <input
               class="input"
               matInput
-              placeholder=""
-              formControlName="senha"
+              type="password"
+              [formControl]="senha"
+              placeholder="sua senha"
             />
+            <mat-error *ngIf="senha.hasError('required')">
+              Senha é <strong>obrigatório</strong>
+            </mat-error>
           </mat-form-field>
         </p>
 
