@@ -15,6 +15,8 @@ export class LoginComponent implements OnInit {
   form: FormGroup;
   actionMessage!: String;
   usuario!: Usuario;
+  load: boolean = false;
+  btnLogin: boolean = false;
 
   constructor(
     private router: Router,
@@ -33,26 +35,30 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {}
 
   submit() {
+    //load true
+    this.load = true;
+    //btn login off
+    this.btnLogin = true;
     this.usuario = this.form.value;
     if (this.usuario) {
       this.service.access(this.usuario).subscribe(
         (result) => {
           if (result.id != null) {
-            //gravar id no localstorage
             this.serviceLS.set('id', result.id);
             this.router.navigate(['principal'], { relativeTo: this.route });
           }
         },
         (error) => {
-          if(error.error.message) {
+          if (error.error.message) {
             this.onMessage(error.error.message);
           } else {
-            this.onMessage("Sem conexão com servidor");
+            this.onMessage('Sem conexão com servidor');
           }
-          
         }
       );
     }
+    this.load = false;
+    this.btnLogin = false;
   }
 
   private onMessage(actionMessage: String) {
