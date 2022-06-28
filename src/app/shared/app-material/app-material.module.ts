@@ -18,6 +18,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { CurrencyMaskModule } from "ng2-currency-mask";
 import { MatRadioModule } from '@angular/material/radio';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatMenuModule } from '@angular/material/menu';
 @NgModule({
   exports: [
     MatTableModule,
@@ -36,7 +37,8 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     MatCheckboxModule,
     CurrencyMaskModule,
     MatRadioModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatMenuModule
   ],
 })
 export class AppMaterialModule {}
