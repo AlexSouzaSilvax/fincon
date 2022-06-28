@@ -8,11 +8,15 @@ import { LocalStorageService } from 'src/app/fincon/services/local-storage.servi
   styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent implements OnInit {
+  login: string;
+
   constructor(
     private serviceLS: LocalStorageService,
     private router: Router,
     private route: ActivatedRoute
-  ) {}
+  ) {
+    this.login = this.serviceLS.get('login');
+  }
 
   ngOnInit(): void {}
 

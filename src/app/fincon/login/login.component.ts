@@ -11,6 +11,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { UsuarioService } from '../services/usuario.service';
 import { LocalStorageService } from '../services/local-storage.service';
 import { UsuarioAccessDTO } from '../model/UsuarioAccessDTO';
+import { MatDialog } from '@angular/material/dialog';
+import { EsqueciSenhaDialogComponent } from 'src/app/shared/components/esqueci-senha-dialog/esqueci-senha-dialog.component';
 
 @Component({
   selector: 'fincon',
@@ -23,9 +25,12 @@ export class LoginComponent implements OnInit {
   usuario!: Usuario;
   load: boolean = false;
   btnLogin: boolean = false;
-  login = new FormControl('', [Validators.required]);
-  senha = new FormControl('', [Validators.required]);
+  btnCadastrese: boolean = false;
+  login = new FormControl(null, [Validators.required]);
+  senha = new FormControl(null, [Validators.required]);
   usuarioAccess!: UsuarioAccessDTO;
+  formCadastrese: FormGroup;
+  visibleLogin: boolean = true;
 
   constructor(
     private router: Router,
@@ -33,11 +38,18 @@ export class LoginComponent implements OnInit {
     private service: UsuarioService,
     private serviceLS: LocalStorageService,
     private snackbar: MatSnackBar,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    public dialog: MatDialog
   ) {
     this.form = this.formBuilder.group({
       login: [this.login],
       senha: [this.senha],
+    });
+    this.formCadastrese = this.formBuilder.group({
+      nome: [],
+      email: [],
+      login: [],
+      senha: [],
     });
   }
 
@@ -47,12 +59,11 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  submit() {
+  onLogin() {
     this.usuarioAccess = {
       login: this.form.value.login.value,
       senha: this.form.value.senha.value,
     };
-
     if (this.usuarioAccess.login != null && this.usuarioAccess.senha != null) {
       //load true
       this.load = true;
@@ -64,6 +75,7 @@ export class LoginComponent implements OnInit {
           (result) => {
             if (result.id != null) {
               this.serviceLS.set('id', result.id);
+              this.serviceLS.set('login', result.login);
               this.router.navigate(['principal'], { relativeTo: this.route });
             }
           },
@@ -79,6 +91,56 @@ export class LoginComponent implements OnInit {
       this.load = false;
       this.btnLogin = false;
     }
+  }
+
+  onClickCadastrese() {
+    this.visibleLogin = false;
+  }
+
+  onCadastrese() {
+    //load true
+    this.load = true;
+    //btn login off
+    this.btnCadastrese = true;
+
+    if (this.formCadastrese) {
+      this.service.save(this.formCadastrese.value).subscribe(
+        (result) => {
+          if (result.id != null) {
+            this.onMessage('Usuário criado com sucesso');
+          }
+        },
+        (error) => {
+          if (error.error.message) {
+            this.onMessage(error.error.message);
+          } else {
+            this.onMessage('Sem conexão com servidor');
+          }
+        }
+      );
+    }
+    this.load = false;
+    this.btnCadastrese = false;
+  }
+
+  onClickEsqueciSenha() {
+    const dialogRef = this.dialog.open(EsqueciSenhaDialogComponent, {
+      data: {
+        title: '',
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log('The dialog was closed');
+      this.onEsqueciSenha(result);
+    });
+  }
+
+  onEsqueciSenha(email: string) {
+    this.onMessage('Senha enviada para: ' + email);
+  }
+  onVoltar() {
+    this.visibleLogin = true;
   }
 
   private onMessage(actionMessage: String) {
