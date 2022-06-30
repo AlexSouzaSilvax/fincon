@@ -85,7 +85,8 @@ export class PrincipalComponent implements OnInit {
     this.load = false;
     var somaEntradas: any = 0;
     var somaSaidas: any = 0;
-    var somaPoupanca: any = 0;
+    var somaPoupancaEntradas: any = 0;
+    var somaPoupancaSaidas: any = 0;
     for (var i = 0; i < lancamentos.length; i++) {
       if (lancamentos[i].tipo_lancamento == 'Saída') {
         somaSaidas += lancamentos[i].valor;
@@ -94,13 +95,19 @@ export class PrincipalComponent implements OnInit {
         somaEntradas += lancamentos[i].valor;
       }
       if (lancamentos[i].categoria == 'Poupança') {
-        somaPoupanca += lancamentos[i].valor;
+        if (lancamentos[i].tipo_lancamento == 'Saída') {
+          somaPoupancaEntradas += lancamentos[i].valor;
+        }
+        if (lancamentos[i].tipo_lancamento == 'Entrada') {
+          somaPoupancaSaidas += lancamentos[i].valor;
+        } 
+        
       }
     }
     this.totalEntrada$ = this.numberToReal(somaEntradas);
     this.totalSaida$ = this.numberToReal(somaSaidas);
     this.saldo$ = this.numberToReal(somaEntradas - somaSaidas);
-    this.poupanca$ = this.numberToReal(somaPoupanca);
+    this.poupanca$ = this.numberToReal(somaPoupancaEntradas - somaPoupancaSaidas);
     if (somaEntradas < somaSaidas) {
       this.saldoPositivo = false;
     } else {
@@ -121,7 +128,7 @@ export class PrincipalComponent implements OnInit {
     this.location.back();
   }
 
-  onEdit(pLancamento: Lancamento) {
+  onEdit(pLancamento: Lancamento) {    
     this.router.navigate(['novo', { lancamento: JSON.stringify(pLancamento) }], {
       relativeTo: this.route,
     });
@@ -149,9 +156,7 @@ export class PrincipalComponent implements OnInit {
       },
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      //console.log('The dialog was closed');
-    });
+    dialogRef.afterClosed().subscribe((result) => { });
   }
 
   onDelete(id: string) {
