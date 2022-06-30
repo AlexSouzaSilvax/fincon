@@ -2,7 +2,7 @@ export interface LancamentoListaDTO {
   id: String,
   categoria: String,
   descricao: String;
-  valor: Number;
+  valor: number;
   pago: Boolean,
   tipo_lancamento: String;
   tipo_pagamento: String;
