@@ -18,7 +18,7 @@
       <!-- Linha 1 -->
       <div class="example-container">
         <!-- Tipo Lançamento -->
-        <mat-form-field appearance="fill">
+        <mat-form-field class="example-full-width" appearance="outline">
           <mat-label>* Tipo Lançamento</mat-label>
           <mat-select formControlName="tipo_lancamento">
             <mat-option
@@ -31,7 +31,7 @@
         </mat-form-field>
 
         <!-- Categoria -->
-        <mat-form-field appearance="fill">
+        <mat-form-field class="example-full-width" appearance="outline">
           <mat-label>* Categoria</mat-label>
           <mat-select formControlName="categoria">
             <mat-option
@@ -53,7 +53,7 @@
           "
         >
           <p>Mensal</p>
-          <mat-checkbox          
+          <mat-checkbox
             color="primary"
             style="margin-left: 15px; margin-top: -5px"
             [disabled]="!selectTipoPagamento.value"
@@ -69,15 +69,21 @@
       <!-- Linha 2 -->
       <div class="example-container">
         <!-- Descrição -->
-        <mat-form-field appearance="fill">
+        <mat-form-field class="example-full-width" appearance="outline">
           <mat-label>* Descrição</mat-label>
           <input matInput #input formControlName="descricao" />
         </mat-form-field>
 
         <!-- Valor -->
-        <mat-form-field appearance="fill">
+        <mat-form-field class="example-full-width" appearance="outline">
           <mat-label>* Valor</mat-label>
-          <input matInput #input currencyMask [options]="optionsInput" formControlName="valor" />
+          <input
+            matInput
+            #input
+            currencyMask
+            [options]="optionsInput"
+            formControlName="valor"
+          />
         </mat-form-field>
 
         <!-- Pago -->
@@ -88,7 +94,7 @@
           <mat-radio-group
             aria-labelledby="example-radio-group-label"
             class="example-radio-group"
-            formControlName="pago"            
+            formControlName="pago"
           >
             <div
               style="display: flex !important; flex-direction: row !important"
@@ -109,9 +115,12 @@
       <!-- Linha 3 -->
       <div class="example-container">
         <!-- Tipo Pagamentos -->
-        <mat-form-field appearance="fill">
+        <mat-form-field class="example-full-width" appearance="outline">
           <mat-label>Tipo de Pagamento</mat-label>
-          <mat-select [(value)]="tipoPagamentoSelecionado" formControlName="tipo_pagamento">
+          <mat-select
+            [(value)]="tipoPagamentoSelecionado"
+            formControlName="tipo_pagamento"
+          >
             <mat-option
               *ngFor="let pagamento of tipoPagamentos"
               [value]="pagamento.value"
@@ -128,7 +137,10 @@
           appearance="fill"
         >
           <mat-label>Parcelas</mat-label>
-          <mat-select [disabled]="selectTipoPagamento.value" formControlName="quantidade_parcelas">
+          <mat-select
+            [disabled]="selectTipoPagamento.value"
+            formControlName="quantidade_parcelas"
+          >
             <mat-option
               *ngFor="let parcela of qtdParcelas"
               [value]="parcela.value"
@@ -139,29 +151,49 @@
         </mat-form-field>
 
         <!-- Data de Vencimento -->
-        <mat-form-field appearance="fill">
+        <mat-form-field class="example-full-width" appearance="outline">
           <mat-label>Data de Vencimento</mat-label>
-          <input matInput #input type="date" formControlName="data_vencimento" />
+          <input
+            matInput
+            #input
+            type="date"
+            formControlName="data_vencimento"
+          />
         </mat-form-field>
       </div>
 
       <!-- Linha 4 -->
       <div class="example-container" style="margin-top: 15px">
         <!-- Mês/Ano Referência -->
-        <mat-form-field appearance="fill">
+        <mat-form-field class="example-full-width" appearance="outline">
           <mat-label>* Mês Referência</mat-label>
-          <input matInput #input type="number" formControlName="mes_referencia" />
+          <input
+            matInput
+            #input
+            type="number"
+            formControlName="mes_referencia"
+          />
         </mat-form-field>
 
-        <mat-form-field appearance="fill">
+        <mat-form-field class="example-full-width" appearance="outline">
           <mat-label>* Ano Referência</mat-label>
-          <input matInput #input type="number" formControlName="ano_referencia" />
+          <input
+            matInput
+            #input
+            type="number"
+            formControlName="ano_referencia"
+          />
         </mat-form-field>
 
         <!-- Data Prevista Pagamento -->
-        <mat-form-field appearance="fill">
+        <mat-form-field class="example-full-width" appearance="outline">
           <mat-label>Data Prevista de Pagamento</mat-label>
-          <input matInput #input type="date" formControlName="data_prevista_pagamento"/>
+          <input
+            matInput
+            #input
+            type="date"
+            formControlName="data_prevista_pagamento"
+          />
         </mat-form-field>
       </div>
 
@@ -171,10 +203,15 @@
         <mat-form-field
           style="width: 100%"
           class="example-full-width"
-          appearance="fill"
+          appearance="outline"
         >
           <mat-label>Observação</mat-label>
-          <textarea matInput placeholder="" formControlName="observacao"></textarea>
+          <textarea
+            matInput
+            placeholder=""
+            formControlName="observacao"
+            style="resize: none"
+          ></textarea>
         </mat-form-field>
       </div>
     </form>
