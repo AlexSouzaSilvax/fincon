@@ -146,14 +146,13 @@ export class NovoComponent implements OnInit {
     if (this.lancamento?.id != null) {
       this.actionMessage = 'Atualizado';
     }
-
     this.lancamento.data_vencimento = changeData(
       this.lancamento.data_vencimento
     );
     this.lancamento.data_prevista_pagamento = changeData(
       this.lancamento.data_prevista_pagamento
     );
-    this.lancamento.categoria = this.lancamento.categoria;
+    this.lancamento.categoria = this.lancamento?.categoria;
     this.lancamento.tipo_lancamento = this.lancamento?.tipo_lancamento;
     this.lancamento.tipo_pagamento = this.lancamento?.tipo_pagamento;
 
@@ -163,11 +162,12 @@ export class NovoComponent implements OnInit {
     );
     this.load = false; // inativa load
     this.disabledSalvar = false; // ativa botao salvar
+    this.router.navigate([''], { relativeTo: this.route });
   }
 
   private onMessage(actionMessage: String) {
     this.snackbar.open(`${actionMessage}`, '', {
-      duration: 5000,
+      duration: 1000,
     });
   }
 }
