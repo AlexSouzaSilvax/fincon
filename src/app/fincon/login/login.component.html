@@ -1,23 +1,172 @@
-<mat-card>
-  <mat-card-title>Fincon</mat-card-title>
-  <mat-card-content>
-    <form [formGroup]="form" (ngSubmit)="submit()">
-      <p>
-        <mat-form-field class="example-full-width divInput" appearance="outline">
-          <mat-label class="labelInput">usuario</mat-label>
-          <input class="input" matInput placeholder="" value="">
-        </mat-form-field>
-      </p>
-      <p>
-        <mat-form-field class="example-full-width" appearance="outline">
-          <mat-label class="labelInput">senha</mat-label>
-          <input class="input" matInput placeholder="" value="">
-        </mat-form-field>
-      </p>
+<mat-card
+  style="
+    padding: 0px !important;
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+  "
+>
+  <!-- INICIO load -->
+  <div style="width: 100%; height: 4px">
+    <mat-progress-bar
+      *ngIf="load == true"
+      mode="indeterminate"
+      color="accent"
+      style="
+        background-color: #1461a9 !important;
+        border-radius: 6px !important;
+        display: flex;
+        height: 2px;
+      "
+    ></mat-progress-bar>
+  </div>
+  <!-- FIM load -->
+  <div style="padding: 16px !important">
+    <mat-card-title>Fincon</mat-card-title>
+    <mat-card-content>
+      <form [formGroup]="form" *ngIf="visibleLogin == true; cadastrese">
+        <p>
+          <mat-form-field
+            class="example-full-width divInput"
+            appearance="outline"
+          >
+            <mat-label class="labelInput">usuario</mat-label>
+            <input
+              class="input"
+              matInput
+              [formControl]="login"
+              placeholder="seu login"
+            />
+            <mat-error *ngIf="login.hasError('required')">
+              Login é <strong>obrigatório</strong>
+            </mat-error>
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label class="labelInput">senha</mat-label>
+            <input
+              class="input"
+              matInput
+              type="password"
+              [formControl]="senha"
+              placeholder="sua senha"
+            />
+            <mat-error *ngIf="senha.hasError('required')">
+              Senha é <strong>obrigatório</strong>
+            </mat-error>
+          </mat-form-field>
+        </p>
 
-      <div class="button">
-        <button mat-raised-button style="background-color: white; color: #1461a9;">Login</button>
-      </div>
-    </form>
-  </mat-card-content>
+        <div class="button">
+          <button
+            (click)="onLogin()"
+            [disabled]="btnLogin"
+            mat-raised-button
+            style="background-color: #1461a9; color: white"
+          >
+            Login
+          </button>
+          <a
+            class="btnEsqueciSenha"
+            (click)="onClickEsqueciSenha()"
+            style="background-color: white; color: #1461a9"
+          >
+            <p style="font-size: 12px">Esqueci minha senha</p>
+          </a>
+          <mat-divider [inset]="true"></mat-divider>
+          <button
+            (click)="onClickCadastrese()"
+            mat-raised-button
+            style="
+              color: #4280ba;
+              background-color: #f8f8f8;
+              margin-top: 10px;
+              box-shadow: 0px 0px 0px 0px !important;
+            "
+          >
+            Cadastre-se
+          </button>
+        </div>
+      </form>
+      <!-- Cadastre-se -->
+      <form
+        #cadastrese
+        [formGroup]="formCadastrese"
+        *ngIf="visibleLogin == false"
+      >
+        <p>
+          <mat-form-field
+            class="example-full-width divInput"
+            appearance="outline"
+          >
+            <mat-label class="labelInput">nome</mat-label>
+            <input
+              class="input"
+              matInput
+              formControlName="nome"
+              placeholder="seu nome"
+            />
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field
+            class="example-full-width divInput"
+            appearance="outline"
+          >
+            <mat-label class="labelInput">email</mat-label>
+            <input
+              class="input"
+              matInput
+              formControlName="email"
+              placeholder="seu email"
+            />
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field
+            class="example-full-width divInput"
+            appearance="outline"
+          >
+            <mat-label class="labelInput">login</mat-label>
+            <input
+              class="input"
+              matInput
+              formControlName="login"
+              placeholder="seu login"
+            />
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label class="labelInput">senha</mat-label>
+            <input
+              class="input"
+              matInput
+              type="password"
+              formControlName="senha"
+              placeholder="sua senha"
+            />
+          </mat-form-field>
+        </p>
+
+        <div class="button">
+          <button
+            (click)="onCadastrese()"
+            [disabled]="btnCadastrese"
+            mat-raised-button
+            style="background-color: #1461a9; color: white"
+          >
+            Criar conta
+          </button>
+          <a
+            class="btnEsqueciSenha"
+            (click)="onVoltar()"
+            style="background-color: white; color: #1461a9"
+          >
+            <p style="font-size: 12px">Voltar</p>
+          </a>
+        </div>
+      </form>
+    </mat-card-content>
+  </div>
 </mat-card>

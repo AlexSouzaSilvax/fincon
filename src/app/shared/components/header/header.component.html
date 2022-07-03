@@ -1,0 +1,26 @@
+<div>
+  <mat-card>
+    <mat-card-title>Fincon</mat-card-title>
+    <div
+      style="display: flex; justify-content: end; margin-top: -37px !important"
+    >
+      <button
+        mat-icon-button
+        [matMenuTriggerFor]="menu"
+        aria-label="Example icon-button with a menu"
+      >
+        <mat-icon style="color: white">more_vert</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item disabled>
+          <mat-icon>person</mat-icon>
+          <span>{{login}}</span>
+        </button>
+        <button mat-menu-item (click)="onLogout()">
+          <mat-icon>logout</mat-icon>
+          <span>Sair</span>
+        </button>
+      </mat-menu>
+    </div>
+  </mat-card>
+</div>

@@ -1,7 +1,5 @@
 <div>
-  <mat-card>
-    <mat-card-title>Fincon</mat-card-title>
-  </mat-card>
+  <header-component></header-component>
 
   <div class="lancamento">
     <div class="primeiro"></div>
@@ -27,7 +25,7 @@
       <!-- cardTotais -->
       <div class="lancamentos">
         <div class="divCardTotais">
-          <mat-card class="cardTotais">
+          <mat-card class="cardTotais" style="box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1), 0 3px 10px 0 rgba(0, 0, 0, 0.19) !important">
             <div
               style="
                 display: flex;
@@ -46,7 +44,7 @@
             }}</mat-card-subtitle>
           </mat-card>
 
-          <mat-card class="cardTotais">
+          <mat-card class="cardTotais" style="box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1), 0 3px 10px 0 rgba(0, 0, 0, 0.19) !important">
             <div
               style="
                 display: flex;
@@ -65,7 +63,11 @@
             }}</mat-card-subtitle>
           </mat-card>
 
-          <mat-card class="cardTotais" style="background-color: #4280ba">
+          <mat-card
+            class="cardTotais  {{
+              saldoPositivo ? 'cardTotaisPositivo' : 'cardTotaisNegativo' 
+            }} {{saldoPositivo == null ? 'cardTotaisNull' : null }}"
+          >
             <div
               style="
                 display: flex;
@@ -91,7 +93,7 @@
             }}</mat-card-subtitle>
           </mat-card>
 
-          <mat-card class="cardTotais" style="background-color: #33cc95">
+          <mat-card class="cardTotais" style="background-color: #4280ba">
             <div
               style="
                 display: flex;
@@ -112,9 +114,9 @@
                 src="../../../assets/icons/moneyWhite.svg"
               />
             </div>
-            <mat-card-subtitle class="valorCardTotais" style="color: white"
-              >R$ XX.XXX,XX</mat-card-subtitle
-            >
+            <mat-card-subtitle class="valorCardTotais" style="color: white">{{
+              poupanca$
+            }}</mat-card-subtitle>
           </mat-card>
         </div>
       </div>
@@ -124,6 +126,7 @@
         <button
           mat-raised-button
           style="background-color: #2b70b1; color: #f1f1f1"
+          (click)="novo()"
         >
           Novo
         </button>
@@ -133,8 +136,22 @@
 </div>
 
 <div class="divTable" *ngIf="lancamentos$ | async as lancamentos; else loading">
-  <div *ngIf="lancamentos$ == null; else table">
-    <p>Nenhum lançamento encontrado</p>
+  <div
+    *ngIf="lancamentos.length <= 0; else table"
+    style="
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 100px;
+    "
+  >
+    <img
+      src="../../../assets/caixa-vazia.png"
+      style="width: 80px; height: 80px"
+    />
+    <p style="color: #646464; font-size: 14px; margin-top: 10px">
+      Nenhum lançamento encontrado
+    </p>
   </div>
 
   <ng-template #table>
@@ -238,9 +255,11 @@
             "
           >
             <button mat-icon-button aria-label="Editar">
-              <mat-icon 
-              style="color: #4280ba !important"
-              (click)="onEdit(lancamento)">edit</mat-icon>
+              <mat-icon
+                style="color: #4280ba !important"
+                (click)="onEdit(lancamento)"
+                >edit</mat-icon
+              >
             </button>
 
             <button mat-icon-button aria-label="Remover">
@@ -262,7 +281,11 @@
 </div>
 
 <ng-template #loading>
-  <div class="loading-spinner">
+  <div
+    *ngIf="load == true"
+    style="display: flex; justify-content: center; margin-top: 200px"
+    class="loading-spinner"
+  >
     <mat-spinner></mat-spinner>
   </div>
 </ng-template>

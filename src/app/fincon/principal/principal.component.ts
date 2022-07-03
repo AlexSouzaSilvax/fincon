@@ -3,15 +3,16 @@ import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Lancamento } from '../model/Lancamento';
 import { LancamentoListaDTO } from '../model/LancamentoListaDTO';
-import { FinconService } from '../services/fincon.service';
+import { LancamentoService } from '../services/lancamento.service';
 import { _numberToReal, _formatData, _changeIsPago } from '../../shared/Util';
 import { tap } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 import { ErrorDialogComponent } from '../../shared/components/error-dialog/error-dialog.component';
 import { ConfirmDialogComponent } from '../../shared/components/confirm-dialog/confirm-dialog.component';
 import { Location } from '@angular/common';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { LocalStorageService } from '../services/local-storage.service';
 
 @Component({
   selector: 'principal',
@@ -24,6 +25,13 @@ export class PrincipalComponent implements OnInit {
   totalEntrada$: string;
   totalSaida$: string;
   saldo$: string;
+  poupanca$: string;
+
+  load: boolean = false;
+
+  saldoPositivo: any = null;
+
+  idUsuario!: string;
 
   displayedColumns: string[] = [
     'id',
@@ -37,31 +45,48 @@ export class PrincipalComponent implements OnInit {
   ];
 
   constructor(
-    private lancamentosService: FinconService,
+    private lancamentosService: LancamentoService,
     public dialog: MatDialog,
     private location: Location,
     private router: Router,
-    private snackbar: MatSnackBar
+    private route: ActivatedRoute,
+    private snackbar: MatSnackBar,
+    private serviceLS: LocalStorageService
   ) {
     this.totalEntrada$ = '';
     this.totalSaida$ = '';
     this.saldo$ = '';
+    this.poupanca$ = '';        
+  }
+  
+  ngOnInit(): void {
+    this.idUsuario = this.serviceLS.get('id');
+    if(this.idUsuario == null) {      
+      this.router.navigate([''], { relativeTo: this.route });
+    }
     this.onLancamentos();
   }
 
   onLancamentos() {
-    this.lancamentos$ = this.lancamentosService.listMain('6', '2022').pipe(
+    this.load = true;
+    if(this.idUsuario == null) {
+      this.idUsuario = this.serviceLS.get('id');
+    }
+    this.lancamentos$ = this.lancamentosService.listMain(this.idUsuario, '6', '2022').pipe(
       tap((l) => this.somaValores(l)),
       catchError((error) => {
-        this.onError('Erro ao carregar cursos');
-        return of([]);
+        this.onError('Não foi possível carregar os lançamentos');
+        return [];
       })
     );
   }
 
   somaValores(lancamentos: Array<LancamentoListaDTO>) {
+    this.load = false;
     var somaEntradas: any = 0;
     var somaSaidas: any = 0;
+    var somaPoupancaEntradas: any = 0;
+    var somaPoupancaSaidas: any = 0;
     for (var i = 0; i < lancamentos.length; i++) {
       if (lancamentos[i].tipo_lancamento == 'Saída') {
         somaSaidas += lancamentos[i].valor;
@@ -69,21 +94,32 @@ export class PrincipalComponent implements OnInit {
       if (lancamentos[i].tipo_lancamento == 'Entrada') {
         somaEntradas += lancamentos[i].valor;
       }
+      if (lancamentos[i].categoria == 'Poupança') {
+        if (lancamentos[i].tipo_lancamento == 'Saída') {
+          somaPoupancaEntradas += lancamentos[i].valor;
+        }
+        if (lancamentos[i].tipo_lancamento == 'Entrada') {
+          somaPoupancaSaidas += lancamentos[i].valor;
+        } 
+        
+      }
     }
     this.totalEntrada$ = this.numberToReal(somaEntradas);
     this.totalSaida$ = this.numberToReal(somaSaidas);
     this.saldo$ = this.numberToReal(somaEntradas - somaSaidas);
+    this.poupanca$ = this.numberToReal(somaPoupancaEntradas - somaPoupancaSaidas);
+    if (somaEntradas < somaSaidas) {
+      this.saldoPositivo = false;
+    } else {
+      this.saldoPositivo = true;
+    }
   }
 
   onError(errorMsg: string) {
-    this.dialog.open(ErrorDialogComponent, {
-      data: errorMsg,
-    });
-    this.snackbar.open(errorMsg, '', { duration: 5000 });
-    this.onLancamentos();
+    this.dialog.open(ErrorDialogComponent, { data: errorMsg });
+    //this.snackbar.open(errorMsg, '', { duration: 5000 });
+    this.load = false;
   }
-
-  ngOnInit(): void {}
 
   onAdd() {}
 
@@ -92,11 +128,15 @@ export class PrincipalComponent implements OnInit {
     this.location.back();
   }
 
-  onEdit(pLancamento: Lancamento) {}
+  onEdit(pLancamento: Lancamento) {    
+    this.router.navigate(['novo', { lancamento: JSON.stringify(pLancamento) }], {
+      relativeTo: this.route,
+    });
+  }
 
   private onSuccess(actionMessage: string) {
     this.snackbar.open(actionMessage, '', { duration: 5000 });
-    this.onLancamentos();//  alterar para apenas manipular a lista,  no caso remover o item selecionado
+    this.onLancamentos(); //  alterar para apenas manipular a lista,  no caso remover o item selecionado
   }
 
   onClickDelete(id: string) {
@@ -116,20 +156,22 @@ export class PrincipalComponent implements OnInit {
       },
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      //console.log('The dialog was closed');
-    });
+    dialogRef.afterClosed().subscribe((result) => { });
   }
 
   onDelete(id: string) {
     this.lancamentosService.delete(id).subscribe(
       (result) => {
-        this.onSuccess('delete success');
+        this.onSuccess('Lançamento apagado com sucesso');
       },
       (error) => {
-        this.onError('delete error');
+        this.onError('Não foi possivel apagar este lançamento');
       }
-    );    
+    );
+  }
+
+  novo() {
+    this.router.navigate(['novo'], { relativeTo: this.route });
   }
 
   numberToReal(param: number) {
