@@ -21,38 +21,14 @@
             mat-icon-button
             aria-label="Example icon button with a vertical three dot icon"
             style="color: #444"
+            (click)="filtrar()"
           >
             <mat-icon>filter_alt</mat-icon>
           </button>
         </div>
       </div>
 
-      <form [formGroup]="form" class="min-width">
-        <mat-form-field class="example-full-width" appearance="outline">
-          <mat-label>Mês Referência</mat-label>
-          <mat-select formControlName="mesReferencia">
-            <mat-option *ngFor="let p of mesesReferencia" [value]="p.value">
-              {{ p.valueText }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-        <mat-form-field class="example-full-width" appearance="outline">
-          <mat-label>Ano Referência</mat-label>
-          <mat-select formControlName="anoReferencia">
-            <mat-option *ngFor="let p of anosReferencia" [value]="p.value">
-              {{ p.valueText }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-
-        <button
-          mat-raised-button
-          (click)="filtrar()"
-          style="background-color: transparent !important; color: #808080"
-        >
-          Filtrar
-        </button>
-      </form>
+     
 
       <!-- cardTotais -->
       <div class="lancamentos">

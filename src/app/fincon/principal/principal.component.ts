@@ -23,6 +23,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { LocalStorageService } from '../services/local-storage.service';
 import { ModelComboBox } from '../model/ModelComboBox';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { FiltroDialogComponent } from 'src/app/shared/components/filtro-dialog/filtro-dialog.component';
 
 @Component({
   selector: 'principal',
@@ -124,18 +125,20 @@ export class PrincipalComponent implements OnInit {
     var somaPoupancaEntradas: any = 0;
     var somaPoupancaSaidas: any = 0;
     for (var i = 0; i < lancamentos.length; i++) {
-      if (lancamentos[i].tipo_lancamento == 'Saída') {
-        somaSaidas += lancamentos[i].valor;
-      }
-      if (lancamentos[i].tipo_lancamento == 'Entrada') {
-        somaEntradas += lancamentos[i].valor;
-      }
-      if (lancamentos[i].categoria == 'Poupança') {
+      if (lancamentos[i].pago) {
         if (lancamentos[i].tipo_lancamento == 'Saída') {
-          somaPoupancaEntradas += lancamentos[i].valor;
+          somaSaidas += lancamentos[i].valor;
         }
         if (lancamentos[i].tipo_lancamento == 'Entrada') {
-          somaPoupancaSaidas += lancamentos[i].valor;
+          somaEntradas += lancamentos[i].valor;
+        }
+        if (lancamentos[i].categoria == 'Poupança') {
+          if (lancamentos[i].tipo_lancamento == 'Saída') {
+            somaPoupancaEntradas += lancamentos[i].valor;
+          }
+          if (lancamentos[i].tipo_lancamento == 'Entrada') {
+            somaPoupancaSaidas += lancamentos[i].valor;
+          }
         }
       }
     }
@@ -215,13 +218,31 @@ export class PrincipalComponent implements OnInit {
   }
 
   filtrar() {
-    this.mesAnoReferencia = `${findTipo(
-      this.form.value.mesReferencia,
-      this.mesesReferencia
-    )} de ${findTipo(this.form.value.anoReferencia, this.anosReferencia)}`;
-    this.mesReferencia = this.form.value.mesReferencia;
-    this.mesReferencia = this.form.value.mesReferencia;
-    this.onLancamentos();
+    const dialogRef = this.dialog.open(FiltroDialogComponent, {
+      data: {
+        title: "Filtros",
+        description: "teste",
+        mesReferencia: this.mesReferencia,
+        anoReferencia: this.anoReferencia,
+        form: this.form,
+        mesesReferencia: this.mesesReferencia,
+        anosReferencia: this.anosReferencia,
+        onConfirm: () => {
+          this.mesAnoReferencia = `${findTipo(
+            this.form.value.mesReferencia,
+            this.mesesReferencia
+          )} de ${findTipo(
+            this.form.value.anoReferencia,
+            this.anosReferencia
+          )}`;
+          this.mesReferencia = this.form.value.mesReferencia;
+          this.anoReferencia = this.form.value.anoReferencia;
+          this.onLancamentos();
+        },
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {});
   }
 
   numberToReal(param: number) {
