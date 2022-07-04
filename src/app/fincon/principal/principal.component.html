@@ -9,6 +9,11 @@
         <div class="lancamentosPrimeiro">
           <p class="lancamentosPrimeiroTitle">Lançamentos</p>
         </div>
+        <div class="lancamentosSegundo">
+          <p class="lancamentosSegundoTitle">
+            {{ mesAnoReferencia }}
+          </p>
+        </div>
 
         <div>
           <!--button mat-button style="color: #cccc; font-size: 14px;">Limpar filtros</!--button-->
@@ -22,10 +27,43 @@
         </div>
       </div>
 
+      <form [formGroup]="form" class="min-width">
+        <mat-form-field class="example-full-width" appearance="outline">
+          <mat-label>Mês Referência</mat-label>
+          <mat-select formControlName="mesReferencia">
+            <mat-option *ngFor="let p of mesesReferencia" [value]="p.value">
+              {{ p.valueText }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="example-full-width" appearance="outline">
+          <mat-label>Ano Referência</mat-label>
+          <mat-select formControlName="anoReferencia">
+            <mat-option *ngFor="let p of anosReferencia" [value]="p.value">
+              {{ p.valueText }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <button
+          mat-raised-button
+          (click)="filtrar()"
+          style="background-color: transparent !important; color: #808080"
+        >
+          Filtrar
+        </button>
+      </form>
+
       <!-- cardTotais -->
       <div class="lancamentos">
         <div class="divCardTotais">
-          <mat-card class="cardTotais" style="box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1), 0 3px 10px 0 rgba(0, 0, 0, 0.19) !important">
+          <mat-card
+            class="cardTotais"
+            style="
+              box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1),
+                0 3px 10px 0 rgba(0, 0, 0, 0.19) !important;
+            "
+          >
             <div
               style="
                 display: flex;
@@ -44,7 +82,13 @@
             }}</mat-card-subtitle>
           </mat-card>
 
-          <mat-card class="cardTotais" style="box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1), 0 3px 10px 0 rgba(0, 0, 0, 0.19) !important">
+          <mat-card
+            class="cardTotais"
+            style="
+              box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1),
+                0 3px 10px 0 rgba(0, 0, 0, 0.19) !important;
+            "
+          >
             <div
               style="
                 display: flex;
@@ -65,8 +109,8 @@
 
           <mat-card
             class="cardTotais  {{
-              saldoPositivo ? 'cardTotaisPositivo' : 'cardTotaisNegativo' 
-            }} {{saldoPositivo == null ? 'cardTotaisNull' : null }}"
+              saldoPositivo ? 'cardTotaisPositivo' : 'cardTotaisNegativo'
+            }} {{ saldoPositivo == null ? 'cardTotaisNull' : null }}"
           >
             <div
               style="
@@ -135,7 +179,11 @@
   </div>
 </div>
 
-<div class="divTable" *ngIf="lancamentos$ | async as lancamentos; else loading">
+<div
+  style="margin-top: 200px"
+  class="divTable"
+  *ngIf="lancamentos$ | async as lancamentos; else loading"
+>
   <div
     *ngIf="lancamentos.length <= 0; else table"
     style="

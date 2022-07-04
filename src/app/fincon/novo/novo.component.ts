@@ -3,6 +3,7 @@ import {
   changeData,
   findTipo,
   formatDataInput,
+  getMesAnoAtual,
   listaCategorias,
   listaParcelas,
   listaTipoLancamentos,
@@ -65,6 +66,7 @@ export class NovoComponent implements OnInit {
     private serviceLS: LocalStorageService,
     private router: Router,
   ) {
+    const { mes, ano }  = getMesAnoAtual();
     this.form = this.formBuilder.group({
       descricao: [],
       categoria: [13],
@@ -75,8 +77,8 @@ export class NovoComponent implements OnInit {
       tipo_lancamento: [0],
       tipo_pagamento: [],
       quantidade_parcelas: [],
-      mes_referencia: [6],
-      ano_referencia: [2022],
+      mes_referencia: [mes],
+      ano_referencia: [ano],
       data_vencimento: [],
       data_prevista_pagamento: [],
     });
