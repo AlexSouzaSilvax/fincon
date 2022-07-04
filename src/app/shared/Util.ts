@@ -157,5 +157,8 @@ export function findTipo(valueText: String, lista: ModelComboBox[]) {
 }
 
 export function formatDataInput(data: String) {
-  return data.substring(0, 10);
+  if (data) {
+    return data.substring(0, 10);
+  }
+  return;
 }
