@@ -51,7 +51,7 @@ mat-card-title {
 }
 
 .lancamentosPrimeiro {
-  width: 80%;
+  width: 44%;
   height: 60px;
   text-align: start;
 }
@@ -61,6 +61,20 @@ mat-card-title {
   color: #444;
   padding: 10px;
 }
+
+.lancamentosSegundo {
+  width: 44%;
+  height: 60px;
+  text-align: start;
+  display: flex;
+  align-items: center;
+}
+
+.lancamentosSegundoTitle {
+  font-size: 14px;
+  color: #696969;
+}
+
 
 .divCardTotais {
   display: flex;
