@@ -8,6 +8,7 @@ import {
   listaParcelas,
   listaTipoLancamentos,
   listaTipoPagamentos,
+  _formatData
 } from 'src/app/shared/Util';
 import { ModelComboBox } from '../model/ModelComboBox';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
@@ -172,4 +173,9 @@ export class NovoComponent implements OnInit {
       duration: 1000,
     });
   }
+
+  formatData(data: String) {
+    return _formatData(data);
+  }
+
 }

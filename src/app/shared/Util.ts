@@ -17,7 +17,7 @@ export function _numberToReal(n: number) {
   );
 }
 
-export function _formatData(data: string) {
+export function _formatData(data: String) {
   if (data) {
     const [date, time] = data.split('T');
     const [YYYY, MM, DD] = date.split('-');

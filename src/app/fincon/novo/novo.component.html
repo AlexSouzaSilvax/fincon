@@ -14,6 +14,9 @@
   <div class="primeiro"></div>
 
   <div class="segundo">
+    <p style="margin-left: 80%; font-size: 12px; color: #aaa">
+      {{ formatData(lancamento.data_lancamento) }}
+    </p>
     <form [formGroup]="form" class="min-width">
       <!-- Linha 1 -->
       <div class="example-container">
