@@ -1,5 +1,6 @@
-import { Input, Component, Output, EventEmitter, OnInit } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { LancamentoEdit } from './../services/LancamentoEdit.service';
+import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Lancamento } from '../model/Lancamento';
 import { LancamentoListaDTO } from '../model/LancamentoListaDTO';
@@ -63,7 +64,9 @@ export class PrincipalComponent implements OnInit {
     'data_lancamento',
     'pago',
     'actions',
-  ];
+  ];  
+
+  items: any[] = [];
 
   constructor(
     private lancamentosService: LancamentoService,
@@ -73,7 +76,8 @@ export class PrincipalComponent implements OnInit {
     private route: ActivatedRoute,
     private snackbar: MatSnackBar,
     private serviceLS: LocalStorageService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private lancamentoEdit: LancamentoEdit
   ) {
     this.totalEntrada$ = '';
     this.totalSaida$ = '';
@@ -169,13 +173,10 @@ export class PrincipalComponent implements OnInit {
   }
 
   onEdit(pLancamento: Lancamento) {
-    this.router.navigate(
-      ['novo', { lancamento: JSON.stringify(pLancamento) }],
-      {
-        relativeTo: this.route,
-      }
-    );
-  }
+    this.items.push(pLancamento);
+    this.lancamentoEdit.setItems(this.items);    
+    this.router.navigate(['detalhe'], { relativeTo: this.route, } );    
+  } 
 
   private onSuccess(actionMessage: string) {
     this.snackbar.open(actionMessage, '', { duration: 5000 });
