@@ -3,9 +3,9 @@ import { ModelComboBox } from '../fincon/model/ModelComboBox';
 //LOCAL
 //export const API = "http://localhost:8080/api";
 //HML
-export const API = "https://hml-api-fincon.herokuapp.com/api";
+//export const API = 'https://hml-api-fincon.herokuapp.com/api';
 //PROD
-//export const API = "https://api-fincon.herokuapp.com/api";
+export const API = "https://api-fincon.herokuapp.com/api";
 
 export function _numberToReal(n: number) {
   return (
@@ -17,7 +17,7 @@ export function _numberToReal(n: number) {
   );
 }
 
-export function _formatData(data: string) {
+export function _formatData(data: String) {
   if (data) {
     const [date, time] = data.split('T');
     const [YYYY, MM, DD] = date.split('-');
@@ -94,6 +94,38 @@ export const listaParcelas: ModelComboBox[] = [
   { value: 70, valueText: '70x' },
 ];
 
+export const listaMesReferencia: ModelComboBox[] = [
+  { value: 1, valueText: 'Janeiro' },
+  { value: 2, valueText: 'Fevereiro' },
+  { value: 3, valueText: 'Março' },
+  { value: 4, valueText: 'Abril' },
+  { value: 5, valueText: 'Maio' },
+  { value: 6, valueText: 'Junho' },
+  { value: 7, valueText: 'Julho' },
+  { value: 8, valueText: 'Agosto' },
+  { value: 9, valueText: 'Setembro' },
+  { value: 10, valueText: 'Outubro' },
+  { value: 11, valueText: 'Novembro' },
+  { value: 12, valueText: 'Dezembro' },  
+];
+
+export const listaAnoReferencia: ModelComboBox[] = [
+  { value: 2022, valueText: '2022' },
+  { value: 2023, valueText: '2023' },
+  { value: 2024, valueText: '2024' },
+  { value: 2025, valueText: '2025' },
+  { value: 2026, valueText: '2026' },
+  { value: 2027, valueText: '2027' },
+  { value: 2028, valueText: '2028' },
+  { value: 2029, valueText: '2029' },
+  { value: 2030, valueText: '2030' },  
+];
+
+export function getMesAnoAtual() {
+  var d = new Date();
+  return { mes: (d.getMonth()+1), ano: d.getFullYear() };
+}
+
 export function changeData(data: String) {
   if (data) {
     if (data.length <= 10) {
@@ -117,11 +149,16 @@ export function findTipo(valueText: String, lista: ModelComboBox[]) {
   lista.forEach((e) => {
     if (e.valueText == valueText) {
       value = e.value;
+    } else if (e.value.toString() == valueText) {
+      value = e.valueText
     }
   });
   return value;
 }
 
 export function formatDataInput(data: String) {
-  return data.substring(0, 10);
+  if (data) {
+    return data.substring(0, 10);
+  }
+  return;
 }

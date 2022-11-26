@@ -4,7 +4,15 @@ import { catchError } from 'rxjs/operators';
 import { Lancamento } from '../model/Lancamento';
 import { LancamentoListaDTO } from '../model/LancamentoListaDTO';
 import { LancamentoService } from '../services/lancamento.service';
-import { _numberToReal, _formatData, _changeIsPago } from '../../shared/Util';
+import {
+  _numberToReal,
+  _formatData,
+  _changeIsPago,
+  findTipo,
+  listaMesReferencia,
+  listaAnoReferencia,
+  getMesAnoAtual,
+} from '../../shared/Util';
 import { tap } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 import { ErrorDialogComponent } from '../../shared/components/error-dialog/error-dialog.component';
@@ -13,6 +21,9 @@ import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { LocalStorageService } from '../services/local-storage.service';
+import { ModelComboBox } from '../model/ModelComboBox';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { FiltroDialogComponent } from 'src/app/shared/components/filtro-dialog/filtro-dialog.component';
 
 @Component({
   selector: 'principal',
@@ -33,6 +44,16 @@ export class PrincipalComponent implements OnInit {
 
   idUsuario!: string;
 
+  mesReferencia: any;
+  anoReferencia: any;
+
+  mesesReferencia: ModelComboBox[] = listaMesReferencia;
+  anosReferencia: ModelComboBox[] = listaAnoReferencia;
+
+  mesAnoReferencia!: string;
+
+  form: FormGroup;
+
   displayedColumns: string[] = [
     'id',
     'categoria',
@@ -51,17 +72,31 @@ export class PrincipalComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private snackbar: MatSnackBar,
-    private serviceLS: LocalStorageService
+    private serviceLS: LocalStorageService,
+    private formBuilder: FormBuilder
   ) {
     this.totalEntrada$ = '';
     this.totalSaida$ = '';
     this.saldo$ = '';
-    this.poupanca$ = '';        
+    this.poupanca$ = '';
+
+    const { mes, ano } = getMesAnoAtual();
+    this.mesReferencia = mes;
+    this.anoReferencia = ano;
+
+    this.form = this.formBuilder.group({
+      mesReferencia: [this.mesReferencia],
+      anoReferencia: [this.anoReferencia],
+    });
+    this.mesAnoReferencia = `${findTipo(
+      this.mesReferencia,
+      listaMesReferencia
+    )} de ${this.anoReferencia}`;
   }
-  
+
   ngOnInit(): void {
     this.idUsuario = this.serviceLS.get('id');
-    if(this.idUsuario == null) {      
+    if (this.idUsuario == null) {
       this.router.navigate([''], { relativeTo: this.route });
     }
     this.onLancamentos();
@@ -69,16 +104,18 @@ export class PrincipalComponent implements OnInit {
 
   onLancamentos() {
     this.load = true;
-    if(this.idUsuario == null) {
+    if (this.idUsuario == null) {
       this.idUsuario = this.serviceLS.get('id');
     }
-    this.lancamentos$ = this.lancamentosService.listMain(this.idUsuario, '6', '2022').pipe(
-      tap((l) => this.somaValores(l)),
-      catchError((error) => {
-        this.onError('Não foi possível carregar os lançamentos');
-        return [];
-      })
-    );
+    this.lancamentos$ = this.lancamentosService
+      .listMain(this.idUsuario, this.mesReferencia, this.anoReferencia)
+      .pipe(
+        tap((l) => this.somaValores(l)),
+        catchError((error) => {
+          this.onError('Não foi possível carregar os lançamentos');
+          return [];
+        })
+      );
   }
 
   somaValores(lancamentos: Array<LancamentoListaDTO>) {
@@ -88,26 +125,29 @@ export class PrincipalComponent implements OnInit {
     var somaPoupancaEntradas: any = 0;
     var somaPoupancaSaidas: any = 0;
     for (var i = 0; i < lancamentos.length; i++) {
-      if (lancamentos[i].tipo_lancamento == 'Saída') {
-        somaSaidas += lancamentos[i].valor;
-      }
-      if (lancamentos[i].tipo_lancamento == 'Entrada') {
-        somaEntradas += lancamentos[i].valor;
-      }
-      if (lancamentos[i].categoria == 'Poupança') {
+      if (lancamentos[i].pago) {
         if (lancamentos[i].tipo_lancamento == 'Saída') {
-          somaPoupancaEntradas += lancamentos[i].valor;
+          somaSaidas += lancamentos[i].valor;
         }
         if (lancamentos[i].tipo_lancamento == 'Entrada') {
-          somaPoupancaSaidas += lancamentos[i].valor;
-        } 
-        
+          somaEntradas += lancamentos[i].valor;
+        }
+        if (lancamentos[i].categoria == 'Poupança') {
+          if (lancamentos[i].tipo_lancamento == 'Saída') {
+            somaPoupancaEntradas += lancamentos[i].valor;
+          }
+          if (lancamentos[i].tipo_lancamento == 'Entrada') {
+            somaPoupancaSaidas += lancamentos[i].valor;
+          }
+        }
       }
     }
     this.totalEntrada$ = this.numberToReal(somaEntradas);
     this.totalSaida$ = this.numberToReal(somaSaidas);
     this.saldo$ = this.numberToReal(somaEntradas - somaSaidas);
-    this.poupanca$ = this.numberToReal(somaPoupancaEntradas - somaPoupancaSaidas);
+    this.poupanca$ = this.numberToReal(
+      somaPoupancaEntradas - somaPoupancaSaidas
+    );
     if (somaEntradas < somaSaidas) {
       this.saldoPositivo = false;
     } else {
@@ -128,10 +168,13 @@ export class PrincipalComponent implements OnInit {
     this.location.back();
   }
 
-  onEdit(pLancamento: Lancamento) {    
-    this.router.navigate(['novo', { lancamento: JSON.stringify(pLancamento) }], {
-      relativeTo: this.route,
-    });
+  onEdit(pLancamento: Lancamento) {
+    this.router.navigate(
+      ['novo', { lancamento: JSON.stringify(pLancamento) }],
+      {
+        relativeTo: this.route,
+      }
+    );
   }
 
   private onSuccess(actionMessage: string) {
@@ -156,7 +199,7 @@ export class PrincipalComponent implements OnInit {
       },
     });
 
-    dialogRef.afterClosed().subscribe((result) => { });
+    dialogRef.afterClosed().subscribe((result) => {});
   }
 
   onDelete(id: string) {
@@ -172,6 +215,34 @@ export class PrincipalComponent implements OnInit {
 
   novo() {
     this.router.navigate(['novo'], { relativeTo: this.route });
+  }
+
+  filtrar() {
+    const dialogRef = this.dialog.open(FiltroDialogComponent, {
+      data: {
+        title: "Filtros",
+        description: "teste",
+        mesReferencia: this.mesReferencia,
+        anoReferencia: this.anoReferencia,
+        form: this.form,
+        mesesReferencia: this.mesesReferencia,
+        anosReferencia: this.anosReferencia,
+        onConfirm: () => {
+          this.mesAnoReferencia = `${findTipo(
+            this.form.value.mesReferencia,
+            this.mesesReferencia
+          )} de ${findTipo(
+            this.form.value.anoReferencia,
+            this.anosReferencia
+          )}`;
+          this.mesReferencia = this.form.value.mesReferencia;
+          this.anoReferencia = this.form.value.anoReferencia;
+          this.onLancamentos();
+        },
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {});
   }
 
   numberToReal(param: number) {
