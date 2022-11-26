@@ -7,7 +7,8 @@ import { NovoComponent } from './novo/novo.component';
 const routes: Routes = [
   { path: '', component: LoginComponent },
   { path: 'principal', component: PrincipalComponent },
-  { path: 'principal/novo', component: NovoComponent }
+  { path: 'principal/novo', component: NovoComponent },
+  { path: 'principal/detalhe', component: NovoComponent },
   
 ];
 
