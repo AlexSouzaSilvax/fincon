@@ -1,11 +1,11 @@
 import { ModelComboBox } from '../fincon/model/ModelComboBox';
 
 //LOCAL
-//export const API = "http://localhost:8080/api";
+export const API = "http://localhost:8090/api";
 //HML
 //export const API = 'https://hml-api-fincon.herokuapp.com/api';
 //PROD
-export const API = "https://api-fincon.herokuapp.com/api";
+//export const API = "https://api-fincon.herokuapp.com/api";
 
 export function _numberToReal(n: number) {
   return (
@@ -123,7 +123,8 @@ export const listaAnoReferencia: ModelComboBox[] = [
 
 export function getMesAnoAtual() {
   var d = new Date();
-  return { mes: (d.getMonth()+1), ano: d.getFullYear() };
+//  return { mes: (d.getMonth()+1), ano: d.getFullYear() };  
+return { mes: 2, ano: d.getFullYear() };  
 }
 
 export function changeData(data: String) {
