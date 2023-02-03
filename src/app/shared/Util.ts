@@ -22,7 +22,8 @@ export function _formatData(data: String) {
     const [date, time] = data.split('T');
     const [YYYY, MM, DD] = date.split('-');
     const [HH, mm] = time.split(':');
-    return `${DD}/${MM}/${YYYY} ${HH}:${mm}`;
+    //return `${DD}/${MM}/${YYYY} ${HH}:${mm}`;
+    return `${DD}/${MM}/${YYYY}`;
   }
   return 'Não informado';
 }
