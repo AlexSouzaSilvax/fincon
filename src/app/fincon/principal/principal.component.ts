@@ -61,6 +61,7 @@ export class PrincipalComponent implements OnInit {
     'descricao',
     'valor',
     'tipo_pagamento',
+    'data_vencimento',
     'data_lancamento',
     'pago',
     'actions',
