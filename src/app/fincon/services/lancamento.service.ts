@@ -2,22 +2,19 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Lancamento } from '../model/Lancamento';
 import { LancamentoListaDTO } from '../model/LancamentoListaDTO';
-import { first, tap } from 'rxjs/operators';
-import { LancamentoSaveDTO } from '../model/LancamentoSaveDTO';
+import { first } from 'rxjs/operators';
+import { API } from '../../shared/Util';
 
 @Injectable({
   providedIn: 'root',
 })
-export class FinconService {
-  private API = 'https://api-fincon.herokuapp.com/api/lancamentos';
-  //private API = 'http://localhost:8080/api/lancamentos';
-
+export class LancamentoService {
   constructor(private httpClient: HttpClient) {}
 
-  listMain(mesReferencia: string, anoReferencia: string) {
+  listMain(idUsuario: string, mesReferencia: string, anoReferencia: string) {
     return this.httpClient
       .get<LancamentoListaDTO[]>(
-        `${this.API}/find-list-main?mes_referencia=${mesReferencia}&ano_referencia=${anoReferencia}`
+        `${API}/lancamentos/find-list-main?id_usuario=${idUsuario}&mes_referencia=${mesReferencia}&ano_referencia=${anoReferencia}`
       )
       .pipe(
         first()
@@ -26,19 +23,19 @@ export class FinconService {
       );
   }
 
-  save(record: Lancamento) {
+  save(idUsuario: string, record: Lancamento) {
     if (record.id) {
       return this.httpClient
-        .post<Lancamento>(`${this.API}/update`, record)
+        .post<Lancamento>(`${API}/lancamentos/update?id_usuario=${idUsuario}`, record)
         .pipe(first());
     } else {
       return this.httpClient
-        .post<Lancamento>(`${this.API}/create`, record)
+        .post<Lancamento>(`${API}/lancamentos/create?id_usuario=${idUsuario}`, record)
         .pipe(first());
     }
   }
 
   delete(id: string) {
-    return this.httpClient.post<String>(`${this.API}/delete`, id).pipe(first());
+    return this.httpClient.post<String>(`${API}/lancamentos/delete`, id).pipe(first());
   }
 }
