@@ -1,4 +1,3 @@
-
 import { NgModule } from '@angular/core';
 
 import { MatTableModule } from '@angular/material/table';
@@ -15,10 +14,12 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSortModule } from '@angular/material/sort';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { CurrencyMaskModule } from "ng2-currency-mask";
+import { CurrencyMaskModule } from 'ng2-currency-mask';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatPaginatorModule } from '@angular/material/paginator';
+
 @NgModule({
   exports: [
     MatTableModule,
@@ -38,7 +39,8 @@ import { MatMenuModule } from '@angular/material/menu';
     CurrencyMaskModule,
     MatRadioModule,
     MatProgressBarModule,
-    MatMenuModule
+    MatMenuModule,
+    MatPaginatorModule,
   ],
 })
 export class AppMaterialModule {}

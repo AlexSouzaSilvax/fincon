@@ -1,8 +1,8 @@
-<div style="min-width: 100vh !important; height: 80vh !important">
+<div class="divFiltro">
   <h1 mat-dialog-title>{{ data.title }}</h1>
-  <div mat-dialog-content class="actions">
+  <div mat-dialog-content>
     <form [formGroup]="data.form" class="min-width">
-      <mat-form-field class="example-full-width" appearance="outline">
+      <mat-form-field class="example-width" appearance="outline">
         <mat-label>Mês Referência</mat-label>
         <mat-select formControlName="mesReferencia">
           <mat-option *ngFor="let p of data.mesesReferencia" [value]="p.value">
@@ -10,7 +10,7 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
-      <mat-form-field class="example-full-width" appearance="outline">
+      <mat-form-field class="example-width" appearance="outline">
         <mat-label>Ano Referência</mat-label>
         <mat-select formControlName="anoReferencia">
           <mat-option *ngFor="let p of data.anosReferencia" [value]="p.value">
@@ -18,13 +18,9 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
+      <button mat-button cdkFocusInitial color="primary" (click)="onConfirm()">
+        Filtrar
+      </button>
     </form>
-  </div>
-
-  <div mat-dialog-actions class="actions">
-    <!--button mat-button mat-dialog-close (click)="onNoClick()">Voltar</!--button-->
-    <button mat-button cdkFocusInitial color="primary" (click)="onConfirm()">
-      Filtrar
-    </button>
   </div>
 </div>

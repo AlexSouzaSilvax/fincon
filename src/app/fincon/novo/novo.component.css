@@ -23,7 +23,7 @@
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
 }
 .terceiro {
-/*  background-color: green;*/
+  /*  background-color: green;*/
   width: 100%;
 }
 
@@ -45,4 +45,48 @@ mat-form-field {
 
 .example-radio-button {
   margin: 5px;
+}
+
+mat-card {
+  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.1), 0 1px 10px 0 rgba(0, 0, 0, 0.19) !important;
+  background-color: #f1f1f1 !important;
+  display: flex;
+  justify-content: center;
+  align-items: center !important;
+  margin-top: 50px !important;
+  margin: auto;  
+}
+
+div {
+  display: flex;
+  align-items: center;
+}
+
+/* mobile */
+@media only screen and (max-width: 750px) {
+  div {
+    flex-direction: column;
+  }
+  .formfieldDtVenc {
+    margin-top: 30px;
+  }
+  mat-card {
+    margin-bottom: 50px;
+  }
+}
+/* web */
+@media only screen and (min-width: 750px) {
+  .labelPago {
+    margin-left: 40px;
+  }
+  .divLinha4 {
+    margin-top: 10px;
+  }
+  .formFieldObservacao {
+    width: 100%;
+  }
+}
+
+mat-card-actions {
+  margin-top: 10px;
 }

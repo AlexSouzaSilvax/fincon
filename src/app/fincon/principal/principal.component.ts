@@ -1,5 +1,5 @@
 import { LancamentoEdit } from './../services/LancamentoEdit.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Lancamento } from '../model/Lancamento';
@@ -25,6 +25,9 @@ import { LocalStorageService } from '../services/local-storage.service';
 import { ModelComboBox } from '../model/ModelComboBox';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { FiltroDialogComponent } from 'src/app/shared/components/filtro-dialog/filtro-dialog.component';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: 'principal',
@@ -65,7 +68,7 @@ export class PrincipalComponent implements OnInit {
     'data_lancamento',
     'pago',
     'actions',
-  ];  
+  ];
 
   items: any[] = [];
 
@@ -175,9 +178,9 @@ export class PrincipalComponent implements OnInit {
 
   onEdit(pLancamento: Lancamento) {
     this.items.push(pLancamento);
-    this.lancamentoEdit.setItems(this.items);    
-    this.router.navigate(['detalhe'], { relativeTo: this.route, } );    
-  } 
+    this.lancamentoEdit.setItems(this.items);
+    this.router.navigate(['detalhe'], { relativeTo: this.route });
+  }
 
   private onSuccess(actionMessage: string) {
     this.snackbar.open(actionMessage, '', { duration: 5000 });
@@ -222,8 +225,8 @@ export class PrincipalComponent implements OnInit {
   filtrar() {
     const dialogRef = this.dialog.open(FiltroDialogComponent, {
       data: {
-        title: "Filtros",
-        description: "teste",
+        title: 'Filtros',
+        description: 'teste',
         mesReferencia: this.mesReferencia,
         anoReferencia: this.anoReferencia,
         form: this.form,

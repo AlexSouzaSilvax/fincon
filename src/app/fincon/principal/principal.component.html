@@ -1,165 +1,163 @@
-<div>
-  <header-component></header-component>
+<header-component></header-component>
 
-  <div class="lancamento">
-    <div class="primeiro"></div>
+<div class="lancamento">
+  <div class="primeiro"></div>
 
-    <div class="segundo">
-      <div class="lancamentos">
-        <div class="lancamentosPrimeiro">
-          <p class="lancamentosPrimeiroTitle">Lançamentos</p>
-        </div>
-        <div class="lancamentosSegundo">
-          <p class="lancamentosSegundoTitle">
-            {{ mesAnoReferencia }}
-          </p>
-        </div>
-
-        <div>
-          <!--button mat-button style="color: #cccc; font-size: 14px;">Limpar filtros</!--button-->
-          <button
-            mat-icon-button
-            aria-label="Example icon button with a vertical three dot icon"
-            style="color: #444"
-            (click)="filtrar()"
-          >
-            <mat-icon>filter_alt</mat-icon>
-          </button>
-        </div>
+  <div class="segundo">
+    <div class="lancamentos">
+      <div class="lancamentosPrimeiro">
+        <p class="lancamentosPrimeiroTitle">Lançamentos</p>
+      </div>
+      <div class="lancamentosSegundo">
+        <p class="lancamentosSegundoTitle">
+          {{ mesAnoReferencia }}
+        </p>
       </div>
 
-     
-
-      <!-- cardTotais -->
-      <div class="lancamentos">
-        <div class="divCardTotais">
-          <mat-card
-            class="cardTotais"
-            style="
-              box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1),
-                0 3px 10px 0 rgba(0, 0, 0, 0.19) !important;
-            "
-          >
-            <div
-              style="
-                display: flex;
-                flex-direction: row;
-                margin-top: 2px !important;
-              "
-            >
-              <p class="titleCardTotais">+ Entradas</p>
-              <img
-                style="margin-left: 12px; margin-top: -12px"
-                src="../../../assets/icons/entradas.svg"
-              />
-            </div>
-            <mat-card-subtitle class="valorCardTotais">{{
-              totalEntrada$
-            }}</mat-card-subtitle>
-          </mat-card>
-
-          <mat-card
-            class="cardTotais"
-            style="
-              box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1),
-                0 3px 10px 0 rgba(0, 0, 0, 0.19) !important;
-            "
-          >
-            <div
-              style="
-                display: flex;
-                flex-direction: row;
-                margin-top: 2px !important;
-              "
-            >
-              <p class="titleCardTotais">- Saídas</p>
-              <img
-                style="margin-left: 12px; margin-top: -12px"
-                src="../../../assets/icons/saidas.svg"
-              />
-            </div>
-            <mat-card-subtitle class="valorCardTotais">{{
-              totalSaida$
-            }}</mat-card-subtitle>
-          </mat-card>
-
-          <mat-card
-            class="cardTotais  {{
-              saldoPositivo ? 'cardTotaisPositivo' : 'cardTotaisNegativo'
-            }} {{ saldoPositivo == null ? 'cardTotaisNull' : null }}"
-          >
-            <div
-              style="
-                display: flex;
-                flex-direction: row;
-                margin-top: 2px !important;
-              "
-            >
-              <p class="titleCardTotais" style="color: white">Saldo</p>
-              <img
-                style="
-                  width: 20px;
-                  height: 20px;
-                  border-radius: 50%;
-                  padding: 2px;
-                  margin-left: 12px;
-                  margin-top: -4px;
-                "
-                src="../../../assets/icons/moneyWhite.svg"
-              />
-            </div>
-            <mat-card-subtitle class="valorCardTotais" style="color: white">{{
-              saldo$
-            }}</mat-card-subtitle>
-          </mat-card>
-
-          <mat-card class="cardTotais" style="background-color: #4280ba">
-            <div
-              style="
-                display: flex;
-                flex-direction: row;
-                margin-top: 2px !important;
-              "
-            >
-              <p class="titleCardTotais" style="color: white">Poupança</p>
-              <img
-                style="
-                  width: 20px;
-                  height: 20px;
-                  border-radius: 50%;
-                  padding: 2px;
-                  margin-left: 12px;
-                  margin-top: -4px;
-                "
-                src="../../../assets/icons/moneyWhite.svg"
-              />
-            </div>
-            <mat-card-subtitle class="valorCardTotais" style="color: white">{{
-              poupanca$
-            }}</mat-card-subtitle>
-          </mat-card>
-        </div>
-      </div>
-    </div>
-    <div class="terceiro">
-      <div class="terceiroDivButton">
+      <div>
+        <!--button mat-button style="color: #cccc; font-size: 14px;">Limpar filtros</!--button-->
         <button
-          mat-raised-button
-          style="background-color: #2b70b1; color: #f1f1f1"
-          (click)="novo()"
+          mat-icon-button
+          aria-label="Example icon button with a vertical three dot icon"
+          style="color: #444"
+          (click)="filtrar()"
         >
-          Novo
+          <mat-icon>filter_alt</mat-icon>
         </button>
       </div>
+    </div>
+
+    <div class="lancamentosSegundo2">
+      <p class="lancamentosSegundoTitle2">
+        {{ mesAnoReferencia }}
+      </p>
+    </div>
+
+    <!-- cardTotais -->
+    <div class="lancamentos">
+      <div class="divCardTotais">
+        <mat-card
+          class="cardTotais"
+          style="
+            box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1),
+              0 3px 10px 0 rgba(0, 0, 0, 0.19) !important;
+          "
+        >
+          <div
+            style="
+              display: flex;
+              flex-direction: row;
+              margin-top: 2px !important;
+            "
+          >
+            <p class="titleCardTotais">+ Entradas</p>
+            <img
+              style="margin-left: 12px; margin-top: -12px"
+              src="../../../assets/icons/entradas.svg"
+            />
+          </div>
+          <mat-card-subtitle class="valorCardTotais">{{
+            totalEntrada$
+          }}</mat-card-subtitle>
+        </mat-card>
+
+        <mat-card
+          class="cardTotais"
+          style="
+            box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1),
+              0 3px 10px 0 rgba(0, 0, 0, 0.19) !important;
+          "
+        >
+          <div
+            style="
+              display: flex;
+              flex-direction: row;
+              margin-top: 2px !important;
+            "
+          >
+            <p class="titleCardTotais">- Saídas</p>
+            <img
+              style="margin-left: 12px; margin-top: -12px"
+              src="../../../assets/icons/saidas.svg"
+            />
+          </div>
+          <mat-card-subtitle class="valorCardTotais">{{
+            totalSaida$
+          }}</mat-card-subtitle>
+        </mat-card>
+
+        <mat-card
+          class="cardTotais  {{
+            saldoPositivo ? 'cardTotaisPositivo' : 'cardTotaisNegativo'
+          }} {{ saldoPositivo == null ? 'cardTotaisNull' : null }}"
+        >
+          <div
+            style="
+              display: flex;
+              flex-direction: row;
+              margin-top: 2px !important;
+            "
+          >
+            <p class="titleCardTotais" style="color: white">Saldo</p>
+            <img
+              style="
+                width: 20px;
+                height: 20px;
+                border-radius: 50%;
+                padding: 2px;
+                margin-left: 12px;
+                margin-top: -4px;
+              "
+              src="../../../assets/icons/moneyWhite.svg"
+            />
+          </div>
+          <mat-card-subtitle class="valorCardTotais" style="color: white">{{
+            saldo$
+          }}</mat-card-subtitle>
+        </mat-card>
+
+        <mat-card class="cardTotais" style="background-color: #4280ba">
+          <div
+            style="
+              display: flex;
+              flex-direction: row;
+              margin-top: 2px !important;
+            "
+          >
+            <p class="titleCardTotais" style="color: white">Poupança</p>
+            <img
+              style="
+                width: 20px;
+                height: 20px;
+                border-radius: 50%;
+                padding: 2px;
+                margin-left: 12px;
+                margin-top: -4px;
+              "
+              src="../../../assets/icons/moneyWhite.svg"
+            />
+          </div>
+          <mat-card-subtitle class="valorCardTotais" style="color: white">{{
+            poupanca$
+          }}</mat-card-subtitle>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+  <div class="terceiro">
+    <div class="terceiroDivButton">
+      <button
+        mat-raised-button
+        style="background-color: #2b70b1; color: #f1f1f1"
+        (click)="novo()"
+      >
+        Novo
+      </button>
     </div>
   </div>
 </div>
 
-<div
-  style="margin-top: 200px"
-  class="divTable"
-  *ngIf="lancamentos$ | async as lancamentos; else loading"
->
+<div class="divTable" *ngIf="lancamentos$ | async as lancamentos; else loading">
   <div
     *ngIf="lancamentos.length <= 0; else table"
     style="
@@ -178,138 +176,184 @@
     </p>
   </div>
 
+  <!-- lista -->
   <ng-template #table>
-    <table
-      style="width: 95%; margin-bottom: 60px"
-      mat-table
-      [dataSource]="lancamentos"
-      class="mat-elevation-z8"
-    >
-      <ng-container matColumnDef="id">
-        <th mat-header-cell *matHeaderCellDef>#</th>
-        <td mat-cell *matCellDef="let lancamento">
-          {{ lancamento.id }}
-        </td>
-      </ng-container>
+    <div class="example-container mat-elevation-z8">
+      <mat-table [dataSource]="lancamentos$" matSort style="background-color: #f1f1f1 !important;">
+        <!-- ID Column -->
+        <ng-container matColumnDef="id">
+          <mat-header-cell *matHeaderCellDef> # </mat-header-cell>
+          <mat-cell *matCellDef="let lancamento" data-label="id">
+            {{ lancamento.id }}
+          </mat-cell>
+        </ng-container>
 
-      <ng-container matColumnDef="categoria">
-        <th mat-header-cell *matHeaderCellDef>Categoria</th>
-        <td mat-cell *matCellDef="let lancamento">
-          {{ lancamento.categoria }}
-        </td>
-      </ng-container>
-
-      <ng-container matColumnDef="descricao">
-        <th mat-header-cell *matHeaderCellDef style="text-align: center">
-          Descrição
-        </th>
-        <td mat-cell *matCellDef="let lancamento" style="text-align: center">
-          {{ lancamento.descricao }}
-        </td>
-      </ng-container>
-
-      <!-- Name Column -->
-      <ng-container matColumnDef="valor">
-        <th mat-header-cell *matHeaderCellDef style="text-align: center">
-          Valor
-        </th>
-        <td
-          mat-cell
-          *matCellDef="let lancamento"
-          style="text-align: center"
-          class="{{
-            lancamento.tipo_lancamento == 'Entrada'
-              ? 'tdValorEntrada'
-              : 'tdValorSaida'
-          }}"
-        >
-          {{ numberToReal(lancamento.valor) }}
-        </td>
-      </ng-container>
-
-      <!-- Weight Column -->
-      <ng-container matColumnDef="tipo_pagamento">
-        <th mat-header-cell *matHeaderCellDef style="text-align: center">
-          Pagamento
-        </th>
-        <td mat-cell *matCellDef="let lancamento" style="text-align: center">
-          {{ lancamento.tipo_pagamento }}
-        </td>
-      </ng-container>
-
-      <ng-container matColumnDef="data_vencimento">
-        <th mat-header-cell *matHeaderCellDef style="text-align: center">
-          Data Vencimento
-        </th>
-        <td mat-cell *matCellDef="let lancamento" style="text-align: center">
-          {{ formatData(lancamento.data_vencimento) }}
-        </td>
-      </ng-container>
-
-      <ng-container matColumnDef="data_lancamento">
-        <th mat-header-cell *matHeaderCellDef style="text-align: center">
-          Criado
-        </th>
-        <td mat-cell *matCellDef="let lancamento" style="text-align: center">
-          {{ formatData(lancamento.data_lancamento) }}
-        </td>
-      </ng-container>
-
-      <ng-container matColumnDef="pago">
-        <th mat-header-cell *matHeaderCellDef style="text-align: center">
-          Status
-        </th>
-        <td
-          mat-cell
-          *matCellDef="let lancamento"
-          style="text-align: center; padding-right: 0px !important"
-        >
-          {{ changeIsPago(lancamento.pago) }}
-        </td>
-      </ng-container>
-
-      <ng-container matColumnDef="actions">
-        <th
-          mat-header-cell
-          *matHeaderCellDef
-          style="text-align: center; width: 70px !important"
-        >
-          Ações
-        </th>
-
-        <div class="actionsColumn">
+        <!-- Categoria Column -->
+        <ng-container matColumnDef="categoria">
+          <mat-header-cell *matHeaderCellDef> Categoria </mat-header-cell>
           <mat-cell
             *matCellDef="let lancamento"
+            data-label="categoria"
             style="
-              padding-left: 0 !important;
-              padding-right: 0 !important;
-              display: flex;
-              justify-content: center;
+              display: flex !important;
+              justify-content: center !important;
+              align-items: center !important;
             "
           >
-            <button mat-icon-button aria-label="Editar">
-              <mat-icon
-                style="color: #4280ba !important"
-                (click)="onEdit(lancamento)"
-                >edit</mat-icon
-              >
-            </button>
-
-            <button mat-icon-button aria-label="Remover">
-              <mat-icon
-                style="color: #cc3333 !important"
-                (click)="onClickDelete(lancamento.id)"
-              >
-                delete
-              </mat-icon>
-            </button>
+            {{ lancamento.categoria }}
           </mat-cell>
-        </div>
-      </ng-container>
+        </ng-container>
 
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-    </table>
+        <!-- Descrição Column -->
+        <ng-container matColumnDef="descricao">
+          <mat-header-cell *matHeaderCellDef> Descrição </mat-header-cell>
+          <mat-cell
+            *matCellDef="let lancamento"
+            data-label="descricao"
+            style="
+              display: flex !important;
+              justify-content: center !important;
+              align-items: center !important;
+            "
+          >
+            {{ lancamento.descricao }}
+          </mat-cell>
+        </ng-container>
+
+        <!-- Valor Column -->
+        <ng-container matColumnDef="valor">
+          <mat-header-cell *matHeaderCellDef> Valor </mat-header-cell>
+          <mat-cell
+            *matCellDef="let lancamento"
+            data-label="valor"
+            class="{{
+              lancamento.tipo_lancamento == 'Entrada'
+                ? 'tdValorEntrada'
+                : 'tdValorSaida'
+            }}"
+            style="
+              display: flex !important;
+              justify-content: center !important;
+              align-items: center !important;
+            "
+          >
+            {{ numberToReal(lancamento.valor) }}
+          </mat-cell>
+        </ng-container>
+
+        <!-- Pagamento Column -->
+        <ng-container matColumnDef="tipo_pagamento">
+          <mat-header-cell *matHeaderCellDef> Pagamento </mat-header-cell>
+          <mat-cell
+            *matCellDef="let lancamento"
+            data-label="tipo_pagamento"
+            style="
+              display: flex !important;
+              justify-content: center !important;
+              align-items: center !important;
+            "
+          >
+            {{ lancamento.tipo_pagamento }}
+          </mat-cell>
+        </ng-container>
+
+        <!-- Data de Vencimento Column -->
+        <ng-container matColumnDef="data_vencimento">
+          <mat-header-cell *matHeaderCellDef>
+            Data de Vencimento
+          </mat-header-cell>
+          <mat-cell
+            *matCellDef="let lancamento"
+            data-label="data_vencimento"
+            style="
+              display: flex !important;
+              justify-content: center !important;
+              align-items: center !important;
+            "
+          >
+            {{ formatData(lancamento.data_vencimento) }}
+          </mat-cell>
+        </ng-container>
+
+        <!-- Data de Lancamento Column -->
+        <ng-container matColumnDef="data_lancamento">
+          <mat-header-cell *matHeaderCellDef> Criado </mat-header-cell>
+          <mat-cell
+            *matCellDef="let lancamento"
+            data-label="data_lancamento"
+            style="
+              display: flex !important;
+              justify-content: center !important;
+              align-items: center !important;
+            "
+          >
+            {{ formatData(lancamento.data_lancamento) }}
+          </mat-cell>
+        </ng-container>
+
+        <!-- Pago Column -->
+        <ng-container matColumnDef="pago">
+          <mat-header-cell *matHeaderCellDef> Pago </mat-header-cell>
+          <mat-cell
+            *matCellDef="let lancamento"
+            data-label="pago"
+            style="
+              display: flex !important;
+              justify-content: center !important;
+              align-items: center !important;
+            "
+          >
+            {{ changeIsPago(lancamento.pago) }}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="actions" style="width: 20px">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            style="
+              text-align: center;
+              width: 70px !important;
+              border-bottom-style: none !important;
+            "
+          >
+            Ações
+          </th>
+
+          <div class="actionsColumn" style="width: 20px">
+            <mat-cell
+              style="
+                padding-right: 20px !important;
+                display: flex !important;
+                justify-content: end !important;
+              "
+              *matCellDef="let lancamento"
+            >
+              <button mat-icon-button aria-label="Editar">
+                <mat-icon
+                  style="color: #4280ba !important"
+                  (click)="onEdit(lancamento)"
+                  >edit</mat-icon
+                >
+              </button>
+
+              <button mat-icon-button aria-label="Remover">
+                <mat-icon
+                  style="color: #cc3333 !important"
+                  (click)="onClickDelete(lancamento.id)"
+                >
+                  delete
+                </mat-icon>
+              </button>
+            </mat-cell>
+          </div>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let lancamento; columns: displayedColumns">
+        </mat-row>
+      </mat-table>
+    </div>
   </ng-template>
 </div>
 
