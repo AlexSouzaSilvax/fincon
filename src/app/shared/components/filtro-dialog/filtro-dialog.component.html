@@ -2,25 +2,104 @@
   <h1 mat-dialog-title>{{ data.title }}</h1>
   <div mat-dialog-content>
     <form [formGroup]="data.form" class="min-width">
-      <mat-form-field class="example-width" appearance="outline">
-        <mat-label>Mês Referência</mat-label>
-        <mat-select formControlName="mesReferencia">
-          <mat-option *ngFor="let p of data.mesesReferencia" [value]="p.value">
-            {{ p.valueText }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-      <mat-form-field class="example-width" appearance="outline">
-        <mat-label>Ano Referência</mat-label>
-        <mat-select formControlName="anoReferencia">
-          <mat-option *ngFor="let p of data.anosReferencia" [value]="p.value">
-            {{ p.valueText }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-      <button mat-button cdkFocusInitial color="primary" (click)="onConfirm()">
-        Filtrar
-      </button>
+      <!-- linha 1 -->
+      <div class="linha">
+        <!-- tipo lancamento -->
+        <mat-form-field class="example-width" appearance="outline">
+          <mat-label>Lançamento</mat-label>
+          <mat-select formControlName="tipo_lancamento">
+            <mat-option>Nenhum</mat-option>
+            <mat-option
+              *ngFor="let lancamento of data.lancamentos"
+              [value]="lancamento.value"
+            >
+              {{ lancamento.valueText }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <!-- tipo categorias -->
+        <mat-form-field class="example-width" appearance="outline">
+          <mat-label>Categoria</mat-label>
+          <mat-select formControlName="categoria">
+            <mat-option>Nenhuma</mat-option>
+            <mat-option              
+              *ngFor="let categoria of data.categorias"
+              [value]="categoria.value"
+            >
+              {{ categoria.valueText }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <!-- tipo pagamento -->
+        <mat-form-field class="example-width" appearance="outline">
+          <mat-label>Pagamento</mat-label>
+          <mat-select formControlName="tipo_pagamento">
+            <mat-option>Nenhum</mat-option>
+            <mat-option
+              *ngFor="let pagamento of data.pagamentos"
+              [value]="pagamento.value"
+            >
+              {{ pagamento.valueText }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <!-- linha 2 -->
+      <div class="linha">
+        <!-- Quinzena -->
+        <mat-form-field class="example-width" appearance="outline">
+          <mat-label>Quinzena</mat-label>
+          <mat-select formControlName="quinzena">
+            <mat-option>Nenhuma</mat-option>
+            <mat-option [value]="1"> 1º </mat-option>
+            <mat-option [value]="2"> 2º </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <!-- Status -->
+        <mat-form-field class="example-width" appearance="outline">
+          <mat-label>Status</mat-label>
+          <mat-select formControlName="pago">
+            <mat-option>Nenhum</mat-option>
+            <mat-option [value]="true"> Pago </mat-option>
+            <mat-option [value]="false"> Não Pago </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <!-- linha 3 -->
+      <div class="linha">
+        <!--- Mes/Ano referencia -->
+        <mat-form-field class="example-width" appearance="outline">
+          <mat-label>Mês Referência</mat-label>
+          <mat-select formControlName="mesReferencia">
+            <mat-option
+              *ngFor="let p of data.mesesReferencia"
+              [value]="p.value"
+            >
+              {{ p.valueText }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="example-width" appearance="outline">
+          <mat-label>Ano Referência</mat-label>
+          <mat-select formControlName="anoReferencia">
+            <mat-option *ngFor="let p of data.anosReferencia" [value]="p.value">
+              {{ p.valueText }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <!-- linha 4 -->
+      <div class="linha">
+        <button
+          mat-button
+          cdkFocusInitial
+          color="primary"
+          (click)="onConfirm()"
+        >
+          Filtrar
+        </button>
+      </div>
     </form>
   </div>
 </div>

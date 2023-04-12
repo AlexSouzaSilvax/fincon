@@ -13,7 +13,7 @@ export class LancamentoService {
 
   listMain(idUsuario: string, mesReferencia: string, anoReferencia: string) {
     return this.httpClient
-      .get<LancamentoListaDTO[]>(
+      .get<[LancamentoListaDTO]>(
         `${API}/lancamentos/find-list-main?id_usuario=${idUsuario}&mes_referencia=${mesReferencia}&ano_referencia=${anoReferencia}`
       )
       .pipe(

@@ -16,4 +16,18 @@ form {
     min-width: 80vh !important;
     height: 60vh !important;
   }
+  .linha {
+    flex-direction: row !important;
+  }
+  mat-form-field {
+    margin: 5px;
+  }
+}
+
+.linha {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  align-content: space-between;
 }

@@ -7,5 +7,6 @@ export interface LancamentoListaDTO {
   tipo_lancamento: String;
   tipo_pagamento: String;
   data_lancamento: String;
+  data_vencimento: String;
 }
 

@@ -157,9 +157,9 @@
   </div>
 </div>
 
-<div class="divTable" *ngIf="lancamentos$ | async as lancamentos; else loading">
+<div class="divTable" *ngIf="listaLancamentos2; else loading">
   <div
-    *ngIf="lancamentos.length <= 0; else table"
+    *ngIf="listaLancamentos2.length <= 0; else table"
     style="
       display: flex;
       flex-direction: column;
@@ -179,7 +179,7 @@
   <!-- lista -->
   <ng-template #table>
     <div class="example-container mat-elevation-z8">
-      <mat-table [dataSource]="lancamentos$" matSort style="background-color: #f1f1f1 !important;">
+      <mat-table [dataSource]="listaLancamentos2" matSort style="background-color: #f1f1f1 !important;">
         <!-- ID Column -->
         <ng-container matColumnDef="id">
           <mat-header-cell *matHeaderCellDef> # </mat-header-cell>

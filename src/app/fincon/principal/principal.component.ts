@@ -13,6 +13,9 @@ import {
   listaMesReferencia,
   listaAnoReferencia,
   getMesAnoAtual,
+  listaTipoLancamentos,
+  listaTipoPagamentos,
+  _formatDia,
 } from '../../shared/Util';
 import { tap } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
@@ -25,9 +28,8 @@ import { LocalStorageService } from '../services/local-storage.service';
 import { ModelComboBox } from '../model/ModelComboBox';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { FiltroDialogComponent } from 'src/app/shared/components/filtro-dialog/filtro-dialog.component';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
+import { listaCategorias } from '../../shared/Util';
+import { Filtro } from '../model/Filtro';
 
 @Component({
   selector: 'principal',
@@ -35,8 +37,10 @@ import { MatSort } from '@angular/material/sort';
   styleUrls: ['./principal.component.css'],
 })
 export class PrincipalComponent implements OnInit {
-  lancamentos$!: Observable<LancamentoListaDTO[]>;
-  dataSource = this.lancamentos$;
+  lancamentos$!: Observable<[LancamentoListaDTO]>;
+  listaLancamentos: any[] = [];
+  listaLancamentos2: any[] = [];
+  //dataSource = this.lancamentos$;
   totalEntrada$: string;
   totalSaida$: string;
   saldo$: string;
@@ -95,6 +99,11 @@ export class PrincipalComponent implements OnInit {
     this.form = this.formBuilder.group({
       mesReferencia: [this.mesReferencia],
       anoReferencia: [this.anoReferencia],
+      categoria: [null],
+      pago: [null],
+      tipo_lancamento: [null],
+      tipo_pagamento: [null],
+      quinzena: [null],
     });
     this.mesAnoReferencia = `${findTipo(
       this.mesReferencia,
@@ -124,6 +133,11 @@ export class PrincipalComponent implements OnInit {
           return [];
         })
       );
+    this.lancamentos$.forEach((e) => {
+      console.log(e);
+      this.listaLancamentos = e;
+      this.listaLancamentos2 = e;
+    });
   }
 
   somaValores(lancamentos: Array<LancamentoListaDTO>) {
@@ -133,22 +147,22 @@ export class PrincipalComponent implements OnInit {
     var somaPoupancaEntradas: any = 0;
     var somaPoupancaSaidas: any = 0;
     for (var i = 0; i < lancamentos.length; i++) {
-      if (lancamentos[i].pago) {
+      // if (lancamentos[i].pago) {
+      if (lancamentos[i].tipo_lancamento == 'Saída') {
+        somaSaidas += lancamentos[i].valor;
+      }
+      if (lancamentos[i].tipo_lancamento == 'Entrada') {
+        somaEntradas += lancamentos[i].valor;
+      }
+      if (lancamentos[i].categoria == 'Poupança') {
         if (lancamentos[i].tipo_lancamento == 'Saída') {
-          somaSaidas += lancamentos[i].valor;
+          somaPoupancaEntradas += lancamentos[i].valor;
         }
         if (lancamentos[i].tipo_lancamento == 'Entrada') {
-          somaEntradas += lancamentos[i].valor;
-        }
-        if (lancamentos[i].categoria == 'Poupança') {
-          if (lancamentos[i].tipo_lancamento == 'Saída') {
-            somaPoupancaEntradas += lancamentos[i].valor;
-          }
-          if (lancamentos[i].tipo_lancamento == 'Entrada') {
-            somaPoupancaSaidas += lancamentos[i].valor;
-          }
+          somaPoupancaSaidas += lancamentos[i].valor;
         }
       }
+      // }
     }
     this.totalEntrada$ = this.numberToReal(somaEntradas);
     this.totalSaida$ = this.numberToReal(somaSaidas);
@@ -229,6 +243,9 @@ export class PrincipalComponent implements OnInit {
         description: 'teste',
         mesReferencia: this.mesReferencia,
         anoReferencia: this.anoReferencia,
+        categorias: listaCategorias,
+        lancamentos: listaTipoLancamentos,
+        pagamentos: listaTipoPagamentos,
         form: this.form,
         mesesReferencia: this.mesesReferencia,
         anosReferencia: this.anosReferencia,
@@ -242,12 +259,55 @@ export class PrincipalComponent implements OnInit {
           )}`;
           this.mesReferencia = this.form.value.mesReferencia;
           this.anoReferencia = this.form.value.anoReferencia;
-          this.onLancamentos();
+          this.filtroLista();
         },
       },
     });
 
     dialogRef.afterClosed().subscribe((result) => {});
+  }
+
+  filtroLista() {
+    if (this.form.value.pago != null) {
+      this.listaLancamentos2 = this.listaLancamentos.filter(
+        (e) => e.pago == this.form.value.pago
+      );
+    }
+    if (this.form.value.tipo_pagamento != null) {
+      this.listaLancamentos2 = this.listaLancamentos.filter(
+        (e) =>
+          e.tipo_pagamento ==
+          listaTipoPagamentos[this.form.value.tipo_pagamento].valueText
+      );
+    }
+    if (this.form.value.tipo_lancamento != null) {
+      this.listaLancamentos2 = this.listaLancamentos.filter(
+        (e) =>
+          e.tipo_lancamento ==
+          listaTipoLancamentos[this.form.value.tipo_lancamento].valueText
+      );
+    }
+    if (this.form.value.categoria != null) {
+      this.listaLancamentos2 = this.listaLancamentos.filter(
+        (e) =>
+          e.categoria == listaCategorias[this.form.value.categoria].valueText
+      );
+    }
+    if (this.form.value.quinzena != null) {
+      if (this.form.value.quinzena == 1) {
+        this.listaLancamentos2 = this.listaLancamentos.filter(
+          (e) => this.formatDia(e.data_vencimento) <= 15
+        );
+      }
+      if (this.form.value.quinzena == 2) {
+        this.listaLancamentos2 = this.listaLancamentos.filter(
+          (e) => this.formatDia(e.data_vencimento) > 15
+        );
+      }
+    } else {
+      this.onLancamentos();
+    }
+    this.somaValores(this.listaLancamentos2);
   }
 
   numberToReal(param: number) {
@@ -260,5 +320,9 @@ export class PrincipalComponent implements OnInit {
 
   changeIsPago(pago: boolean) {
     return _changeIsPago(pago);
+  }
+
+  formatDia(data: String) {
+    return Number(_formatDia(data));
   }
 }
