@@ -29,7 +29,6 @@ import { ModelComboBox } from '../model/ModelComboBox';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { FiltroDialogComponent } from 'src/app/shared/components/filtro-dialog/filtro-dialog.component';
 import { listaCategorias } from '../../shared/Util';
-import { Filtro } from '../model/Filtro';
 
 @Component({
   selector: 'principal',
