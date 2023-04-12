@@ -124,8 +124,7 @@ export const listaAnoReferencia: ModelComboBox[] = [
 
 export function getMesAnoAtual() {
   var d = new Date();
-//  return { mes: (d.getMonth()+1), ano: d.getFullYear() };  
-return { mes: 2, ano: d.getFullYear() };  
+  return { mes: (d.getMonth()+1), ano: d.getFullYear() };  
 }
 
 export function changeData(data: String) {

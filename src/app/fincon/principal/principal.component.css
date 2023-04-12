@@ -75,6 +75,16 @@ mat-card-title {
   color: #696969;
 }
 
+.lancamentosSegundo2 {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.lancamentosSegundoTitle2 {
+  font-size: 14px;
+  color: #696969;
+}
 
 .divCardTotais {
   display: flex;
@@ -86,7 +96,7 @@ mat-card-title {
 .cardTotais {
   margin: 10px !important;
   height: 60px !important;
-  background-color: white;
+  background-color: #f1f1f1;
   border-radius: 4px;
   width: 150px;
   min-width: 136px !important;
@@ -109,13 +119,14 @@ mat-card-title {
 
 .divTable {
   margin-top: 160px;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  padding: 20px;
+  margin-bottom: 40px;
+  /*width: 80%;
+  display: flex;  
+  align-items: center;*/
 }
 
-table {
+mat-table {
   width: 100%;
 }
 
@@ -136,7 +147,7 @@ table {
 }
 
 .cardTotaisNull {
-  background-color: white;
+  background-color: #f1f1f1;
 }
 
 @media only screen and (max-width: 750px) {
@@ -151,5 +162,81 @@ table {
   }
   .divTable {
     margin-top: 500px;
+  }
+}
+
+@media only screen and (max-width: 414px) {
+  .lancamentosSegundoTitle {
+    display: none;
+  }
+  .terceiro {
+  }
+  .lancamentosSegundo2 {
+  }
+  .divCardTotais {
+  }
+}
+
+@media only screen and (min-width: 415px) {
+  .lancamentosSegundoTitle2 {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 960px) {
+  .mat-table {
+    border: 0;
+    vertical-align: middle;
+  }
+
+  .mat-table caption {
+    font-size: 1em;
+  }
+
+  /*  Enable this to hide header */
+  .mat-table .mat-header-cell {
+    border: 10px solid;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+  }
+
+  .mat-table .mat-row {
+    border-bottom: 5px solid #f1f1f1;
+    display: block;
+  }
+  /*
+  .mat-table .mat-row:nth-child(even) {background: #CCC}
+  .mat-table .mat-row:nth-child(odd) {background: #FFF}
+  */
+  .mat-table .mat-cell {
+    border-bottom: 1px solid #f1f1f1;
+    display: block;
+    font-size: 1em;
+    text-align: center;
+    font-weight: bold;
+    height: 30px;
+    margin-bottom: 4%;
+  }
+  .mat-table .mat-cell:before {
+    /*
+    * aria-label has no advantage, it won't be read inside a table
+    content: attr(aria-label);
+    */
+    content: attr(data-label);
+    float: left;
+    text-transform: uppercase;
+    font-weight: normal;
+
+    font-size: 0.85em;
+  }
+  .mat-table .mat-cell:last-child {
+    border-bottom: 0;
+  }
+  .mat-table .mat-cell:first-child {
+    margin-top: 4%;
   }
 }
