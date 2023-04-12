@@ -267,41 +267,49 @@ export class PrincipalComponent implements OnInit {
   }
 
   filtroLista() {
-    if (this.form.value.pago != null) {
-      this.listaLancamentos2 = this.listaLancamentos.filter(
-        (e) => e.pago == this.form.value.pago
-      );
-    }
-    if (this.form.value.tipo_pagamento != null) {
-      this.listaLancamentos2 = this.listaLancamentos.filter(
-        (e) =>
-          e.tipo_pagamento ==
-          listaTipoPagamentos[this.form.value.tipo_pagamento].valueText
-      );
-    }
-    if (this.form.value.tipo_lancamento != null) {
-      this.listaLancamentos2 = this.listaLancamentos.filter(
-        (e) =>
-          e.tipo_lancamento ==
-          listaTipoLancamentos[this.form.value.tipo_lancamento].valueText
-      );
-    }
-    if (this.form.value.categoria != null) {
-      this.listaLancamentos2 = this.listaLancamentos.filter(
-        (e) =>
-          e.categoria == listaCategorias[this.form.value.categoria].valueText
-      );
-    }
-    if (this.form.value.quinzena != null) {
-      if (this.form.value.quinzena == 1) {
+    if (
+      this.form.value.pago != null ||
+      this.form.value.tipo_pagamento != null ||
+      this.form.value.tipo_lancamento != null ||
+      this.form.value.categoria != null ||
+      this.form.value.quinzena != null
+    ) {
+      if (this.form.value.pago != null) {
         this.listaLancamentos2 = this.listaLancamentos.filter(
-          (e) => this.formatDia(e.data_vencimento) <= 15
+          (e) => e.pago == this.form.value.pago
         );
       }
-      if (this.form.value.quinzena == 2) {
+      if (this.form.value.tipo_pagamento != null) {
         this.listaLancamentos2 = this.listaLancamentos.filter(
-          (e) => this.formatDia(e.data_vencimento) > 15
+          (e) =>
+            e.tipo_pagamento ==
+            listaTipoPagamentos[this.form.value.tipo_pagamento].valueText
         );
+      }
+      if (this.form.value.tipo_lancamento != null) {
+        this.listaLancamentos2 = this.listaLancamentos.filter(
+          (e) =>
+            e.tipo_lancamento ==
+            listaTipoLancamentos[this.form.value.tipo_lancamento].valueText
+        );
+      }
+      if (this.form.value.categoria != null) {
+        this.listaLancamentos2 = this.listaLancamentos.filter(
+          (e) =>
+            e.categoria == listaCategorias[this.form.value.categoria].valueText
+        );
+      }
+      if (this.form.value.quinzena != null) {
+        if (this.form.value.quinzena == 1) {
+          this.listaLancamentos2 = this.listaLancamentos.filter(
+            (e) => this.formatDia(e.data_vencimento) <= 15
+          );
+        }
+        if (this.form.value.quinzena == 2) {
+          this.listaLancamentos2 = this.listaLancamentos.filter(
+            (e) => this.formatDia(e.data_vencimento) > 15
+          );
+        }
       }
     } else {
       this.onLancamentos();
