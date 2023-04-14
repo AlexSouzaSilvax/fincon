@@ -76,7 +76,7 @@ export class NovoComponent implements OnInit {
   ) {
     const { mes, ano } = getMesAnoAtual();
     this.form = this.formBuilder.group({
-      descricao: [],
+      descricao: [''],
       categoria: [13],
       valor: [null, [Validators.required]],
       mensal: [false],
