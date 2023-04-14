@@ -157,7 +157,7 @@
   </div>
 </div>
 
-<div class="divTable" *ngIf="listaLancamentos2; else loading">
+<div class="divTable" *ngIf="listaLancamentos2 else loading">
   <div
     *ngIf="listaLancamentos2.length <= 0; else table"
     style="
@@ -257,8 +257,26 @@
           </mat-cell>
         </ng-container>
 
-        <!-- Data de Vencimento Column -->
-        <ng-container matColumnDef="data_vencimento">
+        <!-- Data Prevista de Pagamento Column -->
+        <ng-container matColumnDef="data_prevista_pagamento">
+          <mat-header-cell *matHeaderCellDef>
+            Data Prevista Pagamento
+          </mat-header-cell>
+          <mat-cell
+            *matCellDef="let lancamento"
+            data-label="data_prevista_pagamento"
+            style="
+              display: flex !important;
+              justify-content: center !important;
+              align-items: center !important;
+            "
+          >
+            {{ formatData(lancamento.data_prevista_pagamento) }}
+          </mat-cell>
+        </ng-container>
+
+         <!-- Data de Vencimento Column -->
+         <ng-container matColumnDef="data_vencimento">
           <mat-header-cell *matHeaderCellDef>
             Data de Vencimento
           </mat-header-cell>
@@ -272,22 +290,6 @@
             "
           >
             {{ formatData(lancamento.data_vencimento) }}
-          </mat-cell>
-        </ng-container>
-
-        <!-- Data de Lancamento Column -->
-        <ng-container matColumnDef="data_lancamento">
-          <mat-header-cell *matHeaderCellDef> Criado </mat-header-cell>
-          <mat-cell
-            *matCellDef="let lancamento"
-            data-label="data_lancamento"
-            style="
-              display: flex !important;
-              justify-content: center !important;
-              align-items: center !important;
-            "
-          >
-            {{ formatData(lancamento.data_lancamento) }}
           </mat-cell>
         </ng-container>
 
@@ -366,3 +368,4 @@
     <mat-spinner></mat-spinner>
   </div>
 </ng-template>
+

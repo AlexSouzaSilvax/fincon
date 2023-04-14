@@ -11,7 +11,12 @@ import {
   _formatData,
 } from 'src/app/shared/Util';
 import { ModelComboBox } from '../model/ModelComboBox';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LancamentoService } from '../services/lancamento.service';
@@ -73,17 +78,17 @@ export class NovoComponent implements OnInit {
     this.form = this.formBuilder.group({
       descricao: [],
       categoria: [13],
-      valor: [],
+      valor: [null, [Validators.required]],
       mensal: [false],
       pago: [false],
       observacao: [],
       tipo_lancamento: [0],
-      tipo_pagamento: [],
+      tipo_pagamento: [1],
       quantidade_parcelas: [],
       mes_referencia: [mes],
       ano_referencia: [ano],
       data_vencimento: [],
-      data_prevista_pagamento: [],
+      data_prevista_pagamento: ['', [Validators.required]],
     });
   }
 
@@ -141,32 +146,38 @@ export class NovoComponent implements OnInit {
 
   onSubmit() {
     this.lancamento = this.form.value;
-
     //valida campos
-    this.load = true; // ativa load
-    this.disabledSalvar = true; // inativa botao salvar
-    // salva lancamento
-    this.actionMessage = 'Salvo';
-    if (this.lancamento?.id != null) {
-      this.actionMessage = 'Atualizado';
-    }
-    this.lancamento.data_vencimento = changeData(
-      this.lancamento.data_vencimento
-    );
-    this.lancamento.data_prevista_pagamento = changeData(
-      this.lancamento.data_prevista_pagamento
-    );
-    this.lancamento.categoria = this.lancamento?.categoria;
-    this.lancamento.tipo_lancamento = this.lancamento?.tipo_lancamento;
-    this.lancamento.tipo_pagamento = this.lancamento?.tipo_pagamento;
+    if (this.validaCampos()) {
+      this.load = true; // ativa load
+      this.disabledSalvar = true; // inativa botao salvar
 
-    this.service.save(this.idUsuario, this.lancamento).subscribe(
-      (result) => this.onMessage(`${this.actionMessage} com sucesso`),
-      (error) => this.onMessage(`${this.actionMessage} erro`)
-    );
-    this.load = false; // inativa load
-    this.disabledSalvar = false; // ativa botao salvar
-    this.router.navigate([''], { relativeTo: this.route });
+      // salva lancamento
+      this.actionMessage = 'Salvo';
+      if (this.lancamento?.id != null) {
+        this.actionMessage = 'Atualizado';
+      }
+      this.lancamento.data_vencimento = changeData(
+        this.lancamento.data_vencimento
+      );
+      this.lancamento.data_prevista_pagamento = changeData(
+        this.lancamento.data_prevista_pagamento
+      );
+      this.lancamento.categoria = this.lancamento?.categoria;
+      this.lancamento.tipo_lancamento = this.lancamento?.tipo_lancamento;
+      this.lancamento.tipo_pagamento = this.lancamento?.tipo_pagamento;
+
+      this.service.save(this.idUsuario, this.lancamento).subscribe(
+        (result) => {
+          this.onMessage(`${this.actionMessage} com sucesso`);
+          this.router.navigate([''], { relativeTo: this.route });
+        },
+        (error) => this.onMessage(`${this.actionMessage} erro`)
+      );
+      this.load = false; // inativa load
+      this.disabledSalvar = false; // ativa botao salvar
+    } else {
+      this.onMessage('Preencha todos os campos obrigatórios');
+    }
   }
 
   private onMessage(actionMessage: String) {
@@ -177,5 +188,13 @@ export class NovoComponent implements OnInit {
 
   formatData(data: String) {
     return _formatData(data);
+  }
+
+  validaCampos(): boolean {
+    const { valor, data_prevista_pagamento } = this.lancamento;
+    if (valor != null && data_prevista_pagamento != null) {
+      return true;
+    }
+    return false;
   }
 }

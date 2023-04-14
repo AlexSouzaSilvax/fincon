@@ -67,8 +67,8 @@ export class PrincipalComponent implements OnInit {
     'descricao',
     'valor',
     'tipo_pagamento',
-    'data_vencimento',
-    'data_lancamento',
+    'data_prevista_pagamento',
+    'data_vencimento',    
     'pago',
     'actions',
   ];
@@ -119,7 +119,10 @@ export class PrincipalComponent implements OnInit {
   }
 
   onLancamentos() {
-    this.load = true;
+    this.load = true;    
+    this.listaLancamentos = [];
+    this.listaLancamentos2 = [];
+    
     if (this.idUsuario == null) {
       this.idUsuario = this.serviceLS.get('id');
     }
@@ -132,15 +135,15 @@ export class PrincipalComponent implements OnInit {
           return [];
         })
       );
-    this.lancamentos$.forEach((e) => {
-      console.log(e);
+    this.lancamentos$.forEach((e) => {      
       this.listaLancamentos = e;
       this.listaLancamentos2 = e;
     });
+    //////this.load = false;
   }
 
   somaValores(lancamentos: Array<LancamentoListaDTO>) {
-    this.load = false;
+    ////this.load = false;
     var somaEntradas: any = 0;
     var somaSaidas: any = 0;
     var somaPoupancaEntradas: any = 0;
@@ -179,7 +182,7 @@ export class PrincipalComponent implements OnInit {
   onError(errorMsg: string) {
     this.dialog.open(ErrorDialogComponent, { data: errorMsg });
     //this.snackbar.open(errorMsg, '', { duration: 5000 });
-    this.load = false;
+    ////this.load = false;
   }
 
   onAdd() {}
@@ -302,12 +305,12 @@ export class PrincipalComponent implements OnInit {
       if (this.form.value.quinzena != null) {
         if (this.form.value.quinzena == 1) {
           this.listaLancamentos2 = this.listaLancamentos.filter(
-            (e) => this.formatDia(e.data_vencimento) <= 15
+            (e) => this.formatDia(e.data_prevista_pagamento) <= 15
           );
         }
         if (this.form.value.quinzena == 2) {
           this.listaLancamentos2 = this.listaLancamentos.filter(
-            (e) => this.formatDia(e.data_vencimento) > 15
+            (e) => this.formatDia(e.data_prevista_pagamento) > 15
           );
         }
       }

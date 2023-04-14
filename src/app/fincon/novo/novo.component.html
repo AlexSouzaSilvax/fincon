@@ -10,8 +10,18 @@
   "
 >
   <mat-card-header></mat-card-header>
-  <mat-card-content>
-    <form [formGroup]="form">
+  <form
+    [formGroup]="form"
+    (submit)="onSubmit()"
+    style="
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 80%;
+    "
+  >
+    <mat-card-content>
       <!-- linha 1 -->
       <div>
         <!-- Tipo Lançamento -->
@@ -66,20 +76,22 @@
       <div>
         <!-- Descrição -->
         <mat-form-field class="example-full-width" appearance="outline">
-          <mat-label>* Descrição</mat-label>
+          <mat-label>Descrição</mat-label>
           <input matInput #input formControlName="descricao" />
         </mat-form-field>
 
         <!-- Valor -->
         <mat-form-field class="example-full-width" appearance="outline">
-          <mat-label>* Valor</mat-label>
+          <mat-label>Valor</mat-label>
           <input
+            required
             matInput
             #input
             currencyMask
             [options]="optionsInput"
             formControlName="valor"
           />
+          <div *ngIf="form.get('nome')?.errors">Nome obrigatório</div>
         </mat-form-field>
 
         <!-- Pago -->
@@ -194,7 +206,7 @@
       <!-- linha 5 -->
       <div>
         <!-- Observação -->
-        <mat-form-field                  
+        <mat-form-field
           class="example-width formFieldObservacao"
           appearance="outline"
         >
@@ -207,32 +219,34 @@
           ></textarea>
         </mat-form-field>
       </div>
-    </form>
-  </mat-card-content>
+    </mat-card-content>
 
-  <mat-card-actions>
-    <!-- voltar -->
-    <button
-      mat-button
-      (click)="onVoltar()"
-      style="background-color: transparent !important; color: #808080"
-    >
-      Voltar
-    </button>
+    <mat-card-actions>
+      <!-- voltar -->
+      <button
+        type="button"
+        mat-button
+        (click)="onVoltar()"
+        style="background-color: transparent !important; color: #808080"
+      >
+        Voltar
+      </button>
 
-    <!-- Salvar -->
-    <button
-      [disabled]="disabledSalvar"
-      mat-raised-button
-      (click)="onSubmit()"
-      style="
-        margin-left: 10px;
-        background-color: #1461a9 !important;
-        color: white;
-      "
-    >
-      Salvar
-    </button>
-  </mat-card-actions>
+      <!-- Salvar -->
+      <button
+        [disabled]="disabledSalvar"
+        mat-raised-button
+        type="submit"
+        style="
+          margin-left: 10px;
+          background-color: #1461a9 !important;
+          color: white;
+        "
+      >
+        Salvar
+      </button>
+    </mat-card-actions>
+  </form>
+
   <mat-card-footer></mat-card-footer>
 </mat-card>

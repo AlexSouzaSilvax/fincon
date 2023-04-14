@@ -69,8 +69,6 @@ export class LoginComponent implements OnInit {
       this.load = true;
       //btn login off
       this.btnLogin = true;
-      console.log('---------------> HERE');
-      console.log(this.usuarioAccess);
       if (this.usuarioAccess) {
         this.service.access(this.usuarioAccess).subscribe(
           (result) => {
