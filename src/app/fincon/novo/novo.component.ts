@@ -88,7 +88,7 @@ export class NovoComponent implements OnInit {
       mes_referencia: [mes],
       ano_referencia: [ano],
       data_vencimento: [],
-      data_prevista_pagamento: ['', [Validators.required]],
+      data_prevista_pagamento: [null, [Validators.required]],
     });
   }
 
