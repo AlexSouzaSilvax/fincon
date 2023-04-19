@@ -141,6 +141,33 @@
             poupanca$
           }}</mat-card-subtitle>
         </mat-card>
+
+        <mat-card class="cardTotais" style="background-color: #e08331">
+          <div
+            style="
+              display: flex;
+              flex-direction: row;
+              margin-top: 2px !important;
+            "
+          >
+            <p class="titleCardTotais" style="color: white">Investido</p>
+            <img
+              style="
+                width: 20px;
+                height: 20px;
+                border-radius: 50%;
+                padding: 2px;
+                margin-left: 12px;
+                margin-top: -4px;
+              "
+              src="../../../assets/icons/moneyWhite.svg"
+            />
+          </div>
+          <mat-card-subtitle class="valorCardTotais" style="color: white">{{
+            investido$
+          }}</mat-card-subtitle>
+        </mat-card>
+
       </div>
     </div>
   </div>
@@ -332,7 +359,7 @@
               *matCellDef="let lancamento"
             >
               <button mat-icon-button aria-label="Editar">
-                <mat-icon
+                <mat-icon                  
                   style="color: #4280ba !important"
                   (click)="onEdit(lancamento)"
                   >edit</mat-icon
