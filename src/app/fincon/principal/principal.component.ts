@@ -44,7 +44,7 @@ export class PrincipalComponent implements OnInit {
   totalSaida$: string;
   saldo$: string;
   poupanca$: string;
-  investido$: string;
+  investimentos$: string;
 
   load: boolean = false;
 
@@ -94,7 +94,7 @@ export class PrincipalComponent implements OnInit {
     this.totalSaida$ = '';
     this.saldo$ = '';
     this.poupanca$ = '';
-    this.investido$ = '';
+    this.investimentos$ = '';
 
     const { mes, ano } = getMesAnoAtual();
     this.mesReferencia = mes;
@@ -153,8 +153,8 @@ export class PrincipalComponent implements OnInit {
     var somaSaidas: any = 0;
     var somaPoupancaEntradas: any = 0;
     var somaPoupancaSaidas: any = 0;
-    var somaInvestimentoEntradas: any = 0;
-    var somaInvestimentoSaidas: any = 0;
+    var somaInvestimentosEntradas: any = 0;
+    var somaInvestimentosSaidas: any = 0;
     for (var i = 0; i < lancamentos.length; i++) {
       // if (lancamentos[i].pago) {
       if (lancamentos[i].tipo_lancamento == 'Saída') {
@@ -173,10 +173,10 @@ export class PrincipalComponent implements OnInit {
       }
       if (lancamentos[i].categoria == 'Investimentos') {
         if (lancamentos[i].tipo_lancamento == 'Saída') {
-          somaInvestimentoEntradas += lancamentos[i].valor;
+          somaInvestimentosEntradas += lancamentos[i].valor;
         }
         if (lancamentos[i].tipo_lancamento == 'Entrada') {
-          somaInvestimentoSaidas += lancamentos[i].valor;
+          somaInvestimentosSaidas += lancamentos[i].valor;
         }
       }
       // }
@@ -187,7 +187,7 @@ export class PrincipalComponent implements OnInit {
     this.poupanca$ = this.numberToReal(
       somaPoupancaEntradas - somaPoupancaSaidas
     );
-    this.investido$ = this.numberToReal(somaInvestimentoEntradas - somaInvestimentoSaidas);
+    this.investimentos$ = this.numberToReal(somaInvestimentosEntradas - somaInvestimentosSaidas);
     if (somaEntradas < somaSaidas) {
       this.saldoPositivo = false;
     } else {
