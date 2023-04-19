@@ -22,6 +22,11 @@
     "
   >
     <mat-card-content>
+      <!-- linha 0 -->
+      <div class="linha0" *ngIf="isLancamento == true">
+        <p class="linha0Id"># {{ lancamento.id }}</p>
+        <p class="linha0Dt">{{ formatData(lancamento.data_lancamento) }}</p>
+      </div>
       <!-- linha 1 -->
       <div>
         <!-- Tipo Lançamento -->

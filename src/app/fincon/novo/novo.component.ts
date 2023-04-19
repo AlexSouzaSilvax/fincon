@@ -64,6 +64,8 @@ export class NovoComponent implements OnInit {
 
   idUsuario!: string;
 
+  isLancamento: boolean = false;
+
   constructor(
     private location: Location,
     private formBuilder: FormBuilder,
@@ -74,6 +76,8 @@ export class NovoComponent implements OnInit {
     private router: Router,
     private lancamentoEdit: LancamentoEdit
   ) {
+    // INICIA TELA SEMPRE NO TOPO
+    window.scrollTo(0, 0);
     const { mes, ano } = getMesAnoAtual();
     this.form = this.formBuilder.group({
       descricao: [''],
@@ -103,6 +107,7 @@ export class NovoComponent implements OnInit {
       .map((lancamento) => (this.lancamento = lancamento));
 
     if (this.lancamento) {
+      this.isLancamento = true;
       this.form = this.formBuilder.group({
         id: [this.lancamento?.id],
         descricao: [this.lancamento?.descricao],

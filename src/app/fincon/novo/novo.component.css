@@ -73,6 +73,12 @@ div {
   mat-card {
     margin-bottom: 50px;
   }
+  .linha0 {
+    flex-direction: row;
+  }
+  .linha0Dt {
+    margin-left: 15px;
+  }
 }
 /* web */
 @media only screen and (min-width: 750px) {
@@ -85,8 +91,29 @@ div {
   .formFieldObservacao {
     width: 100%;
   }
+  .linha0Id {
+    padding-left: 15px;
+  }
+
+  .linha0Dt {
+    padding-right: 15px;
+  }
 }
 
 mat-card-actions {
   margin-top: 10px;
+}
+
+.linha0 {
+  justify-content: space-between;
+  margin-top: 20px !important;
+  margin-bottom: 15px !important;
+}
+
+.linha0Id {  
+  color: #848484;
+}
+
+.linha0Dt {  
+  color: #848484;
 }

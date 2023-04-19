@@ -86,6 +86,9 @@ export class PrincipalComponent implements OnInit {
     private formBuilder: FormBuilder,
     private lancamentoEdit: LancamentoEdit
   ) {
+    // INICIA TELA SEMPRE NO TOPO    
+    window.scrollTo(0, 0);
+    
     this.totalEntrada$ = '';
     this.totalSaida$ = '';
     this.saldo$ = '';
@@ -110,11 +113,11 @@ export class PrincipalComponent implements OnInit {
     )} de ${this.anoReferencia}`;
   }
 
-  ngOnInit(): void {
+  ngOnInit(): void {    
     this.idUsuario = this.serviceLS.get('id');
     if (this.idUsuario == null) {
       this.router.navigate([''], { relativeTo: this.route });
-    }
+    }        
     this.onLancamentos();
   }
 

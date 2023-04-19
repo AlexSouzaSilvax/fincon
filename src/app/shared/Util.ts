@@ -1,7 +1,7 @@
 import { ModelComboBox } from '../fincon/model/ModelComboBox';
 
 //LOCAL
-//export const API = "http://localhost:8082/api";
+//export const API = "http://localhost:8090/api";
 //HML
 //export const API = 'https://hml-api-fincon.herokuapp.com/api';
 //PROD
@@ -25,7 +25,7 @@ export function _formatData(data: String) {
     //return `${DD}/${MM}/${YYYY} ${HH}:${mm}`;
     return `${DD}/${MM}/${YYYY}`;
   }
-  return 'Não informado';
+  return '--';
 }
 
 export function _formatDia(data: String) {
@@ -34,7 +34,7 @@ export function _formatDia(data: String) {
     const [YYYY, MM, DD] = date.split('-');
     return DD;
   }
-  return 'Não informado';
+  return '--';
 }
 
 export function _changeIsPago(pago: boolean) {
