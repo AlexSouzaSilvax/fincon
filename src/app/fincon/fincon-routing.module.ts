@@ -1,19 +1,20 @@
-import { LoginComponent } from './login/login.component';
+import { LoginComponent } from './screens/login/login.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { PrincipalComponent } from './principal/principal.component';
-import { NovoComponent } from './novo/novo.component';
+import { PrincipalComponent } from './screens/principal/principal.component';
+import { NovoComponent } from './screens/novo/novo.component';
+import { UsuarioComponent } from './screens/usuario/usuario.component';
 
 const routes: Routes = [
-  { path: '', component: LoginComponent },
+  { path: '', component: LoginComponent },  
   { path: 'principal', component: PrincipalComponent },
   { path: 'principal/novo', component: NovoComponent },
   { path: 'principal/detalhe', component: NovoComponent },
-  
+  { path: 'principal/usuario', component: UsuarioComponent },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class FinconRoutingModule { }
+export class FinconRoutingModule {}

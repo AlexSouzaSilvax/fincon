@@ -1,10 +1,10 @@
-import { LancamentoEdit } from './../services/LancamentoEdit.service';
+import { LancamentoEdit } from '../../services/LancamentoEdit.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { Lancamento } from '../model/Lancamento';
-import { LancamentoListaDTO } from '../model/LancamentoListaDTO';
-import { LancamentoService } from '../services/lancamento.service';
+import { Lancamento } from '../../model/Lancamento';
+import { LancamentoListaDTO } from '../../model/LancamentoListaDTO';
+import { LancamentoService } from '../../services/lancamento.service';
 import {
   _numberToReal,
   _formatData,
@@ -17,19 +17,19 @@ import {
   listaTipoPagamentos,
   _formatDia,
   delay,
-} from '../../shared/Util';
+} from '../../../shared/Util';
 import { tap } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
-import { ErrorDialogComponent } from '../../shared/components/error-dialog/error-dialog.component';
-import { ConfirmDialogComponent } from '../../shared/components/confirm-dialog/confirm-dialog.component';
+import { ErrorDialogComponent } from '../../../shared/components/error-dialog/error-dialog.component';
+import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialog/confirm-dialog.component';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { LocalStorageService } from '../services/local-storage.service';
-import { ModelComboBox } from '../model/ModelComboBox';
+import { LocalStorageService } from '../../services/local-storage.service';
+import { ModelComboBox } from '../../model/ModelComboBox';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { FiltroDialogComponent } from 'src/app/shared/components/filtro-dialog/filtro-dialog.component';
-import { listaCategorias } from '../../shared/Util';
+import { listaCategorias } from '../../../shared/Util';
 
 @Component({
   selector: 'principal',

@@ -27,4 +27,8 @@ export class HeaderComponent implements OnInit {
     this.serviceLS.clear();
     this.router.navigate([''], { relativeTo: this.route });
   }
+
+  usuario() {
+    this.router.navigate(['usuario'], { relativeTo: this.route });
+  }
 }

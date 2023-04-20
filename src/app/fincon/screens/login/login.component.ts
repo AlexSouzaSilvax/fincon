@@ -1,4 +1,4 @@
-import { Usuario } from './../model/Usuario';
+import { Usuario } from './../../model/Usuario';
 import { Input, Component, Output, EventEmitter, OnInit } from '@angular/core';
 import {
   FormGroup,
@@ -8,9 +8,9 @@ import {
 } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UsuarioService } from '../services/usuario.service';
-import { LocalStorageService } from '../services/local-storage.service';
-import { UsuarioAccessDTO } from '../model/UsuarioAccessDTO';
+import { UsuarioService } from '../../services/usuario.service';
+import { LocalStorageService } from '../../services/local-storage.service';
+import { UsuarioAccessDTO } from '../../model/UsuarioAccessDTO';
 import { MatDialog } from '@angular/material/dialog';
 import { EsqueciSenhaDialogComponent } from 'src/app/shared/components/esqueci-senha-dialog/esqueci-senha-dialog.component';
 
@@ -74,7 +74,7 @@ export class LoginComponent implements OnInit {
           (result) => {
             if (result.id != null) {
               this.serviceLS.set('id', result.id);
-              this.serviceLS.set('login', result.login);
+              this.serviceLS.set('login', result.login);              
               this.router.navigate(['principal'], { relativeTo: this.route });
             }
           },
@@ -103,11 +103,9 @@ export class LoginComponent implements OnInit {
     this.btnCadastrese = true;
 
     if (this.formCadastrese) {
-      this.service.save(this.formCadastrese.value).subscribe(
+      this.service.save(this.formCadastrese.value).then(
         (result) => {
-          if (result.id != null) {
-            this.onMessage('Usuário criado com sucesso');
-          }
+          this.onMessage('Usuário criado com sucesso');
         },
         (error) => {
           if (error.error.message) {

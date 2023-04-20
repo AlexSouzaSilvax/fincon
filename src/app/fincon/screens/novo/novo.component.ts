@@ -11,7 +11,7 @@ import {
   _formatData,
   delay,
 } from 'src/app/shared/Util';
-import { ModelComboBox } from '../model/ModelComboBox';
+import { ModelComboBox } from '../../model/ModelComboBox';
 import {
   FormBuilder,
   FormControl,
@@ -20,11 +20,11 @@ import {
 } from '@angular/forms';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
-import { LancamentoService } from '../services/lancamento.service';
+import { LancamentoService } from '../../services/lancamento.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Lancamento } from '../model/Lancamento';
-import { LocalStorageService } from '../services/local-storage.service';
-import { LancamentoEdit } from '../services/LancamentoEdit.service';
+import { Lancamento } from '../../model/Lancamento';
+import { LocalStorageService } from '../../services/local-storage.service';
+import { LancamentoEdit } from '../../services/LancamentoEdit.service';
 
 @Component({
   selector: 'app-novo',

@@ -5,5 +5,5 @@ export interface Usuario {
   celular: String;
   login: String;
   senha: String;
-  data_cadastro: String;
+  data_criacao: String;
 }

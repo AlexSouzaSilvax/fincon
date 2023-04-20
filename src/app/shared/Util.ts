@@ -38,6 +38,16 @@ export function _formatData(data: String) {
   return '--';
 }
 
+export function _formatData2(data: String) {
+  if (data) {
+    var YYYY = data.toLocaleString().substr(0, 4);
+    var MM = data.toLocaleString().substr(5, 2);
+    var DD = data.toLocaleString().substr(8, 2);    
+    return `${DD}/${MM}/${YYYY}`;
+  }
+  return '--';
+}
+
 export function _formatDia(data: String) {
   if (data) {
     const [date, time] = data.split('T');
