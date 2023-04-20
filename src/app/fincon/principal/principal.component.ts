@@ -243,9 +243,9 @@ export class PrincipalComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {});
   }
 
-  async onDelete(id: string) {
-    await this.lancamentosService.delete(id).then(
-      async (result) => {
+  onDelete(id: string) {
+    this.lancamentosService.delete(id).subscribe(
+      (result) => {
         this.onSuccess('Apagado com sucesso');
       },
       (error) => {

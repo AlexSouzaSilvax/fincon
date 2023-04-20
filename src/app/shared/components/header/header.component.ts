@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LocalStorageService } from 'src/app/fincon/services/local-storage.service';
+import { API } from '../../Util';
 
 @Component({
   selector: 'header-component',
@@ -9,6 +10,7 @@ import { LocalStorageService } from 'src/app/fincon/services/local-storage.servi
 })
 export class HeaderComponent implements OnInit {
   login: string;
+  base: string;
 
   constructor(
     private serviceLS: LocalStorageService,
@@ -16,6 +18,7 @@ export class HeaderComponent implements OnInit {
     private route: ActivatedRoute
   ) {
     this.login = this.serviceLS.get('login');
+    this.base = API.name;
   }
 
   ngOnInit(): void {}

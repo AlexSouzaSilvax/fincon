@@ -14,7 +14,7 @@ export class LancamentoService {
   listMain(idUsuario: string, mesReferencia: string, anoReferencia: string) {
     return this.httpClient
       .get<[LancamentoListaDTO]>(
-        `${API}/lancamentos/find-list-main?id_usuario=${idUsuario}&mes_referencia=${mesReferencia}&ano_referencia=${anoReferencia}`
+        `${API.url}/lancamentos/find-list-main?id_usuario=${idUsuario}&mes_referencia=${mesReferencia}&ano_referencia=${anoReferencia}`
       )
       .pipe(
         first()
@@ -27,7 +27,7 @@ export class LancamentoService {
     if (record.id) {
       return this.httpClient
         .post<Lancamento>(
-          `${API}/lancamentos/update?id_usuario=${idUsuario}`,
+          `${API.url}/lancamentos/update?id_usuario=${idUsuario}`,
           record
         )
         .toPromise();
@@ -35,7 +35,7 @@ export class LancamentoService {
     } else {
       return this.httpClient
         .post<Lancamento>(
-          `${API}/lancamentos/create?id_usuario=${idUsuario}`,
+          `${API.url}/lancamentos/create?id_usuario=${idUsuario}`,
           record
         )
         .toPromise();
@@ -45,7 +45,7 @@ export class LancamentoService {
 
   delete(id: string) {
     return this.httpClient
-      .post<String>(`${API}/lancamentos/delete`, id)
+      .post<String>(`${API.url}/lancamentos/delete`, id)
       .pipe(first());
   }
 }

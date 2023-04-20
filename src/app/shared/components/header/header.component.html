@@ -12,6 +12,10 @@
         <mat-icon style="color: white">more_vert</mat-icon>
       </button>
       <mat-menu #menu="matMenu">
+        <button mat-menu-item disabled *ngIf="base != 'prod'">
+          <mat-icon>info</mat-icon>
+          <span>{{base}}</span>
+        </button>
         <button mat-menu-item disabled>
           <mat-icon>person</mat-icon>
           <span>{{login}}</span>

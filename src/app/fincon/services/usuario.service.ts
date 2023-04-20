@@ -13,25 +13,25 @@ export class UsuarioService {
 
   access(record: UsuarioAccessDTO) {
     return this.httpClient
-      .post<Usuario>(`${API}/usuario/access`, record)
+      .post<Usuario>(`${API.url}/usuario/access`, record)
       .pipe(first());
   }
 
   save(record: Usuario) {
     if (record.id) {
       return this.httpClient
-        .post<Usuario>(`${API}/usuario/update`, record)
+        .post<Usuario>(`${API.url}/usuario/update`, record)
         .pipe(first());
     } else {
       return this.httpClient
-        .post<Usuario>(`${API}/usuario/create`, record)
+        .post<Usuario>(`${API.url}/usuario/create`, record)
         .pipe(first());
     }
   }
 
   delete(id: string) {
     return this.httpClient
-      .post<String>(`${API}/usuario/delete`, id)
+      .post<String>(`${API.url}/usuario/delete`, id)
       .pipe(first());
   }
 }
