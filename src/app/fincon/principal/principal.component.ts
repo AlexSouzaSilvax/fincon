@@ -46,7 +46,7 @@ export class PrincipalComponent implements OnInit {
   poupanca$: string;
   investimentos$: string;
 
-  load: boolean = false;
+  load: boolean = true;
 
   saldoPositivo: any = null;
 
@@ -69,7 +69,7 @@ export class PrincipalComponent implements OnInit {
     'valor',
     'tipo_pagamento',
     'data_prevista_pagamento',
-    'data_vencimento',    
+    'data_vencimento',
     'pago',
     'actions',
   ];
@@ -87,9 +87,9 @@ export class PrincipalComponent implements OnInit {
     private formBuilder: FormBuilder,
     private lancamentoEdit: LancamentoEdit
   ) {
-    // INICIA TELA SEMPRE NO TOPO    
+    // INICIA TELA SEMPRE NO TOPO
     window.scrollTo(0, 0);
-    
+
     this.totalEntrada$ = '';
     this.totalSaida$ = '';
     this.saldo$ = '';
@@ -113,25 +113,25 @@ export class PrincipalComponent implements OnInit {
       this.mesReferencia,
       listaMesReferencia
     )} de ${this.anoReferencia}`;
-  }
-
-  ngOnInit(): void {    
-    this.idUsuario = this.serviceLS.get('id');
-    if (this.idUsuario == null) {
-      this.router.navigate([''], { relativeTo: this.route });
-    }        
     this.onLancamentos();
   }
 
-  onLancamentos() {
-    this.load = true;    
+  ngOnInit(): void {
+    this.idUsuario = this.serviceLS.get('id');
+    if (this.idUsuario == null) {
+      this.router.navigate([''], { relativeTo: this.route });
+    }
+  }
+
+  async onLancamentos() {
+    this.load = true;
     this.listaLancamentos = [];
     this.listaLancamentos2 = [];
-    
+
     if (this.idUsuario == null) {
       this.idUsuario = this.serviceLS.get('id');
     }
-    this.lancamentos$ = this.lancamentosService
+    this.lancamentos$ = await this.lancamentosService
       .listMain(this.idUsuario, this.mesReferencia, this.anoReferencia)
       .pipe(
         tap((l) => this.somaValores(l)),
@@ -140,15 +140,15 @@ export class PrincipalComponent implements OnInit {
           return [];
         })
       );
-    this.lancamentos$.forEach((e) => {      
+
+    this.lancamentos$.forEach((e) => {
       this.listaLancamentos = e;
       this.listaLancamentos2 = e;
-    });
-    //////this.load = false;
+    });        
+    //this.load = false;
   }
 
   somaValores(lancamentos: Array<LancamentoListaDTO>) {
-    ////this.load = false;
     var somaEntradas: any = 0;
     var somaSaidas: any = 0;
     var somaPoupancaEntradas: any = 0;
@@ -187,12 +187,15 @@ export class PrincipalComponent implements OnInit {
     this.poupanca$ = this.numberToReal(
       somaPoupancaEntradas - somaPoupancaSaidas
     );
-    this.investimentos$ = this.numberToReal(somaInvestimentosEntradas - somaInvestimentosSaidas);
+    this.investimentos$ = this.numberToReal(
+      somaInvestimentosEntradas - somaInvestimentosSaidas
+    );
     if (somaEntradas < somaSaidas) {
       this.saldoPositivo = false;
     } else {
       this.saldoPositivo = true;
     }
+    this.load = false;
   }
 
   onError(errorMsg: string) {

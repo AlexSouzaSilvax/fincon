@@ -184,10 +184,19 @@
   </div>
 </div>
 
-<div class="divTable" *ngIf="listaLancamentos2 else loading">
+<div class="divTable">
+  <!-- load -->
+  <div
+    *ngIf="load == true"
+    style="display: flex; justify-content: center; margin-top: 200px"
+    class="loading-spinner"
+  >
+    <mat-spinner></mat-spinner>
+  </div>
+  
   <!-- lista vazia -->
   <div
-    *ngIf="listaLancamentos2.length <= 0; else table"
+    *ngIf="load == false && listaLancamentos2.length <= 0; else table"
     style="
       display: flex;
       flex-direction: column;
@@ -202,11 +211,11 @@
     <p style="color: #646464; font-size: 14px; margin-top: 10px">
       Nenhum lançamento encontrado
     </p>
-  </div>
-
+  </div>  
+ 
   <!-- lista -->
   <ng-template #table>
-    <div class="example-container mat-elevation-z8">
+    <div class="example-container mat-elevation-z8" *ngIf="listaLancamentos2.length > 0" >
       <mat-table [dataSource]="listaLancamentos2" matSort style="background-color: #f1f1f1 !important;">        
         <!-- ID Column -->
         <ng-container matColumnDef="id">
@@ -386,14 +395,3 @@
     </div>    
   </ng-template>
 </div>
-
-<!-- load -->
-<ng-template #loading>
-  <div
-    *ngIf="load == true"
-    style="display: flex; justify-content: center; margin-top: 200px"
-    class="loading-spinner"
-  >
-    <mat-spinner></mat-spinner>
-  </div>
-</ng-template>

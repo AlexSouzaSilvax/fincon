@@ -174,8 +174,8 @@ export class NovoComponent implements OnInit {
       await this.service.save(this.idUsuario, this.lancamento).then(
         async (result) => {
           if (result) {
-            this.onMessage(`${this.actionMessage} com sucesso`);            
-            await delay(1800); //gambiarra uheuehuheuhe         
+            this.onMessage(`${this.actionMessage} com sucesso`);                    
+            await delay(1200); //gambiarra uheuehuheuhe         
             this.router.navigate([''], { relativeTo: this.route });
           }
         },

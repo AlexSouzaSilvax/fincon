@@ -26,16 +26,26 @@ export class LancamentoService {
   save(idUsuario: string, record: Lancamento) {
     if (record.id) {
       return this.httpClient
-        .post<Lancamento>(`${API}/lancamentos/update?id_usuario=${idUsuario}`, record).toPromise();
-        //.pipe(first());
+        .post<Lancamento>(
+          `${API}/lancamentos/update?id_usuario=${idUsuario}`,
+          record
+        )
+        .toPromise();
+      //.pipe(first());
     } else {
       return this.httpClient
-        .post<Lancamento>(`${API}/lancamentos/create?id_usuario=${idUsuario}`, record).toPromise();
-        //.pipe(first());
+        .post<Lancamento>(
+          `${API}/lancamentos/create?id_usuario=${idUsuario}`,
+          record
+        )
+        .toPromise();
+      //.pipe(first());
     }
   }
 
   delete(id: string) {
-    return this.httpClient.post<String>(`${API}/lancamentos/delete`, id).pipe(first());
+    return this.httpClient
+      .post<String>(`${API}/lancamentos/delete`, id)
+      .pipe(first());
   }
 }
