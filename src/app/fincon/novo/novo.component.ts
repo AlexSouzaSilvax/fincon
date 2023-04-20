@@ -9,6 +9,7 @@ import {
   listaTipoLancamentos,
   listaTipoPagamentos,
   _formatData,
+  delay,
 } from 'src/app/shared/Util';
 import { ModelComboBox } from '../model/ModelComboBox';
 import {
@@ -149,13 +150,12 @@ export class NovoComponent implements OnInit {
     this.location.back();
   }
 
-  onSubmit() {
+  async onSubmit() {
     this.lancamento = this.form.value;
     //valida campos
     if (this.validaCampos()) {
       this.load = true; // ativa load
       this.disabledSalvar = true; // inativa botao salvar
-
       // salva lancamento
       this.actionMessage = 'Salvo';
       if (this.lancamento?.id != null) {
@@ -171,13 +171,17 @@ export class NovoComponent implements OnInit {
       this.lancamento.tipo_lancamento = this.lancamento?.tipo_lancamento;
       this.lancamento.tipo_pagamento = this.lancamento?.tipo_pagamento;
 
-      this.service.save(this.idUsuario, this.lancamento).subscribe(
-        (result) => {
-          this.onMessage(`${this.actionMessage} com sucesso`);
-          this.router.navigate([''], { relativeTo: this.route });
+      await this.service.save(this.idUsuario, this.lancamento).then(
+        async (result) => {
+          if (result) {
+            this.onMessage(`${this.actionMessage} com sucesso`);            
+            await delay(1800); //gambiarra uheuehuheuhe         
+            this.router.navigate([''], { relativeTo: this.route });
+          }
         },
-        (error) => this.onMessage(`${this.actionMessage} erro`)
+        (error) => this.onMessage(`Problema no servidor`)
       );
+
       this.load = false; // inativa load
       this.disabledSalvar = false; // ativa botao salvar
     } else {

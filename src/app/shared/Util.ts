@@ -172,3 +172,7 @@ export function formatDataInput(data: String) {
   }
   return;
 }
+
+export function delay(num: number) {
+  return new Promise( resolve => setTimeout(resolve, num) );
+}

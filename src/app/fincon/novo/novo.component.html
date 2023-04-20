@@ -226,7 +226,7 @@
       </div>
     </mat-card-content>
 
-    <mat-card-actions>
+    <mat-card-actions *ngIf="load == false">
       <!-- voltar -->
       <button
         type="button"
@@ -251,6 +251,15 @@
         Salvar
       </button>
     </mat-card-actions>
+
+    <!-- load -->
+    <div
+      *ngIf="load == true"
+      style="display: flex; justify-content: center; margin-top: 0px; margin-bottom: 30px;"
+      class="loading-spinner"
+    >
+      <mat-spinner [diameter]="50"></mat-spinner>
+    </div>
   </form>
 
   <mat-card-footer></mat-card-footer>

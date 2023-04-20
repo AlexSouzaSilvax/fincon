@@ -185,6 +185,7 @@
 </div>
 
 <div class="divTable" *ngIf="listaLancamentos2 else loading">
+  <!-- lista vazia -->
   <div
     *ngIf="listaLancamentos2.length <= 0; else table"
     style="
@@ -206,7 +207,7 @@
   <!-- lista -->
   <ng-template #table>
     <div class="example-container mat-elevation-z8">
-      <mat-table [dataSource]="listaLancamentos2" matSort style="background-color: #f1f1f1 !important;">
+      <mat-table [dataSource]="listaLancamentos2" matSort style="background-color: #f1f1f1 !important;">        
         <!-- ID Column -->
         <ng-container matColumnDef="id">
           <mat-header-cell *matHeaderCellDef> # </mat-header-cell>
@@ -322,7 +323,7 @@
 
         <!-- Pago Column -->
         <ng-container matColumnDef="pago">
-          <mat-header-cell *matHeaderCellDef> Pago </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef style="justify-content: center;">Pago</mat-header-cell>
           <mat-cell
             *matCellDef="let lancamento"
             data-label="pago"
@@ -382,10 +383,11 @@
         <mat-row *matRowDef="let lancamento; columns: displayedColumns">
         </mat-row>
       </mat-table>
-    </div>
+    </div>    
   </ng-template>
 </div>
 
+<!-- load -->
 <ng-template #loading>
   <div
     *ngIf="load == true"
@@ -395,4 +397,3 @@
     <mat-spinner></mat-spinner>
   </div>
 </ng-template>
-
