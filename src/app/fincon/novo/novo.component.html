@@ -62,13 +62,17 @@
             display: flex;
             flex-direction: column;
             margin-top: 10px;
-          "
+          "          
         >
-          <p>Mensal</p>
+          <p class="{{
+            isLancamento == true
+              ? 'mensalTrue'
+              : 'mensalFalse'
+          }}">Mensal</p>
           <mat-checkbox
             color="primary"
             style="margin-left: 5px; margin-top: -5px"
-            [disabled]="!selectTipoPagamento.value"
+            [disabled]="!selectTipoPagamento.value || isLancamento == true"
             [formControl]="mensalSelect"
             formControlName="mensal"
           ></mat-checkbox>

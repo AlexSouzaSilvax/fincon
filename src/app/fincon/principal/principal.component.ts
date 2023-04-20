@@ -16,6 +16,7 @@ import {
   listaTipoLancamentos,
   listaTipoPagamentos,
   _formatDia,
+  delay,
 } from '../../shared/Util';
 import { tap } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
@@ -144,7 +145,7 @@ export class PrincipalComponent implements OnInit {
     this.lancamentos$.forEach((e) => {
       this.listaLancamentos = e;
       this.listaLancamentos2 = e;
-    });        
+    });
     //this.load = false;
   }
 
@@ -242,10 +243,10 @@ export class PrincipalComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {});
   }
 
-  onDelete(id: string) {
-    this.lancamentosService.delete(id).subscribe(
-      (result) => {
-        this.onSuccess('Lançamento apagado com sucesso');
+  async onDelete(id: string) {
+    await this.lancamentosService.delete(id).then(
+      async (result) => {
+        this.onSuccess('Apagado com sucesso');
       },
       (error) => {
         this.onError('Não foi possivel apagar este lançamento');
@@ -270,18 +271,7 @@ export class PrincipalComponent implements OnInit {
         form: this.form,
         mesesReferencia: this.mesesReferencia,
         anosReferencia: this.anosReferencia,
-        onConfirm: () => {
-          this.mesAnoReferencia = `${findTipo(
-            this.form.value.mesReferencia,
-            this.mesesReferencia
-          )} de ${findTipo(
-            this.form.value.anoReferencia,
-            this.anosReferencia
-          )}`;
-          this.mesReferencia = this.form.value.mesReferencia;
-          this.anoReferencia = this.form.value.anoReferencia;
-          this.filtroLista();
-        },
+        onConfirm: () => this.filtroLista(),
       },
     });
 
@@ -334,6 +324,12 @@ export class PrincipalComponent implements OnInit {
         }
       }
     } else {
+      this.mesAnoReferencia = `${findTipo(
+        this.form.value.mesReferencia,
+        this.mesesReferencia
+      )} de ${findTipo(this.form.value.anoReferencia, this.anosReferencia)}`;
+      this.mesReferencia = this.form.value.mesReferencia;
+      this.anoReferencia = this.form.value.anoReferencia;
       this.onLancamentos();
     }
     this.somaValores(this.listaLancamentos2);

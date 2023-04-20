@@ -167,7 +167,6 @@
             investimentos$
           }}</mat-card-subtitle>
         </mat-card>
-
       </div>
     </div>
   </div>
@@ -193,7 +192,7 @@
   >
     <mat-spinner></mat-spinner>
   </div>
-  
+
   <!-- lista vazia -->
   <div
     *ngIf="load == false && listaLancamentos2.length <= 0; else table"
@@ -211,12 +210,19 @@
     <p style="color: #646464; font-size: 14px; margin-top: 10px">
       Nenhum lançamento encontrado
     </p>
-  </div>  
- 
+  </div>
+
   <!-- lista -->
   <ng-template #table>
-    <div class="example-container mat-elevation-z8" *ngIf="listaLancamentos2.length > 0" >
-      <mat-table [dataSource]="listaLancamentos2" matSort style="background-color: #f1f1f1 !important;">        
+    <div
+      class="example-container mat-elevation-z8"
+      *ngIf="listaLancamentos2.length > 0"
+    >
+      <mat-table
+        [dataSource]="listaLancamentos2"
+        matSort
+        style="background-color: #f1f1f1 !important"
+      >
         <!-- ID Column -->
         <ng-container matColumnDef="id">
           <mat-header-cell *matHeaderCellDef> # </mat-header-cell>
@@ -250,7 +256,10 @@
             style="
               display: flex !important;
               justify-content: center !important;
-              align-items: center !important;
+              align-items: center !important;            
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
             "
           >
             {{ lancamento.descricao }}
@@ -312,8 +321,8 @@
           </mat-cell>
         </ng-container>
 
-         <!-- Data de Vencimento Column -->
-         <ng-container matColumnDef="data_vencimento">
+        <!-- Data de Vencimento Column -->
+        <ng-container matColumnDef="data_vencimento">
           <mat-header-cell *matHeaderCellDef>
             Data de Vencimento
           </mat-header-cell>
@@ -332,7 +341,9 @@
 
         <!-- Pago Column -->
         <ng-container matColumnDef="pago">
-          <mat-header-cell *matHeaderCellDef style="justify-content: center;">Pago</mat-header-cell>
+          <mat-header-cell *matHeaderCellDef style="justify-content: center"
+            >Pago</mat-header-cell
+          >
           <mat-cell
             *matCellDef="let lancamento"
             data-label="pago"
@@ -369,7 +380,7 @@
               *matCellDef="let lancamento"
             >
               <button mat-icon-button aria-label="Editar">
-                <mat-icon                  
+                <mat-icon
                   style="color: #4280ba !important"
                   (click)="onEdit(lancamento)"
                   >edit</mat-icon
@@ -392,6 +403,6 @@
         <mat-row *matRowDef="let lancamento; columns: displayedColumns">
         </mat-row>
       </mat-table>
-    </div>    
+    </div>
   </ng-template>
 </div>
