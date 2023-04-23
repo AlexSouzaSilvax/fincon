@@ -3,7 +3,6 @@ import {
   changeData,
   findTipo,
   formatDataInput,
-  getMesAnoAtual,
   listaCategorias,
   listaParcelas,
   listaTipoLancamentos,
@@ -25,6 +24,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Lancamento } from '../../model/Lancamento';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { LancamentoEdit } from '../../services/LancamentoEdit.service';
+import { MesAnoReferenciaService } from '../../services/mesAnoReferencia.service';
 
 @Component({
   selector: 'app-novo',
@@ -75,11 +75,13 @@ export class NovoComponent implements OnInit {
     private route: ActivatedRoute,
     private serviceLS: LocalStorageService,
     private router: Router,
-    private lancamentoEdit: LancamentoEdit
+    private lancamentoEdit: LancamentoEdit,
+    private mesAnoReferenciaService: MesAnoReferenciaService
   ) {
     // INICIA TELA SEMPRE NO TOPO
     window.scrollTo(0, 0);
-    const { mes, ano } = getMesAnoAtual();
+    const { mes, ano } = this.mesAnoReferenciaService.getMesAnoAtual();
+
     this.form = this.formBuilder.group({
       descricao: [''],
       categoria: [13],

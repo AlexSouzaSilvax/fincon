@@ -74,21 +74,23 @@ export class LoginComponent implements OnInit {
           (result) => {
             if (result.id != null) {
               this.serviceLS.set('id', result.id);
-              this.serviceLS.set('login', result.login);              
+              this.serviceLS.set('login', result.login);
               this.router.navigate(['principal'], { relativeTo: this.route });
             }
           },
           (error) => {
             if (error.error.message) {
               this.onMessage(error.error.message);
+              this.load = false;
+              this.btnLogin = false;
             } else {
               this.onMessage('Sem conexão com servidor');
+              this.load = false;
+              this.btnLogin = false;
             }
           }
         );
       }
-      this.load = false;
-      this.btnLogin = false;
     }
   }
 

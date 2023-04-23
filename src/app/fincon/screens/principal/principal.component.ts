@@ -1,5 +1,5 @@
 import { LancamentoEdit } from '../../services/LancamentoEdit.service';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Lancamento } from '../../model/Lancamento';
@@ -12,15 +12,12 @@ import {
   findTipo,
   listaMesReferencia,
   listaAnoReferencia,
-  getMesAnoAtual,
   listaTipoLancamentos,
   listaTipoPagamentos,
   _formatDia,
-  delay,
 } from '../../../shared/Util';
 import { tap } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
-import { ErrorDialogComponent } from '../../../shared/components/error-dialog/error-dialog.component';
 import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialog/confirm-dialog.component';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -30,6 +27,7 @@ import { ModelComboBox } from '../../model/ModelComboBox';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { FiltroDialogComponent } from 'src/app/shared/components/filtro-dialog/filtro-dialog.component';
 import { listaCategorias } from '../../../shared/Util';
+import { MesAnoReferenciaService } from '../../services/mesAnoReferencia.service';
 
 @Component({
   selector: 'principal',
@@ -86,7 +84,8 @@ export class PrincipalComponent implements OnInit {
     private snackbar: MatSnackBar,
     private serviceLS: LocalStorageService,
     private formBuilder: FormBuilder,
-    private lancamentoEdit: LancamentoEdit
+    private lancamentoEdit: LancamentoEdit,
+    private mesAnoReferenciaService: MesAnoReferenciaService
   ) {
     // INICIA TELA SEMPRE NO TOPO
     window.scrollTo(0, 0);
@@ -97,7 +96,7 @@ export class PrincipalComponent implements OnInit {
     this.poupanca$ = '';
     this.investimentos$ = '';
 
-    const { mes, ano } = getMesAnoAtual();
+    const { mes, ano } = this.mesAnoReferenciaService.getMesAnoAtual();
     this.mesReferencia = mes;
     this.anoReferencia = ano;
 
@@ -200,7 +199,8 @@ export class PrincipalComponent implements OnInit {
   }
 
   onError(errorMsg: string) {
-    this.dialog.open(ErrorDialogComponent, { data: errorMsg });
+    //this.dialog.open(ErrorDialogComponent, { data: errorMsg });
+    this.snackbar.open(errorMsg, '', { duration: 5000 });
     //this.snackbar.open(errorMsg, '', { duration: 5000 });
     ////this.load = false;
   }
@@ -328,8 +328,13 @@ export class PrincipalComponent implements OnInit {
         this.form.value.mesReferencia,
         this.mesesReferencia
       )} de ${findTipo(this.form.value.anoReferencia, this.anosReferencia)}`;
+
       this.mesReferencia = this.form.value.mesReferencia;
       this.anoReferencia = this.form.value.anoReferencia;
+
+      this.mesAnoReferenciaService.setMes(this.form.value.mesReferencia);
+      this.mesAnoReferenciaService.setAno(this.form.value.anoReferencia);
+
       this.onLancamentos();
     }
     this.somaValores(this.listaLancamentos2);
