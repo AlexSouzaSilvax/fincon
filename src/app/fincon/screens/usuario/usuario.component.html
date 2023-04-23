@@ -21,7 +21,7 @@
       width: 80%;
     "
   >
-    <mat-card-content>
+    <mat-card-content *ngIf="loadFind == false">
       <!-- linha 0 -->
       <div class="linha0">
         <p class="linha0Id"># {{ this.form.value.id }}</p>
@@ -60,7 +60,7 @@
       </div>
     </mat-card-content>
 
-    <mat-card-actions *ngIf="load == false">
+    <mat-card-actions *ngIf="load == false && loadFind == false">
       <!-- voltar -->
       <button
         type="button"
@@ -88,14 +88,14 @@
 
     <!-- load -->
     <div
-      *ngIf="load == true"
+      *ngIf="load == true || loadFind == true"
       style="
         display: flex;
         justify-content: center;
         margin-top: 0px;
         margin-bottom: 30px;
       "
-      class="loading-spinner"
+      class="loading-spinner {{loadFind == true ? 'loadFind' : ''}}"
     >
       <mat-spinner [diameter]="50"></mat-spinner>
     </div>

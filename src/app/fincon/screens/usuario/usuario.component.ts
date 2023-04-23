@@ -35,6 +35,7 @@ import { UsuarioService } from '../../services/usuario.service';
 })
 export class UsuarioComponent implements OnInit {
   load: boolean = false;
+  loadFind: boolean = false;
   disabledSalvar: boolean = false;
 
   form: FormGroup;
@@ -77,6 +78,7 @@ export class UsuarioComponent implements OnInit {
   ngOnInit(): void {}
 
   findById() {
+    this.loadFind = true;
     this.usuario = this.service.findById(this.idUsuario).subscribe(
       (result) => {
         if (result.id != null) {
@@ -89,6 +91,7 @@ export class UsuarioComponent implements OnInit {
             senha: [result.senha, [Validators.required]],
             data_criacao: [formatDataInput(result.data_criacao)],
           });
+          this.loadFind = false;
         }
       },
       (error) => {
@@ -97,6 +100,7 @@ export class UsuarioComponent implements OnInit {
         } else {
           this.onMessage('Problema no servidor');
         }
+        this.loadFind = false;
       }
     );
   }
@@ -140,7 +144,7 @@ export class UsuarioComponent implements OnInit {
   }
 
   changeData(data: String) {
-    this.form.value.data_criacao
+    this.form.value.data_criacao;
   }
 
   validaCampos(): boolean {
