@@ -2,16 +2,16 @@ import { ModelComboBox } from '../fincon/model/ModelComboBox';
 
 const apis = [
   {
-    'name': 'local',
-    'url': 'http://localhost:8090/api'
+    name: 'local',
+    url: 'http://localhost:8082/api',
   },
   {
-    'name': 'hml',
-    'url': 'https://hml-api-fincon.herokuapp.com/api'
+    name: 'hml',
+    url: 'https://hml-api-fincon.herokuapp.com/api',
   },
   {
-    'name': 'prod',
-    'url': 'http://34.127.35.212:8082/api'
+    name: 'prod',
+    url: 'http://34.127.35.212:8082/api',
   },
 ];
 
@@ -42,7 +42,7 @@ export function _formatData2(data: String) {
   if (data) {
     var YYYY = data.toLocaleString().substr(0, 4);
     var MM = data.toLocaleString().substr(5, 2);
-    var DD = data.toLocaleString().substr(8, 2);    
+    var DD = data.toLocaleString().substr(8, 2);
     return `${DD}/${MM}/${YYYY}`;
   }
   return '--';
@@ -194,5 +194,33 @@ export function formatDataInput(data: String) {
 }
 
 export function delay(num: number) {
-  return new Promise( resolve => setTimeout(resolve, num) );
+  return new Promise((resolve) => setTimeout(resolve, num));
 }
+
+export function getDataAtual() {
+  var date = new Date();
+  var day = date.getDate();
+  var month = (date.getMonth() + 1).toString();
+  if (month.toString().length < 10) {
+    month = `0${month}`;
+  }
+  var year = date.getFullYear();
+  return `${year}-${month}-${day}`;
+}
+
+export function formatTelCel(n: String) {
+  var numeroFormatado = n;
+  if (n.substr(2, 9).length == 9) {
+      var ddd = n.substr(0, 2);
+      var nove = n.substr(2, 1);
+      var pDigito = n.substr(3, 4);
+      var sDigito = n.substr(7, 4);
+      numeroFormatado = `(${ddd}) ${nove} ${pDigito}-${sDigito}`;
+  } else {
+      var ddd = n.substr(0, 2);
+      var pDigito = n.substr(2, 4);
+      var sDigito = n.substr(6, 4);
+      numeroFormatado = `(${ddd}) ${pDigito}-${sDigito}`;
+  }
+  return numeroFormatado;
+};
