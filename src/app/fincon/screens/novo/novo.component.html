@@ -9,7 +9,7 @@
     width: 80%;
   "
 >
-  <mat-card-header></mat-card-header>
+  <mat-card-header>Lançamento</mat-card-header>
   <form
     [formGroup]="form"
     (submit)="onSubmit()"
@@ -100,7 +100,6 @@
             [options]="optionsInput"
             formControlName="valor"
           />
-          <div *ngIf="form.get('nome')?.errors">Nome obrigatório</div>
         </mat-form-field>
 
         <!-- Pago -->
@@ -109,7 +108,7 @@
           <mat-radio-group
             aria-labelledby="example-radio-group-label"
             class="example-radio-group"
-            formControlName="pago"
+            formControlName="pago"            
           >
             <div
               style="display: flex !important; flex-direction: row !important"
@@ -119,6 +118,7 @@
                 class="example-radio-button"
                 *ngFor="let season of seasons"
                 [value]="season.value"
+                (click)="isChangePago(season.value)"
               >
                 {{ season.valueText }}
               </mat-radio-button>

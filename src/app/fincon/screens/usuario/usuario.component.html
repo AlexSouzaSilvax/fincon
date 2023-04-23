@@ -9,7 +9,7 @@
     width: 80%;
   "
 >
-  <mat-card-header></mat-card-header>
+  <mat-card-header>Dados do Usuário</mat-card-header>
   <form
     [formGroup]="form"
     (submit)="onSubmit()"
@@ -42,7 +42,7 @@
         <!-- Celular -->
         <mat-form-field class="example-full-width" appearance="outline">
           <mat-label>Celular</mat-label>
-          <input matInput #input formControlName="celular" />
+          <input matInput #input formControlName="celular"  />
         </mat-form-field>
       </div>
       <!-- linha 3 -->

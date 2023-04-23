@@ -54,7 +54,7 @@ mat-card {
   justify-content: center;
   align-items: center !important;
   margin-top: 50px !important;
-  margin: auto;  
+  margin: auto;
 }
 
 div {
@@ -110,11 +110,20 @@ mat-card-actions {
   margin-bottom: 15px !important;
 }
 
-.linha0Id {  
+.linha0Id {
   color: #848484;
 }
 
-.linha0Dt {  
+.linha0Dt {
   color: #848484;
 }
 
+mat-card-header {
+  margin-top: -40px !important;
+  font-size: 30px;
+  font-weight: 400;
+  justify-content: center;
+  display: flex;
+  margin-bottom: 30px;
+  color: #737373 !important;
+}

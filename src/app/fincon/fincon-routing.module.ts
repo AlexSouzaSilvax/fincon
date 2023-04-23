@@ -11,6 +11,7 @@ const routes: Routes = [
   { path: 'principal/novo', component: NovoComponent },
   { path: 'principal/detalhe', component: NovoComponent },
   { path: 'principal/usuario', component: UsuarioComponent },
+  { path: 'principal/detalhe/usuario', component: UsuarioComponent },
 ];
 
 @NgModule({

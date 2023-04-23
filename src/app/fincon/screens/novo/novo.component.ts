@@ -9,6 +9,7 @@ import {
   listaTipoPagamentos,
   _formatData,
   delay,
+  getDataAtual,
 } from 'src/app/shared/Util';
 import { ModelComboBox } from '../../model/ModelComboBox';
 import {
@@ -108,7 +109,6 @@ export class NovoComponent implements OnInit {
     this.lancamentoEdit
       .getItems()
       .map((lancamento) => (this.lancamento = lancamento));
-
     if (this.lancamento) {
       this.isLancamento = true;
       this.form = this.formBuilder.group({
@@ -176,8 +176,8 @@ export class NovoComponent implements OnInit {
       await this.service.save(this.idUsuario, this.lancamento).then(
         async (result) => {
           if (result) {
-            this.onMessage(`${this.actionMessage} com sucesso`);                    
-            await delay(1200); //gambiarra uheuehuheuhe         
+            this.onMessage(`${this.actionMessage} com sucesso`);
+            await delay(1200); //gambiarra uheuehuheuhe
             this.router.navigate([''], { relativeTo: this.route });
           }
         },
@@ -207,5 +207,27 @@ export class NovoComponent implements OnInit {
       return true;
     }
     return false;
+  }
+
+  isChangePago(p: boolean) {
+    if (p) {
+      if (this.form.value.data_prevista_pagamento == null) {
+        this.form = this.formBuilder.group({
+          descricao: [this.form.value.descricao],
+          categoria: [this.form.value.categoria],
+          valor: [this.form.value.valor, [Validators.required]],
+          mensal: [this.form.value.mensal],
+          pago: [this.form.value.pago],
+          observacao: [this.form.value.observacao],
+          tipo_lancamento: [this.form.value.tipo_lancamento],
+          tipo_pagamento: [this.form.value.tipo_pagamento],
+          quantidade_parcelas: [this.form.value.qtd_parcelas],
+          mes_referencia: [this.form.value.mes_referencia],
+          ano_referencia: [this.form.value.ano_referencia],
+          data_vencimento: [this.form.value.data_vencimento],
+          data_prevista_pagamento: [getDataAtual(), [Validators.required]],
+        });
+      }
+    }
   }
 }
