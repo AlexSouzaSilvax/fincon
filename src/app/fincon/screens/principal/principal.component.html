@@ -214,10 +214,30 @@
 
   <!-- lista -->
   <ng-template #table>
+    <div class="pesquisaLista" *ngIf="listaLancamentos2.length > 0">
+      <!-- Search -->
+      <mat-form-field
+        style="margin: 10px; max-width: 500px !important"
+        class="example-full-width"
+        appearance="outline"
+      >
+        <mat-icon matPrefix style="color: #2b70b1">search</mat-icon>
+        <input
+          matInput
+          type="search"
+          placeholder="pesquisa"
+          class="search-input"
+          [(ngModel)]="pesquisa" 
+          (ngModelChange)="onPesquisa()"
+        />
+      </mat-form-field>
+    </div>
+
     <div
       class="example-container mat-elevation-z8"
       *ngIf="listaLancamentos2.length > 0"
     >
+      <!-- Lista -->
       <mat-table
         [dataSource]="listaLancamentos2"
         matSort
@@ -256,7 +276,7 @@
             style="
               display: flex !important;
               justify-content: center !important;
-              align-items: center !important;            
+              align-items: center !important;
               white-space: nowrap;
               overflow: hidden;
               text-overflow: ellipsis;

@@ -75,6 +75,8 @@ export class PrincipalComponent implements OnInit {
 
   items: any[] = [];
 
+  pesquisa: any = '';
+
   constructor(
     private lancamentosService: LancamentoService,
     public dialog: MatDialog,
@@ -338,6 +340,12 @@ export class PrincipalComponent implements OnInit {
       this.onLancamentos();
     }
     this.somaValores(this.listaLancamentos2);
+  }
+
+  onPesquisa() {
+    this.listaLancamentos2 = this.listaLancamentos.filter((item) =>
+      item.descricao.toLowerCase().includes(this.pesquisa.toLowerCase())
+    );
   }
 
   numberToReal(param: number) {

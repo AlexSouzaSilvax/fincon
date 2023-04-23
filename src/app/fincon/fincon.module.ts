@@ -6,7 +6,7 @@ import { LoginComponent } from './screens/login/login.component';
 import { PrincipalComponent } from './screens/principal/principal.component';
 import { AppMaterialModule } from '../shared/app-material/app-material.module';
 import { SharedModule } from '../shared/shared.module';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NovoComponent } from './screens/novo/novo.component';
 import { UsuarioComponent } from './screens/usuario/usuario.component';
 
@@ -22,7 +22,8 @@ import { UsuarioComponent } from './screens/usuario/usuario.component';
     FinconRoutingModule,
     AppMaterialModule,
     SharedModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule
   ]
 })
 export class FinconModule { }

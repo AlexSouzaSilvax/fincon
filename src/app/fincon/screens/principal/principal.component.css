@@ -243,4 +243,13 @@ mat-table {
   .mat-table .mat-cell:first-child {
     margin-top: 4%;
   }
+  .pesquisaLista {
+    display: flex !important;
+    justify-content: center !important;
+  }
+}
+
+.pesquisaLista {
+  display: flex !important;
+  justify-content: flex-end;
 }
