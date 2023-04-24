@@ -138,15 +138,22 @@ export class PrincipalComponent implements OnInit {
       .pipe(
         tap((l) => this.somaValores(l)),
         catchError((error) => {
-          this.onError('Não foi possível carregar os lançamentos');
+          this.onError('Problema no servidor');
           this.load = false;
           return [];
         })
       );
+
     this.lancamentos$.forEach((e) => {
       this.listaLancamentos = e;
       this.listaLancamentos2 = e;
     });
+
+    if(this.listaLancamentos2[0] == null) {
+      this.listaLancamentos = [];
+      this.listaLancamentos2 = [];
+    }
+    
   }
 
   somaValores(lancamentos: Array<LancamentoListaDTO>) {
@@ -262,7 +269,7 @@ export class PrincipalComponent implements OnInit {
   filtrar() {
     const dialogRef = this.dialog.open(FiltroDialogComponent, {
       data: {
-        title: 'Filtros',    
+        title: 'Filtros',
         mesReferencia: this.mesReferencia,
         anoReferencia: this.anoReferencia,
         categorias: listaCategorias,

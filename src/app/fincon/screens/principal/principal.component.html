@@ -214,7 +214,7 @@
 
   <!-- lista vazia -->
   <div
-    *ngIf="load == false && listaLancamentos2.length <= 0 && listaLancamentos2 != null"
+    *ngIf="load == false && listaLancamentos2.length <= 0 || listaLancamentos2 == null "
     style="
       display: flex;
       flex-direction: column;
@@ -234,7 +234,7 @@
   <!-- lista -->
     <div
       class="example-container mat-elevation-z8"
-      *ngIf="load == false && listaLancamentos2.length > 0"
+      *ngIf="load == false && listaLancamentos2.length > 0 && listaLancamentos2 != []"
     >
       <!-- Lista -->
       <mat-table
