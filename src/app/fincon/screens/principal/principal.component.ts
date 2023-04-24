@@ -340,6 +340,7 @@ export class PrincipalComponent implements OnInit {
       this.onLancamentos();
     }
     this.somaValores(this.listaLancamentos2);
+    this.pesquisa = '';
   }
 
   onPesquisa() {
