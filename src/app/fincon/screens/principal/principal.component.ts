@@ -47,7 +47,7 @@ export class PrincipalComponent implements OnInit {
 
   load: boolean = true;
 
-  saldoPositivo: any = null;
+  saldoPositivo: boolean = true;
 
   idUsuario!: string;
 
@@ -92,11 +92,11 @@ export class PrincipalComponent implements OnInit {
     // INICIA TELA SEMPRE NO TOPO
     window.scrollTo(0, 0);
 
-    this.totalEntrada$ = '';
-    this.totalSaida$ = '';
-    this.saldo$ = '';
-    this.poupanca$ = '';
-    this.investimentos$ = '';
+    this.totalEntrada$ = this.numberToReal(0);
+    this.totalSaida$ = this.numberToReal(0);
+    this.saldo$ = this.numberToReal(0);
+    this.poupanca$ = this.numberToReal(0);
+    this.investimentos$ = this.numberToReal(0);
 
     const { mes, ano } = this.mesAnoReferenciaService.getMesAnoAtual();
     this.mesReferencia = mes;
@@ -138,8 +138,10 @@ export class PrincipalComponent implements OnInit {
       .pipe(
         tap((l) => this.somaValores(l)),
         catchError((error) => {
-          this.onError('Problema no servidor');
+          console.log(error);
+          this.onError('Sem conexão com o servidor');
           this.load = false;
+          this.onLogout();
           return [];
         })
       );
@@ -149,11 +151,10 @@ export class PrincipalComponent implements OnInit {
       this.listaLancamentos2 = e;
     });
 
-    if(this.listaLancamentos2[0] == null) {
+    if (this.listaLancamentos2[0] == null) {
       this.listaLancamentos = [];
       this.listaLancamentos2 = [];
     }
-    
   }
 
   somaValores(lancamentos: Array<LancamentoListaDTO>) {
@@ -376,5 +377,9 @@ export class PrincipalComponent implements OnInit {
 
   formatDia(data: String) {
     return Number(_formatDia(data));
+  }
+  onLogout() {
+    this.serviceLS.clear();
+    this.router.navigate([''], { relativeTo: this.route });
   }
 }

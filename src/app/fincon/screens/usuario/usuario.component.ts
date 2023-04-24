@@ -95,12 +95,9 @@ export class UsuarioComponent implements OnInit {
         }
       },
       (error) => {
-        if (error.error.message) {
-          this.onMessage(error.error.message);
-        } else {
-          this.onMessage('Problema no servidor');
-        }
+        this.onMessage('Sem conexão com o servidor');
         this.loadFind = false;
+        this.onLogout();
       }
     );
   }
@@ -119,7 +116,10 @@ export class UsuarioComponent implements OnInit {
             this.onMessage(`Salvo com sucesso`);
           }
         },
-        (error) => this.onMessage(`Problema no servidor`)
+        (error) => {
+          this.onMessage(`Sem conexão com o servidor`);
+          this.onLogout();
+        }
       );
 
       this.load = false; // inativa load
@@ -165,5 +165,9 @@ export class UsuarioComponent implements OnInit {
   //criar um shared
   onVoltar() {
     this.location.back();
+  }
+  onLogout() {
+    this.serviceLS.clear();
+    this.router.navigate([''], { relativeTo: this.route });
   }
 }

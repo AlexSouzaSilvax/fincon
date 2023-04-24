@@ -181,7 +181,10 @@ export class NovoComponent implements OnInit {
             this.router.navigate([''], { relativeTo: this.route });
           }
         },
-        (error) => this.onMessage(`Problema no servidor`)
+        (error) => {
+          this.onMessage(`Sem conexão com o servidor`);
+          this.onLogout();
+        }
       );
 
       this.load = false; // inativa load
@@ -229,5 +232,9 @@ export class NovoComponent implements OnInit {
         });
       }
     }
+  }
+  onLogout() {
+    this.serviceLS.clear();
+    this.router.navigate([''], { relativeTo: this.route });
   }
 }

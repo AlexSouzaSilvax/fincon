@@ -78,17 +78,7 @@ export class LoginComponent implements OnInit {
               this.router.navigate(['principal'], { relativeTo: this.route });
             }
           },
-          (error) => {
-            if (error.error.message) {
-              this.onMessage(error.error.message);
-              this.load = false;
-              this.btnLogin = false;
-            } else {
-              this.onMessage('Sem conexão com servidor');
-              this.load = false;
-              this.btnLogin = false;
-            }
-          }
+          (error) => this.retornoErro(error)
         );
       }
     }
@@ -109,13 +99,7 @@ export class LoginComponent implements OnInit {
         (result) => {
           this.onMessage('Usuário criado com sucesso');
         },
-        (error) => {
-          if (error.error.message) {
-            this.onMessage(error.error.message);
-          } else {
-            this.onMessage('Sem conexão com servidor');
-          }
-        }
+        (error) => this.retornoErro(error)
       );
     }
     this.load = false;
@@ -145,5 +129,32 @@ export class LoginComponent implements OnInit {
     this.snackbar.open(`${actionMessage}`, '', {
       duration: 5000,
     });
+  }
+  onLogout() {
+    this.serviceLS.clear();
+    this.router.navigate([''], { relativeTo: this.route });
+  }
+
+  retornoErro(error: any) {
+    {
+      if (error.name) {
+        if (error.name == 'TimeoutError') {
+          this.retornoErroSemConexao();
+        }
+      }
+      if (error.error.message) {
+        this.onMessage(error.error.message);
+        this.load = false;
+        this.btnLogin = false;
+      } else {
+        this.retornoErroSemConexao();
+      }
+    }
+  }
+  retornoErroSemConexao() {
+    this.onMessage('Sem conexão com o servidor');
+    this.load = false;
+    this.btnLogin = false;
+    this.onLogout();
   }
 }
