@@ -195,11 +195,7 @@
 
   <div class="pesquisaLista" *ngIf="!load">
     <!-- Search -->
-    <mat-form-field
-      style="margin: 10px; max-width: 500px !important"
-      class="example-full-width"
-      appearance="outline"
-    >
+    <mat-form-field class="example-full-width" appearance="outline" style="height: 40px !important">
       <mat-icon matPrefix style="color: #2b70b1">search</mat-icon>
       <input
         matInput
@@ -230,8 +226,6 @@
       Nenhum lançamento encontrado
     </p>
   </div>
-
-
 
   <!-- lista -->
   <ng-template #table>
