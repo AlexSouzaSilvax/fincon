@@ -193,9 +193,13 @@
     <mat-spinner></mat-spinner>
   </div>
 
-  <div class="pesquisaLista" *ngIf="!load">
+  <div class="pesquisaLista" *ngIf="load == false">
     <!-- Search -->
-    <mat-form-field class="example-full-width" appearance="outline" style="height: 40px !important">
+    <mat-form-field
+      class="example-full-width"
+      appearance="outline"
+      style="height: 40px !important"
+    >
       <mat-icon matPrefix style="color: #2b70b1">search</mat-icon>
       <input
         matInput
@@ -210,7 +214,7 @@
 
   <!-- lista vazia -->
   <div
-    *ngIf="load == false && listaLancamentos2.length <= 0; else table"
+    *ngIf="load == false && listaLancamentos2.length <= 0 && listaLancamentos2 != null"
     style="
       display: flex;
       flex-direction: column;
@@ -228,10 +232,9 @@
   </div>
 
   <!-- lista -->
-  <ng-template #table>
     <div
       class="example-container mat-elevation-z8"
-      *ngIf="listaLancamentos2.length > 0"
+      *ngIf="load == false && listaLancamentos2.length > 0"
     >
       <!-- Lista -->
       <mat-table
@@ -420,5 +423,4 @@
         </mat-row>
       </mat-table>
     </div>
-  </ng-template>
 </div>

@@ -72,6 +72,7 @@
         <mat-form-field class="example-width" appearance="outline">
           <mat-label>Mês Referência</mat-label>
           <mat-select formControlName="mesReferencia">
+            <mat-option [value]="0">Nenhum</mat-option>
             <mat-option
               *ngFor="let p of data.mesesReferencia"
               [value]="p.value"

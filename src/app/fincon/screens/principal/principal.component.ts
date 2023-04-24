@@ -128,7 +128,7 @@ export class PrincipalComponent implements OnInit {
   async onLancamentos() {
     this.load = true;
     this.listaLancamentos = [];
-    this.listaLancamentos2 = [];
+    this.listaLancamentos2 = [null];
 
     if (this.idUsuario == null) {
       this.idUsuario = this.serviceLS.get('id');
@@ -139,15 +139,14 @@ export class PrincipalComponent implements OnInit {
         tap((l) => this.somaValores(l)),
         catchError((error) => {
           this.onError('Não foi possível carregar os lançamentos');
+          this.load = false;
           return [];
         })
       );
-
     this.lancamentos$.forEach((e) => {
       this.listaLancamentos = e;
       this.listaLancamentos2 = e;
     });
-    //this.load = false;
   }
 
   somaValores(lancamentos: Array<LancamentoListaDTO>) {
@@ -281,6 +280,7 @@ export class PrincipalComponent implements OnInit {
   }
 
   filtroLista() {
+    this.load = true;
     if (
       this.form.value.pago != null ||
       this.form.value.tipo_pagamento != null ||
@@ -326,10 +326,17 @@ export class PrincipalComponent implements OnInit {
         }
       }
     } else {
-      this.mesAnoReferencia = `${findTipo(
-        this.form.value.mesReferencia,
-        this.mesesReferencia
-      )} de ${findTipo(this.form.value.anoReferencia, this.anosReferencia)}`;
+      if (this.form.value.mesReferencia == 0) {
+        this.mesAnoReferencia = `Todos de ${findTipo(
+          this.form.value.anoReferencia,
+          this.anosReferencia
+        )}`;
+      } else {
+        this.mesAnoReferencia = `${findTipo(
+          this.form.value.mesReferencia,
+          this.mesesReferencia
+        )} de ${findTipo(this.form.value.anoReferencia, this.anosReferencia)}`;
+      }
 
       this.mesReferencia = this.form.value.mesReferencia;
       this.anoReferencia = this.form.value.anoReferencia;
