@@ -95,9 +95,13 @@ export class UsuarioComponent implements OnInit {
         }
       },
       (error) => {
-        this.onMessage('Sem conexão com o servidor');
-        this.loadFind = false;
-        this.onLogout();
+        if (error.status == 500) {
+          this.onMessage(`#${error.status} Falha no sistema`);
+        } else {
+          this.onMessage('Sem conexão com o servidor');
+          this.loadFind = false;
+          this.onLogout();
+        }
       }
     );
   }
@@ -117,8 +121,12 @@ export class UsuarioComponent implements OnInit {
           }
         },
         (error) => {
-          this.onMessage(`Sem conexão com o servidor`);
-          this.onLogout();
+          if (error.status == 500) {
+            this.onMessage(`#${error.status} Falha no sistema`);
+          } else {
+            this.onMessage(`Sem conexão com o servidor`);
+            this.onLogout();
+          }
         }
       );
 

@@ -137,6 +137,9 @@ export class LoginComponent implements OnInit {
 
   retornoErro(error: any) {
     {
+      if (error.status == 500) {
+        this.onMessage(`#${error.status} Falha no sistema`);
+      }
       if (error.name) {
         if (error.name == 'TimeoutError') {
           this.retornoErroSemConexao();

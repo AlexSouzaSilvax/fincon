@@ -138,10 +138,13 @@ export class PrincipalComponent implements OnInit {
       .pipe(
         tap((l) => this.somaValores(l)),
         catchError((error) => {
-          console.log(error);
-          this.onError('Sem conexão com o servidor');
-          this.load = false;
-          this.onLogout();
+          if (error.status == 500) {
+            this.onMessage(`#${error.status} Falha no sistema`);
+          } else {
+            this.onError('Sem conexão com o servidor');
+            this.load = false;
+            this.onLogout();
+          }
           return [];
         })
       );
@@ -381,5 +384,10 @@ export class PrincipalComponent implements OnInit {
   onLogout() {
     this.serviceLS.clear();
     this.router.navigate([''], { relativeTo: this.route });
+  }
+  private onMessage(actionMessage: String) {
+    this.snackbar.open(`${actionMessage}`, '', {
+      duration: 1000,
+    });
   }
 }
