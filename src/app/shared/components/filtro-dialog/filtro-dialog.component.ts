@@ -16,9 +16,9 @@ export class FiltroDialogComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  onConfirm() {
-    this.data.onConfirm();
+  onConfirm() {    
     this.onNoClick();
+    this.data.onConfirm();
   }
 
   onNoClick(): void {

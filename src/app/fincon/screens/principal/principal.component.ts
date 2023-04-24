@@ -262,8 +262,7 @@ export class PrincipalComponent implements OnInit {
   filtrar() {
     const dialogRef = this.dialog.open(FiltroDialogComponent, {
       data: {
-        title: 'Filtros',
-        description: 'teste',
+        title: 'Filtros',    
         mesReferencia: this.mesReferencia,
         anoReferencia: this.anoReferencia,
         categorias: listaCategorias,
@@ -280,7 +279,6 @@ export class PrincipalComponent implements OnInit {
   }
 
   filtroLista() {
-    this.load = true;
     if (
       this.form.value.pago != null ||
       this.form.value.tipo_pagamento != null ||
@@ -348,6 +346,7 @@ export class PrincipalComponent implements OnInit {
     }
     this.somaValores(this.listaLancamentos2);
     this.pesquisa = '';
+    this.dialog.closeAll();
   }
 
   onPesquisa() {
