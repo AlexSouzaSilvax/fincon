@@ -38,7 +38,7 @@ export class PrincipalComponent implements OnInit {
   lancamentos$!: Observable<[LancamentoListaDTO]>;
   listaLancamentos: any[] = [];
   listaLancamentos2: any[] = [];
-  //dataSource = this.lancamentos$;
+  listaLancamentosFiltro: any = null;
   totalEntrada$: string;
   totalSaida$: string;
   saldo$: string;
@@ -297,42 +297,10 @@ export class PrincipalComponent implements OnInit {
       this.form.value.categoria != null ||
       this.form.value.quinzena != null
     ) {
-      if (this.form.value.pago != null) {
-        this.listaLancamentos2 = this.listaLancamentos.filter(
-          (e) => e.pago == this.form.value.pago
-        );
-      }
-      if (this.form.value.tipo_pagamento != null) {
-        this.listaLancamentos2 = this.listaLancamentos.filter(
-          (e) =>
-            e.tipo_pagamento ==
-            listaTipoPagamentos[this.form.value.tipo_pagamento].valueText
-        );
-      }
-      if (this.form.value.tipo_lancamento != null) {
-        this.listaLancamentos2 = this.listaLancamentos.filter(
-          (e) =>
-            e.tipo_lancamento ==
-            listaTipoLancamentos[this.form.value.tipo_lancamento].valueText
-        );
-      }
-      if (this.form.value.categoria != null) {
-        this.listaLancamentos2 = this.listaLancamentos.filter(
-          (e) =>
-            e.categoria == listaCategorias[this.form.value.categoria].valueText
-        );
-      }
-      if (this.form.value.quinzena != null) {
-        if (this.form.value.quinzena == 1) {
-          this.listaLancamentos2 = this.listaLancamentos.filter(
-            (e) => this.formatDia(e.data_prevista_pagamento) <= 15
-          );
-        }
-        if (this.form.value.quinzena == 2) {
-          this.listaLancamentos2 = this.listaLancamentos.filter(
-            (e) => this.formatDia(e.data_prevista_pagamento) > 15
-          );
-        }
+      if (this.listaLancamentosFiltro != null) {
+        this.listaLancamentos2 = this.filtroCampos(this.listaLancamentosFiltro);
+      } else {
+        this.listaLancamentos2 = this.filtroCampos(this.listaLancamentos);
       }
     } else {
       if (this.form.value.mesReferencia == 0) {
@@ -358,6 +326,58 @@ export class PrincipalComponent implements OnInit {
     this.somaValores(this.listaLancamentos2);
     this.pesquisa = '';
     this.dialog.closeAll();
+  }
+
+  filtroCampos(listaFiltro: LancamentoListaDTO[]) {
+    //pago
+    if (this.form.value.pago != null) {
+      listaFiltro = listaFiltro.filter((e) => e.pago == this.form.value.pago);
+      this.listaLancamentosFiltro = listaFiltro;
+    }
+    //tipo_pagamento
+    if (listaTipoPagamentos[this.form.value.tipo_pagamento] != null) {
+      listaFiltro = listaFiltro.filter(
+        (e) =>
+          e.tipo_pagamento ==
+          listaTipoPagamentos[this.form.value.tipo_pagamento].valueText
+      );
+      this.listaLancamentosFiltro = listaFiltro;
+    }
+    //tipo_lancamento
+    if (listaTipoLancamentos[this.form.value.tipo_lancamento] != null) {
+      listaFiltro = listaFiltro.filter(
+        (e) =>
+          e.tipo_lancamento ==
+          listaTipoLancamentos[this.form.value.tipo_lancamento].valueText
+      );
+      this.listaLancamentosFiltro = listaFiltro;
+    }
+    //categoria
+    if (listaCategorias[this.form.value.categoria] != null) {
+      listaFiltro = listaFiltro.filter(
+        (e) =>
+          e.categoria == listaCategorias[this.form.value.categoria].valueText
+      );
+      this.listaLancamentosFiltro = listaFiltro;
+    }
+    //quinzena
+    if (this.form.value.quinzena != null) {
+      if (this.form.value.quinzena == 1) {
+        listaFiltro = listaFiltro.filter(
+          (e) => this.formatDia(e.data_prevista_pagamento) <= 15
+        );
+        this.listaLancamentosFiltro = listaFiltro;
+      }
+      if (this.form.value.quinzena == 2) {
+        listaFiltro = listaFiltro.filter(
+          (e) => this.formatDia(e.data_prevista_pagamento) > 15
+        );
+        this.listaLancamentosFiltro = listaFiltro;
+      }
+    }
+
+    this.listaLancamentosFiltro = null;
+    return listaFiltro;
   }
 
   onPesquisa() {
