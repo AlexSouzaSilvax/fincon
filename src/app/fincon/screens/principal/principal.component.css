@@ -267,6 +267,12 @@ mat-table {
     font-size: 13px;
     height: 70px !important;
   }
+  .lancamentosSegundo2 {
+    margin-left: 30px !important;
+  }
+  .cardTotais {
+    margin-left: 50px !important;
+  }
 }
 
 .pesquisaLista {
@@ -274,4 +280,25 @@ mat-table {
   justify-content: flex-end;
   height: 55px;
   font-size: 12px;
+}
+
+.back-to-top {
+  background-color: #1461a980;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
+  border-radius: 65px;
+  bottom: 14px;
+  color: #f1f1f1;
+  cursor: pointer;
+  height: 40px;
+  position: fixed;
+  right: 2px;
+  width: 40px;
+  z-index: 3;
+}
+.back-to-top::after {
+  content: "▲";
+  display: flex;
+  justify-content: center;
+  padding-left: 1px;
+  padding-top: 10px;
 }

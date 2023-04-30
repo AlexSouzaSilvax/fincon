@@ -126,6 +126,7 @@ export class PrincipalComponent implements OnInit {
   }
 
   async onLancamentos() {
+    this.pesquisa = '';
     this.load = true;
     this.listaLancamentos = [];
     this.listaLancamentos2 = [null];
@@ -186,9 +187,6 @@ export class PrincipalComponent implements OnInit {
       if (lancamentos[i].categoria == 'Investimentos') {
         if (lancamentos[i].tipo_lancamento == 'Saída') {
           somaInvestimentosEntradas += lancamentos[i].valor;
-        }
-        if (lancamentos[i].tipo_lancamento == 'Entrada') {
-          somaInvestimentosSaidas += lancamentos[i].valor;
         }
       }
       // }
@@ -257,7 +255,7 @@ export class PrincipalComponent implements OnInit {
 
   onDelete(id: string) {
     this.lancamentosService.delete(id).subscribe(
-      (result) => {
+      (result) => {       
         this.onSuccess('Apagado com sucesso');
       },
       (error) => {
@@ -320,7 +318,7 @@ export class PrincipalComponent implements OnInit {
 
       this.mesAnoReferenciaService.setMes(this.form.value.mesReferencia);
       this.mesAnoReferenciaService.setAno(this.form.value.anoReferencia);
-
+      this.pesquisa = '';
       this.onLancamentos();
     }
     this.somaValores(this.listaLancamentos2);
@@ -386,6 +384,12 @@ export class PrincipalComponent implements OnInit {
     );
   }
 
+  limparFiltros() {
+    this.pesquisa = '';
+    this.listaLancamentos2 = this.listaLancamentos;
+    this.somaValores(this.listaLancamentos2);
+  }
+
   numberToReal(param: number) {
     return _numberToReal(param);
   }
@@ -409,5 +413,8 @@ export class PrincipalComponent implements OnInit {
     this.snackbar.open(`${actionMessage}`, '', {
       duration: 1000,
     });
+  }
+  scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 }

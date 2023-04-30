@@ -153,6 +153,11 @@ export class NovoComponent implements OnInit {
   }
 
   async onSubmit() {
+    //visivel somente quando vai atualizar
+    var data_lancamento: any = '';
+    if (this.lancamento?.data_lancamento != undefined) {
+      data_lancamento = this.lancamento.data_lancamento;
+    }
     this.lancamento = this.form.value;
     //valida campos
     if (this.validaCampos()) {
@@ -163,6 +168,8 @@ export class NovoComponent implements OnInit {
       if (this.lancamento?.id != null) {
         this.actionMessage = 'Atualizado';
       }
+      //visivel somente quando vai atualizar
+      this.lancamento.data_lancamento = data_lancamento;
       this.lancamento.data_vencimento = changeData(
         this.lancamento.data_vencimento
       );
@@ -177,7 +184,7 @@ export class NovoComponent implements OnInit {
         async (result) => {
           if (result) {
             this.onMessage(`${this.actionMessage} com sucesso`);
-            await delay(1200); //gambiarra uheuehuheuhe
+            await delay(1100); //gambiarra uheuehuheuhe
             this.router.navigate([''], { relativeTo: this.route });
           }
         },
