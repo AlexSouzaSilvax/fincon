@@ -10,6 +10,11 @@ html {
   background-color: #f1f1f1;
 }
 
+body,
+html {
+  overflow-x: hidden !important;
+}
+
 .mat-progress-spinner circle,
 .mat-spinner circle {
   stroke: #2b70b1 !important;

@@ -268,10 +268,10 @@ mat-table {
     height: 70px !important;
   }
   .lancamentosSegundo2 {
-    margin-left: 30px !important;
+    margin-left: 50px !important;
   }
   .cardTotais {
-    margin-left: 50px !important;
+    margin-left: 100px !important;
   }
 }
 
@@ -294,6 +294,7 @@ mat-table {
   right: 2px;
   width: 40px;
   z-index: 3;
+  margin: 5px;
 }
 .back-to-top::after {
   content: "▲";

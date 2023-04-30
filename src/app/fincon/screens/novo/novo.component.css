@@ -54,12 +54,16 @@ mat-card {
   justify-content: center;
   align-items: center !important;
   margin-top: 50px !important;
-  margin: auto;
+  margin: auto;  
 }
 
 div {
   display: flex;
   align-items: center;
+}
+
+form {
+  margin-left: 30px;
 }
 
 /* mobile */
