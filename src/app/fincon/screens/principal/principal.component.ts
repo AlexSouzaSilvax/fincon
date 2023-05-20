@@ -385,6 +385,15 @@ export class PrincipalComponent implements OnInit {
   }
 
   limparFiltros() {
+    this.form = this.formBuilder.group({
+      mesReferencia: [this.mesReferencia],
+      anoReferencia: [this.anoReferencia],
+      categoria: [null],
+      pago: [null],
+      tipo_lancamento: [null],
+      tipo_pagamento: [null],
+      quinzena: [null],
+    });
     this.pesquisa = '';
     this.listaLancamentos2 = this.listaLancamentos;
     this.somaValores(this.listaLancamentos2);
