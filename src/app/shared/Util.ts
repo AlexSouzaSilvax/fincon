@@ -15,7 +15,7 @@ const apis = [
   },
 ];
 
-export const API = apis[2];
+export const API = apis[0];
 
 export function _numberToReal(n: number) {
   return (
@@ -199,13 +199,16 @@ export function delay(num: number) {
 
 export function getDataAtual() {
   var date = new Date();
-  var day = date.getDate();
+  var day: any = date.getDate();
   var month = (date.getMonth() + 1).toString();
   if (month.toString().length < 10) {
     month = `0${month}`;
   }
+  if (day.toString().length == 1) {
+    day = `0${day}`;
+  }
   var year = date.getFullYear();
-  return `${year}-${month}-${day}`;
+  return `${year  }-${month}-${day}`;
 }
 
 export function formatTelCel(n: String) {
