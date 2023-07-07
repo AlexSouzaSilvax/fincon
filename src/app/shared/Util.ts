@@ -119,9 +119,13 @@ export const listaParcelas: ModelComboBox[] = [
   { value: 11, valueText: '11x' },
   { value: 12, valueText: '12x' },
   { value: 24, valueText: '24x' },
+  { value: 30, valueText: '30x' },
   { value: 36, valueText: '36x' },
+  { value: 43, valueText: '43x' },
   { value: 48, valueText: '48x' },
+  { value: 60, valueText: '60x' },
   { value: 70, valueText: '70x' },
+  { value: 360, valueText: '360x' },
 ];
 
 export const listaMesReferencia: ModelComboBox[] = [
