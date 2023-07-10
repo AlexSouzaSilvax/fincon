@@ -6,7 +6,8 @@ const routes: Routes = [
   { path: 'fincon', loadChildren: () => import('./fincon/fincon.module').then(m => m.FinconModule) },
   { path: 'principal', loadChildren: () => import('./fincon/fincon.module').then(m => m.FinconModule) },
   { path: 'novo', loadChildren: () => import('./fincon/fincon.module').then(m => m.FinconModule) },
-  { path: 'usuario', loadChildren: () => import('./fincon/fincon.module').then(m => m.FinconModule) }
+  { path: 'usuario', loadChildren: () => import('./fincon/fincon.module').then(m => m.FinconModule) },
+  { path: 'lancamento-fixo', loadChildren: () => import('./fincon/fincon.module').then(m => m.FinconModule) }
 ];
 
 @NgModule({

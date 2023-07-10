@@ -9,13 +9,15 @@ import { SharedModule } from '../shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NovoComponent } from './screens/novo/novo.component';
 import { UsuarioComponent } from './screens/usuario/usuario.component';
+import { LancamentosFixoComponent } from './screens/lancamentos_fixo/lancamentos_fixo.component';
 
 @NgModule({
   declarations: [
     LoginComponent,
     PrincipalComponent,
     NovoComponent,
-    UsuarioComponent    
+    UsuarioComponent,
+    LancamentosFixoComponent    
   ],
   imports: [
     CommonModule,

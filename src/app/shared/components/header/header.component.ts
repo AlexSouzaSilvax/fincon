@@ -31,4 +31,13 @@ export class HeaderComponent implements OnInit {
   usuario() {
     this.router.navigate(['usuario'], { relativeTo: this.route });
   }
+
+  lancamentosFixo() {
+    this.router.navigate(['lancamento-fixo'], { relativeTo: this.route });
+  }
+
+  principal() {
+    this.router.navigate([''], { relativeTo: this.route });
+  }
+
 }

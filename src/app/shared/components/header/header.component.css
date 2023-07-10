@@ -15,3 +15,7 @@ mat-card-title {
   border-radius: 0px;
   height: 2vh !important;
 }
+
+.divTxtPrincipal {
+  cursor: pointer !important;
+}

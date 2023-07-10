@@ -1,6 +1,8 @@
 <div>
   <mat-card>
-    <mat-card-title>Fincon</mat-card-title>
+    <div (click)="principal()" class="divTxtPrincipal">
+      <mat-card-title>Fincon</mat-card-title>
+    </div>
     <div
       style="display: flex; justify-content: end; margin-top: -37px !important"
     >
@@ -12,13 +14,21 @@
         <mat-icon style="color: white">more_vert</mat-icon>
       </button>
       <mat-menu #menu="matMenu">
-        <button mat-menu-item disabled *ngIf="base != 'prod'">
+        <!--button mat-menu-item disabled *ngIf="base != 'prod'">
           <mat-icon>info</mat-icon>
           <span>{{base}}</span>
-        </button>
+        </button-->
         <button mat-menu-item (click)="usuario()">
           <mat-icon>person</mat-icon>
           <span>{{login}}</span>
+        </button>
+        <button mat-menu-item (click)="principal()">
+          <mat-icon>home</mat-icon>
+          <span>Principal</span>
+        </button>
+        <button mat-menu-item (click)="lancamentosFixo()">
+          <mat-icon>request_quote</mat-icon>
+          <span>Lançamentos Fixos</span>
         </button>
         <button mat-menu-item (click)="onLogout()">
           <mat-icon>logout</mat-icon>
