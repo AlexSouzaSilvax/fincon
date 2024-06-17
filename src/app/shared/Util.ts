@@ -15,6 +15,8 @@ const apis = [
   },
 ];
 
+export const API = apis[0];
+
 export function _numberToReal(n: number) {
   return (
     'R$ ' +
