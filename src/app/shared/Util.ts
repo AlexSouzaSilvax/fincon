@@ -1,21 +1,12 @@
 import { ModelComboBox } from '../fincon/model/ModelComboBox';
 
-const apis = [
-  {
-    name: 'local',
-    url: 'http://localhost:8082/api',
-  },
-  {
-    name: 'hml',
-    url: 'https://hml-api-fincon.herokuapp.com/api',
-  },
-  {
-    name: 'prod',
-    url: 'http://34.127.35.212:8082/api',
-  },
-];
+//LOCAL
+//export const API = "http://localhost:8080/api";
+//HML
+//export const API = 'https://hml-api-fincon.herokuapp.com/api';
+//PROD
+export const API = "https://api-fincon.onrender.com/api";
 
-export const API = apis[0];
 
 export function _numberToReal(n: number) {
   return (
