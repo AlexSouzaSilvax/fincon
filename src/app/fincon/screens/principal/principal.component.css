@@ -1,0 +1,305 @@
+mat-card-title,
+mat-card-content {
+  display: flex;
+  justify-content: center;
+}
+
+mat-card-title {
+  color: #f1f1f1;
+}
+
+.mat-card {
+  background-color: #1461a9;
+  box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0) !important;
+  border-radius: 0px;
+  height: 2vh !important;
+}
+
+.lancamento {
+  /* background-color: black; */
+  width: 100%;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  align-content: space-between;
+}
+
+.primeiro {
+  /*background-color: red;*/
+  width: 100%;
+}
+
+.segundo {
+  /* background-color: yellow;*/
+  width: 100%;
+}
+.terceiro {
+  /* background-color: green; */
+  width: 100%;
+}
+
+.terceiroDivButton {
+  display: flex;
+  justify-content: flex-start;
+  margin: 10px;
+}
+
+.lancamentos {
+  display: flex;
+  flex-direction: row;
+}
+
+.lancamentosPrimeiro {
+  width: 44%;
+  height: 60px;
+  text-align: start;
+}
+
+.lancamentosPrimeiroTitle {
+  font-size: 20px;
+  color: #444;
+  padding: 10px;
+}
+
+.lancamentosSegundo {
+  width: 44%;
+  height: 60px;
+  text-align: start;
+  display: flex;
+  align-items: center;
+}
+
+.lancamentosSegundoTitle {
+  font-size: 14px;
+  color: #696969;
+}
+
+.lancamentosSegundo2 {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.lancamentosSegundoTitle2 {
+  font-size: 14px;
+  color: #696969;
+}
+
+.divCardTotais {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 80%;
+}
+
+.cardTotais {
+  margin: 10px !important;
+  height: 60px !important;
+  background-color: #f1f1f1;
+  border-radius: 4px;
+  width: 150px;
+  min-width: 136px !important;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
+}
+
+.cardTotaisSimples {
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1), 0 3px 10px 0 rgba(0, 0, 0, 0.19) !important;
+}
+
+.cardTotaisLoad {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f1f1f1 !important;
+}
+
+.cardTotaisDivTitle {
+  display: flex;
+  flex-direction: row;
+  margin-top: 2px !important;
+}
+
+.cardTotaisDivTitleImg {
+  margin-left: 12px;
+  margin-top: -12px;
+}
+
+.titleCardTotais {
+  font-size: 14px;
+  color: #909090;
+  width: 80%;
+}
+
+.valorCardTotais {
+  margin-top: 5px !important;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 500;
+  color: #444;
+  max-width: 500px; /* Limite maximo do texto */
+  white-space: nowrap; /* Removendo quebra de linha*/
+  overflow: hidden; /* Removendo a barra de rolagem*/
+  text-overflow: ellipsis; /* Adicionando "..." ao final do texto*/
+}
+
+.divTable {
+  margin-top: 160px;
+  padding: 20px;
+  margin-bottom: 40px;
+  /*width: 80%;
+  display: flex;  
+  align-items: center;*/
+}
+
+mat-table {
+  width: 100%;
+}
+
+.tdValorEntrada {
+  color: #33cc95 !important;
+}
+
+.tdValorSaida {
+  color: #cc3333 !important;
+}
+
+.cardTotaisPositivo {
+  background-color: #33cc95;
+}
+
+.cardTotaisNegativo {
+  background-color: #cc3333;
+}
+
+@media only screen and (max-width: 750px) {
+  .divCardTotais {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+  .cardTotais {
+    width: 200px;
+  }
+  .divTable {
+    margin-top: 650px;
+  }
+}
+
+@media only screen and (max-width: 414px) {
+  .lancamentosSegundoTitle {
+    display: none;
+  }
+  .terceiro {
+  }
+  .lancamentosSegundo2 {
+  }
+  .divCardTotais {
+  }
+}
+
+@media only screen and (min-width: 415px) {
+  .lancamentosSegundoTitle2 {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 960px) {
+  .mat-table {
+    border: 0;
+    vertical-align: middle;
+  }
+
+  .mat-table caption {
+    font-size: 1em;
+  }
+
+  /*  Enable this to hide header */
+  .mat-table .mat-header-cell {
+    border: 10px solid;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+  }
+
+  .mat-table .mat-row {
+    border-bottom: 5px solid #f1f1f1;
+    display: block;
+  }
+  /*
+  .mat-table .mat-row:nth-child(even) {background: #CCC}
+  .mat-table .mat-row:nth-child(odd) {background: #FFF}
+  */
+  .mat-table .mat-cell {
+    border-bottom: 1px solid #f1f1f1;
+    display: block;
+    font-size: 1em;
+    text-align: center;
+    font-weight: bold;
+    height: 30px;
+    margin-bottom: 4%;
+  }
+  .mat-table .mat-cell:before {
+    /*
+    * aria-label has no advantage, it won't be read inside a table
+    content: attr(aria-label);
+    */
+    content: attr(data-label);
+    float: left;
+    text-transform: uppercase;
+    font-weight: normal;
+
+    font-size: 0.85em;
+  }
+  .mat-table .mat-cell:last-child {
+    border-bottom: 0;
+  }
+  .mat-table .mat-cell:first-child {
+    margin-top: 4%;
+  }
+  .pesquisaLista {
+    display: flex !important;
+    justify-content: center !important;
+    font-size: 13px;
+    height: 70px !important;
+  }
+  .lancamentosSegundo2 {
+    margin-left: 50px !important;
+  }
+  .cardTotais {
+    margin-left: 100px !important;
+  }
+}
+
+.pesquisaLista {
+  display: flex;
+  justify-content: flex-end;
+  height: 55px;
+  font-size: 12px;
+}
+
+.back-to-top {
+  background-color: #1461a980;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
+  border-radius: 65px;
+  bottom: 14px;
+  color: #f1f1f1;
+  cursor: pointer;
+  height: 40px;
+  position: fixed;
+  right: 2px;
+  width: 40px;
+  z-index: 3;
+  margin: 5px;
+}
+.back-to-top::after {
+  content: "▲";
+  display: flex;
+  justify-content: center;
+  padding-left: 1px;
+  padding-top: 10px;
+}

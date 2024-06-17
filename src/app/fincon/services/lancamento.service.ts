@@ -13,8 +13,8 @@ export class LancamentoService {
 
   listMain(idUsuario: string, mesReferencia: string, anoReferencia: string) {
     return this.httpClient
-      .get<LancamentoListaDTO[]>(
-        `${API}/lancamentos/find-list-main?id_usuario=${idUsuario}&mes_referencia=${mesReferencia}&ano_referencia=${anoReferencia}`
+      .get<[LancamentoListaDTO]>(
+        `${API.url}/lancamentos/find-list-main?id_usuario=${idUsuario}&mes_referencia=${mesReferencia}&ano_referencia=${anoReferencia}`
       )
       .pipe(
         first()
@@ -26,16 +26,26 @@ export class LancamentoService {
   save(idUsuario: string, record: Lancamento) {
     if (record.id) {
       return this.httpClient
-        .post<Lancamento>(`${API}/lancamentos/update?id_usuario=${idUsuario}`, record)
-        .pipe(first());
+        .post<Lancamento>(
+          `${API.url}/lancamentos/update?id_usuario=${idUsuario}`,
+          record
+        )
+        .toPromise();
+      //.pipe(first());
     } else {
       return this.httpClient
-        .post<Lancamento>(`${API}/lancamentos/create?id_usuario=${idUsuario}`, record)
-        .pipe(first());
+        .post<Lancamento>(
+          `${API.url}/lancamentos/create?id_usuario=${idUsuario}`,
+          record
+        )
+        .toPromise();
+      //.pipe(first());
     }
   }
 
   delete(id: string) {
-    return this.httpClient.post<String>(`${API}/lancamentos/delete`, id).pipe(first());
+    return this.httpClient
+      .post<String>(`${API.url}/lancamentos/delete`, id)
+      .pipe(first());
   }
 }

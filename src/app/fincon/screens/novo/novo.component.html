@@ -1,24 +1,36 @@
 <header-component></header-component>
-<!-- load -->
-<div style="width: 100%; height: 5px">
-  <div *ngIf="load == true" class="loading-spinner">
-    <mat-progress-bar
-      mode="indeterminate"
-      color="accent"
-      style="background-color: #1461a9 !important"
-    ></mat-progress-bar>
-  </div>
-</div>
 
-<div class="lancamento">
-  <div class="primeiro"></div>
-
-  <div class="segundo">
-    <form [formGroup]="form" class="min-width">
-      <!-- Linha 1 -->
-      <div class="example-container">
+<mat-card
+  style="
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+  "
+>
+  <mat-card-header>Lançamento</mat-card-header>
+  <form
+    [formGroup]="form"
+    (submit)="onSubmit()"
+    style="
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 80%;
+    "
+  >
+    <mat-card-content>
+      <!-- linha 0 -->
+      <div class="linha0" *ngIf="isLancamento == true">
+        <p class="linha0Id"># {{ lancamento.id }}</p>
+        <p class="linha0Dt">{{ formatData(lancamento.data_lancamento) }}</p>
+      </div>
+      <!-- linha 1 -->
+      <div>
         <!-- Tipo Lançamento -->
-        <mat-form-field class="example-full-width" appearance="outline">
+        <mat-form-field class="example-width" appearance="outline">
           <mat-label>* Tipo Lançamento</mat-label>
           <mat-select formControlName="tipo_lancamento">
             <mat-option
@@ -31,7 +43,7 @@
         </mat-form-field>
 
         <!-- Categoria -->
-        <mat-form-field class="example-full-width" appearance="outline">
+        <mat-form-field class="example-width" appearance="outline">
           <mat-label>* Categoria</mat-label>
           <mat-select formControlName="categoria">
             <mat-option
@@ -52,11 +64,13 @@
             margin-top: 10px;
           "
         >
-          <p>Mensal</p>
+          <p class="{{ isLancamento == true ? 'mensalTrue' : 'mensalFalse' }}">
+            Mensal
+          </p>
           <mat-checkbox
             color="primary"
-            style="margin-left: 15px; margin-top: -5px"
-            [disabled]="!selectTipoPagamento.value"
+            style="margin-left: 5px; margin-top: -5px"
+            [disabled]="!selectTipoPagamento.value || isLancamento == true"
             [formControl]="mensalSelect"
             formControlName="mensal"
           ></mat-checkbox>
@@ -65,19 +79,19 @@
           </p>
         </div>
       </div>
-
-      <!-- Linha 2 -->
-      <div class="example-container">
+      <!-- linha 2 -->
+      <div>
         <!-- Descrição -->
         <mat-form-field class="example-full-width" appearance="outline">
-          <mat-label>* Descrição</mat-label>
+          <mat-label>Descrição</mat-label>
           <input matInput #input formControlName="descricao" />
         </mat-form-field>
 
         <!-- Valor -->
         <mat-form-field class="example-full-width" appearance="outline">
-          <mat-label>* Valor</mat-label>
+          <mat-label>Valor</mat-label>
           <input
+            required
             matInput
             #input
             currencyMask
@@ -88,9 +102,7 @@
 
         <!-- Pago -->
         <div style="margin: 10px">
-          <label id="example-radio-group-label" style="margin-left: 40px"
-            >Pago</label
-          >
+          <label id="example-radio-group-label" class="labelPago">Pago</label>
           <mat-radio-group
             aria-labelledby="example-radio-group-label"
             class="example-radio-group"
@@ -104,6 +116,7 @@
                 class="example-radio-button"
                 *ngFor="let season of seasons"
                 [value]="season.value"
+                (click)="isChangePago(season.value)"
               >
                 {{ season.valueText }}
               </mat-radio-button>
@@ -111,9 +124,8 @@
           </mat-radio-group>
         </div>
       </div>
-
-      <!-- Linha 3 -->
-      <div class="example-container">
+      <!-- linha 3 -->
+      <div>
         <!-- Tipo Pagamentos -->
         <mat-form-field class="example-full-width" appearance="outline">
           <mat-label>* Tipo de Pagamento</mat-label>
@@ -134,12 +146,12 @@
         <!-- Parcelas -->
         <mat-form-field
           hintLabel="Este lançamento será replicado a quantidade de parcelas selecionada"
-          appearance="fill"
+          appearance="outline"
         >
           <mat-label>Parcelas</mat-label>
           <mat-select
-            [disabled]="selectTipoPagamento.value"
             formControlName="quantidade_parcelas"
+            [disabled]="isLancamento == true"
           >
             <mat-option
               *ngFor="let parcela of qtdParcelas"
@@ -151,7 +163,10 @@
         </mat-form-field>
 
         <!-- Data de Vencimento -->
-        <mat-form-field class="example-full-width" appearance="outline">
+        <mat-form-field
+          class="example-width formfieldDtVenc"
+          appearance="outline"
+        >
           <mat-label>Data de Vencimento</mat-label>
           <input
             matInput
@@ -161,9 +176,8 @@
           />
         </mat-form-field>
       </div>
-
-      <!-- Linha 4 -->
-      <div class="example-container" style="margin-top: 15px">
+      <!-- linha 4 -->
+      <div class="divLinha4">
         <!-- Mês/Ano Referência -->
         <mat-form-field class="example-full-width" appearance="outline">
           <mat-label>* Mês Referência</mat-label>
@@ -196,13 +210,11 @@
           />
         </mat-form-field>
       </div>
-
-      <!-- Linha 5 -->
-      <div class="example-container" style="width: 100%">
+      <!-- linha 5 -->
+      <div>
         <!-- Observação -->
         <mat-form-field
-          style="width: 100%"
-          class="example-full-width"
+          class="example-width formFieldObservacao"
           appearance="outline"
         >
           <mat-label>Observação</mat-label>
@@ -214,15 +226,13 @@
           ></textarea>
         </mat-form-field>
       </div>
-    </form>
-    <!-- Linha 6 -->
-    <div
-      class="example-container"
-      style="margin: 10px; justify-content: center"
-    >
+    </mat-card-content>
+
+    <mat-card-actions *ngIf="load == false">
       <!-- voltar -->
       <button
-        mat-raised-button
+        type="button"
+        mat-button
         (click)="onVoltar()"
         style="background-color: transparent !important; color: #808080"
       >
@@ -233,7 +243,7 @@
       <button
         [disabled]="disabledSalvar"
         mat-raised-button
-        (click)="onSubmit()"
+        type="submit"
         style="
           margin-left: 10px;
           background-color: #1461a9 !important;
@@ -242,8 +252,22 @@
       >
         Salvar
       </button>
-    </div>
-  </div>
+    </mat-card-actions>
 
-  <div class="terceiro"></div>
-</div>
+    <!-- load -->
+    <div
+      *ngIf="load == true"
+      style="
+        display: flex;
+        justify-content: center;
+        margin-top: 0px;
+        margin-bottom: 30px;
+      "
+      class="loading-spinner"
+    >
+      <mat-spinner [diameter]="50"></mat-spinner>
+    </div>
+  </form>
+
+  <mat-card-footer></mat-card-footer>
+</mat-card>

@@ -1,0 +1,105 @@
+<header-component></header-component>
+
+<mat-card
+  style="
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+  "
+>
+  <mat-card-header>Dados do Usuário</mat-card-header>
+  <form
+    [formGroup]="form"
+    (submit)="onSubmit()"
+    style="
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 80%;
+    "
+  >
+    <mat-card-content *ngIf="loadFind == false">
+      <!-- linha 0 -->
+      <div class="linha0">
+        <p class="linha0Id"># {{ this.form.value.id }}</p>
+        <p class="linha0Dt">{{ formatData2(this.form.value.data_criacao) }}</p>
+      </div>
+      <!-- linha 1 -->
+      <div>
+        <!-- Nome -->
+        <mat-form-field class="example-full-width" appearance="outline">
+          <mat-label>Nome</mat-label>
+          <input matInput #input formControlName="nome" />
+        </mat-form-field>
+        <!-- E-mail -->
+        <mat-form-field class="example-full-width" appearance="outline">
+          <mat-label>E-mail</mat-label>
+          <input matInput #input formControlName="email" />
+        </mat-form-field>
+        <!-- Celular -->
+        <mat-form-field class="example-full-width" appearance="outline">
+          <mat-label>Celular</mat-label>
+          <input matInput #input formControlName="celular"  />
+        </mat-form-field>
+      </div>
+      <!-- linha 3 -->
+      <div>
+        <!-- Login -->
+        <mat-form-field class="example-full-width" appearance="outline">
+          <mat-label>Login</mat-label>
+          <input matInput #input formControlName="login" />
+        </mat-form-field>
+        <!-- Senha -->
+        <mat-form-field class="example-full-width" appearance="outline">
+          <mat-label>Senha</mat-label>
+          <input matInput #input formControlName="senha" />
+        </mat-form-field>        
+      </div>
+    </mat-card-content>
+
+    <mat-card-actions *ngIf="load == false && loadFind == false">
+      <!-- voltar -->
+      <button
+        type="button"
+        mat-button
+        (click)="onVoltar()"
+        style="background-color: transparent !important; color: #808080"
+      >
+        Voltar
+      </button>
+
+      <!-- Salvar -->
+      <button
+        [disabled]="disabledSalvar"
+        mat-raised-button
+        type="submit"
+        style="
+          margin-left: 10px;
+          background-color: #1461a9 !important;
+          color: white;
+        "
+      >
+        Salvar
+      </button>
+    </mat-card-actions>
+
+    <!-- load -->
+    <div
+      *ngIf="load == true || loadFind == true"
+      style="
+        display: flex;
+        justify-content: center;
+        margin-top: 0px;
+        margin-bottom: 30px;
+      "
+      class="loading-spinner {{loadFind == true ? 'loadFind' : ''}}"
+    >
+      <mat-spinner [diameter]="50"></mat-spinner>
+    </div>
+  </form>
+
+  <mat-card-footer></mat-card-footer>
+</mat-card>

@@ -1,0 +1,465 @@
+<header-component></header-component>
+
+<div class="lancamento">
+  <div class="primeiro"></div>
+
+  <div class="segundo">
+    <!-- Filtro -->
+    <div class="lancamentos">
+      <div class="lancamentosPrimeiro">
+        <p class="lancamentosPrimeiroTitle">Lançamentos</p>
+      </div>
+      <div class="lancamentosSegundo">
+        <p class="lancamentosSegundoTitle">
+          {{ mesAnoReferencia }}
+        </p>
+      </div>
+
+      <div>
+        <div style="display: flex; flex-direction: row">
+          <button
+            mat-button
+            style="color: #cccc; font-size: 14px; margin-top: 5px"
+            (click)="limparFiltros()"
+          >
+            Limpar filtros
+          </button>
+          <button
+            mat-icon-button
+            aria-label="Example icon button with a vertical three dot icon"
+            style="color: #444"
+            (click)="filtrar()"
+          >
+            <mat-icon>filter_alt</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- mesAnoReferencia -->
+    <div class="lancamentosSegundo2">
+      <p class="lancamentosSegundoTitle2">
+        {{ mesAnoReferencia }}
+      </p>
+    </div>
+    <!-- cardTotais -->
+    <div class="lancamentos">
+      <div class="divCardTotais">
+        <!-- Entrada -->
+        <mat-card
+          class="cardTotais {{
+            load == true
+              ? ' cardTotaisSimples cardTotaisLoad'
+              : 'cardTotaisSimples'
+          }}"
+        >
+          <!-- load -->
+          <div *ngIf="load == true" class="loading-spinner">
+            <mat-spinner [diameter]="50"></mat-spinner>
+          </div>
+          <div *ngIf="load == false">
+            <div class="cardTotaisDivTitle">
+              <p class="titleCardTotais">+ Entradas</p>
+              <img
+                class="cardTotaisDivTitleImg"
+                src="../../../assets/icons/entradas.svg"
+              />
+            </div>
+            <mat-card-subtitle class="valorCardTotais">{{
+              totalEntrada$
+            }}</mat-card-subtitle>
+          </div>
+        </mat-card>
+
+        <!-- Saida -->
+        <mat-card
+          class="cardTotais {{
+            load == true
+              ? 'cardTotaisSimples cardTotaisLoad'
+              : 'cardTotaisSimples'
+          }}"
+        >
+          <!-- load -->
+          <div *ngIf="load == true" class="loading-spinner">
+            <mat-spinner [diameter]="50"></mat-spinner>
+          </div>
+          <div *ngIf="load == false">
+            <div class="cardTotaisDivTitle">
+              <p class="titleCardTotais">- Saídas</p>
+              <img
+                class="cardTotaisDivTitleImg"
+                src="../../../assets/icons/saidas.svg"
+              />
+            </div>
+            <mat-card-subtitle class="valorCardTotais">{{
+              totalSaida$
+            }}</mat-card-subtitle>
+          </div>
+        </mat-card>
+
+        <!-- Saldo  -->
+        <mat-card
+          class="cardTotais {{
+            load == true
+              ? 'cardTotaisSimples cardTotaisLoad'
+              : ' cardTotaisSimples'
+          }}
+                    {{
+            saldoPositivo ? 'cardTotaisPositivo' : 'cardTotaisNegativo'
+          }}"
+        >
+          <!-- load -->
+          <div *ngIf="load == true" class="loading-spinner">
+            <mat-spinner [diameter]="50"></mat-spinner>
+          </div>
+          <div *ngIf="load == false">
+            <div class="cardTotaisDivTitle">
+              <p class="titleCardTotais" style="color: white">Saldo</p>
+              <img
+                style="
+                  width: 20px;
+                  height: 20px;
+                  border-radius: 50%;
+                  padding: 2px;
+                  margin-left: 12px;
+                  margin-top: -4px;
+                "
+                src="../../../assets/icons/moneyWhite.svg"
+              />
+            </div>
+            <mat-card-subtitle class="valorCardTotais" style="color: white">{{
+              saldo$
+            }}</mat-card-subtitle>
+          </div>
+        </mat-card>
+
+        <!-- Poupança -->
+        <mat-card
+          class="cardTotais {{
+            load == true
+              ? ' cardTotaisSimples cardTotaisLoad'
+              : 'cardTotaisSimples'
+          }}"
+          style="background-color: #4280ba"
+        >
+          <!-- load -->
+          <div *ngIf="load == true" class="loading-spinner">
+            <mat-spinner [diameter]="50"></mat-spinner>
+          </div>
+          <div *ngIf="load == false">
+            <div class="cardTotaisDivTitle">
+              <p class="titleCardTotais" style="color: white">Poupança</p>
+              <img
+                style="
+                  width: 20px;
+                  height: 20px;
+                  border-radius: 50%;
+                  padding: 2px;
+                  margin-left: 12px;
+                  margin-top: -4px;
+                "
+                src="../../../assets/icons/moneyWhite.svg"
+              />
+            </div>
+            <mat-card-subtitle class="valorCardTotais" style="color: white">{{
+              poupanca$
+            }}</mat-card-subtitle>
+          </div>
+        </mat-card>
+
+        <!-- Investimentos -->
+        <mat-card
+          class="cardTotais {{
+            load == true
+              ? ' cardTotaisSimples cardTotaisLoad'
+              : 'cardTotaisSimples'
+          }}"
+          style="background-color: #e08331"
+        >
+          <!-- load -->
+          <div *ngIf="load == true" class="loading-spinner">
+            <mat-spinner [diameter]="50"></mat-spinner>
+          </div>
+          <div *ngIf="load == false">
+            <div class="cardTotaisDivTitle">
+              <p class="titleCardTotais" style="color: white">Investimentos</p>
+              <img
+                style="
+                  width: 20px;
+                  height: 20px;
+                  border-radius: 50%;
+                  padding: 2px;
+                  margin-left: 12px;
+                  margin-top: -4px;
+                "
+                src="../../../assets/icons/moneyWhite.svg"
+              />
+            </div>
+            <mat-card-subtitle class="valorCardTotais" style="color: white">{{
+              investimentos$
+            }}</mat-card-subtitle>
+          </div>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+  <div class="terceiro">
+    <div class="terceiroDivButton">
+      <button
+        mat-raised-button
+        style="background-color: #2b70b1; color: #f1f1f1"
+        (click)="novo()"
+      >
+        Novo
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="divTable">
+  <!-- load -->
+  <div
+    *ngIf="load == true"
+    style="display: flex; justify-content: center; margin-top: 200px"
+    class="loading-spinner"
+  >
+    <mat-spinner></mat-spinner>
+  </div>
+
+  <div class="pesquisaLista" *ngIf="load == false">
+    <!-- Search -->
+    <mat-form-field
+      class="example-full-width"
+      appearance="outline"
+      style="height: 40px !important"
+    >
+      <mat-icon matPrefix style="color: #2b70b1">search</mat-icon>
+      <input
+        matInput
+        type="search"
+        placeholder="pesquisa"
+        class="search-input"
+        [(ngModel)]="pesquisa"
+        (ngModelChange)="onPesquisa()"
+      />
+    </mat-form-field>
+  </div>
+
+  <!-- lista vazia -->
+  <div
+    *ngIf="
+      (load == false && listaLancamentos2.length <= 0) ||
+      listaLancamentos2 == null
+    "
+    style="
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 100px;
+    "
+  >
+    <img
+      src="../../../assets/caixa-vazia.png"
+      style="width: 80px; height: 80px"
+    />
+    <p style="color: #646464; font-size: 14px; margin-top: 10px">
+      Nenhum lançamento encontrado
+    </p>
+  </div>
+
+  <!-- lista -->
+  <div
+    class="example-container mat-elevation-z8"
+    *ngIf="
+      load == false && listaLancamentos2.length > 0 && listaLancamentos2 != []
+    "
+  >
+    <!-- Lista -->
+    <mat-table
+      [dataSource]="listaLancamentos2"
+      matSort
+      style="background-color: #f1f1f1 !important"
+    >
+      <!-- ID Column -->
+      <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef> # </mat-header-cell>
+        <mat-cell *matCellDef="let lancamento" data-label="id">
+          {{ lancamento.id }}
+        </mat-cell>
+      </ng-container>
+
+      <!-- Categoria Column -->
+      <ng-container matColumnDef="categoria">
+        <mat-header-cell *matHeaderCellDef> Categoria </mat-header-cell>
+        <mat-cell
+          *matCellDef="let lancamento"
+          data-label="categoria"
+          style="
+            display: flex !important;
+            justify-content: center !important;
+            align-items: center !important;
+          "
+        >
+          {{ lancamento.categoria }}
+        </mat-cell>
+      </ng-container>
+
+      <!-- Descrição Column -->
+      <ng-container matColumnDef="descricao">
+        <mat-header-cell *matHeaderCellDef> Descrição </mat-header-cell>
+        <mat-cell
+          *matCellDef="let lancamento"
+          data-label="descricao"
+          style="
+            display: flex !important;
+            justify-content: center !important;
+            align-items: center !important;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          "
+        >
+          {{ lancamento.descricao }}
+        </mat-cell>
+      </ng-container>
+
+      <!-- Valor Column -->
+      <ng-container matColumnDef="valor">
+        <mat-header-cell *matHeaderCellDef> Valor </mat-header-cell>
+        <mat-cell
+          *matCellDef="let lancamento"
+          data-label="valor"
+          class="{{
+            lancamento.tipo_lancamento == 'Entrada'
+              ? 'tdValorEntrada'
+              : 'tdValorSaida'
+          }}"
+          style="
+            display: flex !important;
+            justify-content: center !important;
+            align-items: center !important;
+          "
+        >
+          {{ numberToReal(lancamento.valor) }}
+        </mat-cell>
+      </ng-container>
+
+      <!-- Pagamento Column -->
+      <ng-container matColumnDef="tipo_pagamento">
+        <mat-header-cell *matHeaderCellDef> Pagamento </mat-header-cell>
+        <mat-cell
+          *matCellDef="let lancamento"
+          data-label="tipo_pagamento"
+          style="
+            display: flex !important;
+            justify-content: center !important;
+            align-items: center !important;
+          "
+        >
+          {{ lancamento.tipo_pagamento }}
+        </mat-cell>
+      </ng-container>
+
+      <!-- Data Prevista de Pagamento Column -->
+      <ng-container matColumnDef="data_prevista_pagamento">
+        <mat-header-cell *matHeaderCellDef>
+          Data Prevista Pagamento
+        </mat-header-cell>
+        <mat-cell
+          *matCellDef="let lancamento"
+          data-label="data_prevista_pagamento"
+          style="
+            display: flex !important;
+            justify-content: center !important;
+            align-items: center !important;
+          "
+        >
+          {{ formatData(lancamento.data_prevista_pagamento) }}
+        </mat-cell>
+      </ng-container>
+
+      <!-- Data de Vencimento Column -->
+      <ng-container matColumnDef="data_vencimento">
+        <mat-header-cell *matHeaderCellDef>
+          Data de Vencimento
+        </mat-header-cell>
+        <mat-cell
+          *matCellDef="let lancamento"
+          data-label="data_vencimento"
+          style="
+            display: flex !important;
+            justify-content: center !important;
+            align-items: center !important;
+          "
+        >
+          {{ formatData(lancamento.data_vencimento) }}
+        </mat-cell>
+      </ng-container>
+
+      <!-- Pago Column -->
+      <ng-container matColumnDef="pago">
+        <mat-header-cell *matHeaderCellDef style="justify-content: center"
+          >Pago</mat-header-cell
+        >
+        <mat-cell
+          *matCellDef="let lancamento"
+          data-label="pago"
+          style="
+            display: flex !important;
+            justify-content: center !important;
+            align-items: center !important;
+          "
+        >
+          {{ changeIsPago(lancamento.pago) }}
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="actions" style="width: 20px">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          style="
+            text-align: center;
+            width: 70px !important;
+            border-bottom-style: none !important;
+          "
+        >
+          Ações
+        </th>
+
+        <div class="actionsColumn" style="width: 20px">
+          <mat-cell
+            style="
+              padding-right: 20px !important;
+              display: flex !important;
+              justify-content: end !important;
+            "
+            *matCellDef="let lancamento"
+          >
+            <button mat-icon-button aria-label="Editar">
+              <mat-icon
+                style="color: #4280ba !important"
+                (click)="onEdit(lancamento)"
+                >edit</mat-icon
+              >
+            </button>
+
+            <button mat-icon-button aria-label="Remover">
+              <mat-icon
+                style="color: #cc3333 !important"
+                (click)="onClickDelete(lancamento.id)"
+              >
+                delete
+              </mat-icon>
+            </button>
+          </mat-cell>
+        </div>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let lancamento; columns: displayedColumns">
+      </mat-row>
+    </mat-table>
+  </div>
+</div>
+
+<div (click)="scrollToTop()" class="back-to-top"></div>

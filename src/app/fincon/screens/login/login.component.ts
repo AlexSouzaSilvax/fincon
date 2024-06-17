@@ -1,4 +1,4 @@
-import { Usuario } from './../model/Usuario';
+import { Usuario } from './../../model/Usuario';
 import { Input, Component, Output, EventEmitter, OnInit } from '@angular/core';
 import {
   FormGroup,
@@ -8,9 +8,9 @@ import {
 } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UsuarioService } from '../services/usuario.service';
-import { LocalStorageService } from '../services/local-storage.service';
-import { UsuarioAccessDTO } from '../model/UsuarioAccessDTO';
+import { UsuarioService } from '../../services/usuario.service';
+import { LocalStorageService } from '../../services/local-storage.service';
+import { UsuarioAccessDTO } from '../../model/UsuarioAccessDTO';
 import { MatDialog } from '@angular/material/dialog';
 import { EsqueciSenhaDialogComponent } from 'src/app/shared/components/esqueci-senha-dialog/esqueci-senha-dialog.component';
 
@@ -69,7 +69,6 @@ export class LoginComponent implements OnInit {
       this.load = true;
       //btn login off
       this.btnLogin = true;
-
       if (this.usuarioAccess) {
         this.service.access(this.usuarioAccess).subscribe(
           (result) => {
@@ -79,17 +78,9 @@ export class LoginComponent implements OnInit {
               this.router.navigate(['principal'], { relativeTo: this.route });
             }
           },
-          (error) => {
-            if (error.error.message) {
-              this.onMessage(error.error.message);
-            } else {
-              this.onMessage('Sem conexão com servidor');
-            }
-          }
+          (error) => this.retornoErro(error)
         );
       }
-      this.load = false;
-      this.btnLogin = false;
     }
   }
 
@@ -104,19 +95,11 @@ export class LoginComponent implements OnInit {
     this.btnCadastrese = true;
 
     if (this.formCadastrese) {
-      this.service.save(this.formCadastrese.value).subscribe(
+      this.service.save(this.formCadastrese.value).then(
         (result) => {
-          if (result.id != null) {
-            this.onMessage('Usuário criado com sucesso');
-          }
+          this.onMessage('Usuário criado com sucesso');
         },
-        (error) => {
-          if (error.error.message) {
-            this.onMessage(error.error.message);
-          } else {
-            this.onMessage('Sem conexão com servidor');
-          }
-        }
+        (error) => this.retornoErro(error)
       );
     }
     this.load = false;
@@ -146,5 +129,35 @@ export class LoginComponent implements OnInit {
     this.snackbar.open(`${actionMessage}`, '', {
       duration: 5000,
     });
+  }
+  onLogout() {
+    this.serviceLS.clear();
+    this.router.navigate([''], { relativeTo: this.route });
+  }
+
+  retornoErro(error: any) {
+    {
+      if (error.status == 500) {
+        this.onMessage(`#${error.status} Falha no sistema`);
+      }
+      if (error.name) {
+        if (error.name == 'TimeoutError') {
+          this.retornoErroSemConexao();
+        }
+      }
+      if (error.error.message) {
+        this.onMessage(error.error.message);
+        this.load = false;
+        this.btnLogin = false;
+      } else {
+        this.retornoErroSemConexao();
+      }
+    }
+  }
+  retornoErroSemConexao() {
+    this.onMessage('Sem conexão com o servidor');
+    this.load = false;
+    this.btnLogin = false;
+    this.onLogout();
   }
 }

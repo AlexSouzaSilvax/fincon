@@ -7,6 +7,7 @@ import { ModelComboBox } from '../fincon/model/ModelComboBox';
 //PROD
 export const API = "https://api-fincon.onrender.com/api";
 
+
 export function _numberToReal(n: number) {
   return (
     'R$ ' +
@@ -22,9 +23,29 @@ export function _formatData(data: String) {
     const [date, time] = data.split('T');
     const [YYYY, MM, DD] = date.split('-');
     const [HH, mm] = time.split(':');
-    return `${DD}/${MM}/${YYYY} ${HH}:${mm}`;
+    //return `${DD}/${MM}/${YYYY} ${HH}:${mm}`;
+    return `${DD}/${MM}/${YYYY}`;
   }
-  return 'Não informado';
+  return '--';
+}
+
+export function _formatData2(data: String) {
+  if (data) {
+    var YYYY = data.toLocaleString().substr(0, 4);
+    var MM = data.toLocaleString().substr(5, 2);
+    var DD = data.toLocaleString().substr(8, 2);
+    return `${DD}/${MM}/${YYYY}`;
+  }
+  return '--';
+}
+
+export function _formatDia(data: String) {
+  if (data) {
+    const [date, time] = data.split('T');
+    const [YYYY, MM, DD] = date.split('-');
+    return DD;
+  }
+  return '--';
 }
 
 export function _changeIsPago(pago: boolean) {
@@ -89,9 +110,13 @@ export const listaParcelas: ModelComboBox[] = [
   { value: 11, valueText: '11x' },
   { value: 12, valueText: '12x' },
   { value: 24, valueText: '24x' },
+  { value: 30, valueText: '30x' },
   { value: 36, valueText: '36x' },
+  { value: 43, valueText: '43x' },
   { value: 48, valueText: '48x' },
+  { value: 60, valueText: '60x' },
   { value: 70, valueText: '70x' },
+  { value: 360, valueText: '360x' },
 ];
 
 export const listaMesReferencia: ModelComboBox[] = [
@@ -106,7 +131,7 @@ export const listaMesReferencia: ModelComboBox[] = [
   { value: 9, valueText: 'Setembro' },
   { value: 10, valueText: 'Outubro' },
   { value: 11, valueText: 'Novembro' },
-  { value: 12, valueText: 'Dezembro' },  
+  { value: 12, valueText: 'Dezembro' },
 ];
 
 export const listaAnoReferencia: ModelComboBox[] = [
@@ -118,12 +143,12 @@ export const listaAnoReferencia: ModelComboBox[] = [
   { value: 2027, valueText: '2027' },
   { value: 2028, valueText: '2028' },
   { value: 2029, valueText: '2029' },
-  { value: 2030, valueText: '2030' },  
+  { value: 2030, valueText: '2030' },
 ];
 
 export function getMesAnoAtual() {
   var d = new Date();
-  return { mes: (d.getMonth()+1), ano: d.getFullYear() };
+  return { mes: d.getMonth() + 1, ano: d.getFullYear() };
 }
 
 export function changeData(data: String) {
@@ -150,7 +175,7 @@ export function findTipo(valueText: String, lista: ModelComboBox[]) {
     if (e.valueText == valueText) {
       value = e.value;
     } else if (e.value.toString() == valueText) {
-      value = e.valueText
+      value = e.valueText;
     }
   });
   return value;
@@ -162,3 +187,38 @@ export function formatDataInput(data: String) {
   }
   return;
 }
+
+export function delay(num: number) {
+  return new Promise((resolve) => setTimeout(resolve, num));
+}
+
+export function getDataAtual() {
+  var date = new Date();
+  var day: any = date.getDate();
+  var month = (date.getMonth() + 1).toString();
+  if (month.toString().length < 10) {
+    month = `0${month}`;
+  }
+  if (day.toString().length == 1) {
+    day = `0${day}`;
+  }
+  var year = date.getFullYear();
+  return `${year  }-${month}-${day}`;
+}
+
+export function formatTelCel(n: String) {
+  var numeroFormatado = n;
+  if (n.substr(2, 9).length == 9) {
+      var ddd = n.substr(0, 2);
+      var nove = n.substr(2, 1);
+      var pDigito = n.substr(3, 4);
+      var sDigito = n.substr(7, 4);
+      numeroFormatado = `(${ddd}) ${nove} ${pDigito}-${sDigito}`;
+  } else {
+      var ddd = n.substr(0, 2);
+      var pDigito = n.substr(2, 4);
+      var sDigito = n.substr(6, 4);
+      numeroFormatado = `(${ddd}) ${pDigito}-${sDigito}`;
+  }
+  return numeroFormatado;
+};

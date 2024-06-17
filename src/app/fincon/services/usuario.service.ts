@@ -11,27 +11,39 @@ import { UsuarioAccessDTO } from '../model/UsuarioAccessDTO';
 export class UsuarioService {
   constructor(private httpClient: HttpClient) {}
 
+  findById(idUsuario: string) {
+    return this.httpClient
+      .get<Usuario>(`${API.url}/usuario/find-by-id?id=${idUsuario}`)
+      .pipe(
+        first()
+        //delay(1500),
+        //,tap((l) => console.log(l))
+      );
+  }
+
   access(record: UsuarioAccessDTO) {
     return this.httpClient
-      .post<Usuario>(`${API}/usuario/access`, record)
+      .post<Usuario>(`${API.url}/usuario/access`, record)
       .pipe(first());
   }
 
   save(record: Usuario) {
     if (record.id) {
       return this.httpClient
-        .post<Usuario>(`${API}/usuario/update`, record)
-        .pipe(first());
+        .post<Usuario>(`${API.url}/usuario/update`, record)
+        .toPromise();
+      //.pipe(first());
     } else {
       return this.httpClient
-        .post<Usuario>(`${API}/usuario/create`, record)
-        .pipe(first());
+        .post<Usuario>(`${API.url}/usuario/create`, record)
+        .toPromise();
+      //.pipe(first());
     }
   }
 
   delete(id: string) {
     return this.httpClient
-      .post<String>(`${API}/usuario/delete`, id)
+      .post<String>(`${API.url}/usuario/delete`, id)
       .pipe(first());
   }
 }
