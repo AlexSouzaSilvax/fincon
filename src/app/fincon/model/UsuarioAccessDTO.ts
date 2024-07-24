@@ -1,4 +1,6 @@
 export interface UsuarioAccessDTO {
-  login: String;
-  senha: String;
+  id: String;
+  username: String;
+  password: String;
+  token: string;
 }

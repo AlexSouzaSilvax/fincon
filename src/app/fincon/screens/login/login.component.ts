@@ -61,20 +61,25 @@ export class LoginComponent implements OnInit {
 
   onLogin() {
     this.usuarioAccess = {
-      login: this.form.value.login.value,
-      senha: this.form.value.senha.value,
+      username: this.form.value.login.value,
+      password: this.form.value.senha.value,
+      token: '',
+      id: ''
     };
-    if (this.usuarioAccess.login != null && this.usuarioAccess.senha != null) {
+    if (
+      this.usuarioAccess.username != null &&
+      this.usuarioAccess.password != null
+    ) {
       //load true
       this.load = true;
       //btn login off
       this.btnLogin = true;
       if (this.usuarioAccess) {
-        this.service.access(this.usuarioAccess).subscribe(
-          (result) => {
-            if (result.id != null) {
-              this.serviceLS.set('id', result.id);
-              this.serviceLS.set('login', result.login);
+        this.service.access(this.usuarioAccess).then(
+          (result?) => {
+            if (result?.token) {
+              this.serviceLS.set('token', result?.token);
+              this.serviceLS.set('id', result?.id);
               this.router.navigate(['principal'], { relativeTo: this.route });
             }
           },
