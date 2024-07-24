@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { first } from 'rxjs/operators';
+import { catchError, first } from 'rxjs/operators';
 import { API } from '../../shared/Util';
 import { Usuario } from '../model/Usuario';
 import { UsuarioAccessDTO } from '../model/UsuarioAccessDTO';
+import { Observable } from 'rxjs/internal/Observable';
+import { of } from 'rxjs/internal/observable/of';
 
 @Injectable({
   providedIn: 'root',
@@ -23,8 +25,8 @@ export class UsuarioService {
 
   access(record: UsuarioAccessDTO) {
     return this.httpClient
-      .post<Usuario>(`${API.url}/usuario/access`, record)
-      .pipe(first());
+      .post<UsuarioAccessDTO>(`${API.url}/auth/login`, record)
+      .toPromise();
   }
 
   save(record: Usuario) {
