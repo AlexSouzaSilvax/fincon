@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Lancamento } from '../model/Lancamento';
-import { LancamentoListaDTO } from '../model/LancamentoListaDTO';
+import { Injectable } from '@angular/core';
 import { first } from 'rxjs/operators';
 import { API } from '../../shared/Util';
+import { Lancamento } from '../model/Lancamento';
+import { LancamentoListaDTO } from '../model/LancamentoListaDTO';
 
 @Injectable({
   providedIn: 'root',

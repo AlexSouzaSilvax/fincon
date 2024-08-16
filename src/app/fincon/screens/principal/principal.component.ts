@@ -1,32 +1,31 @@
-import { LancamentoEdit } from '../../services/LancamentoEdit.service';
+import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { catchError } from 'rxjs/operators';
-import { Lancamento } from '../../model/Lancamento';
-import { LancamentoListaDTO } from '../../model/LancamentoListaDTO';
-import { LancamentoService } from '../../services/lancamento.service';
+import { catchError, tap } from 'rxjs/operators';
+import { FiltroDialogComponent } from 'src/app/shared/components/filtro-dialog/filtro-dialog.component';
+import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialog/confirm-dialog.component';
 import {
-  _numberToReal,
-  _formatData,
   _changeIsPago,
+  _formatData,
+  _formatDia,
+  _numberToReal,
   findTipo,
-  listaMesReferencia,
   listaAnoReferencia,
+  listaCategorias,
+  listaMesReferencia,
   listaTipoLancamentos,
   listaTipoPagamentos,
-  _formatDia,
 } from '../../../shared/Util';
-import { tap } from 'rxjs/operators';
-import { MatDialog } from '@angular/material/dialog';
-import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialog/confirm-dialog.component';
-import { Location } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { LocalStorageService } from '../../services/local-storage.service';
+import { Lancamento } from '../../model/Lancamento';
+import { LancamentoListaDTO } from '../../model/LancamentoListaDTO';
 import { ModelComboBox } from '../../model/ModelComboBox';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { FiltroDialogComponent } from 'src/app/shared/components/filtro-dialog/filtro-dialog.component';
-import { listaCategorias } from '../../../shared/Util';
+import { LancamentoService } from '../../services/lancamento.service';
+import { LancamentoEdit } from '../../services/LancamentoEdit.service';
+import { LocalStorageService } from '../../services/local-storage.service';
 import { MesAnoReferenciaService } from '../../services/mesAnoReferencia.service';
 
 @Component({
@@ -142,6 +141,7 @@ export class PrincipalComponent implements OnInit {
           if (error.status == 500) {
             this.onMessage(`#${error.status} Falha no sistema`);
           } else {
+            console.log(error);
             this.onError('Sem conexão com o servidor');
             this.load = false;
             this.onLogout();
@@ -255,7 +255,7 @@ export class PrincipalComponent implements OnInit {
 
   onDelete(id: string) {
     this.lancamentosService.delete(id).subscribe(
-      (result) => {       
+      (result) => {
         this.onSuccess('Apagado com sucesso');
       },
       (error) => {

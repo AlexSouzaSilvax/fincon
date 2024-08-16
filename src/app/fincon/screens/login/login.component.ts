@@ -1,18 +1,18 @@
-import { Usuario } from './../../model/Usuario';
-import { Input, Component, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
-  FormGroup,
-  FormControl,
   FormBuilder,
+  FormControl,
+  FormGroup,
   Validators,
 } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UsuarioService } from '../../services/usuario.service';
-import { LocalStorageService } from '../../services/local-storage.service';
-import { UsuarioAccessDTO } from '../../model/UsuarioAccessDTO';
-import { MatDialog } from '@angular/material/dialog';
 import { EsqueciSenhaDialogComponent } from 'src/app/shared/components/esqueci-senha-dialog/esqueci-senha-dialog.component';
+import { UsuarioAccessDTO } from '../../model/UsuarioAccessDTO';
+import { LocalStorageService } from '../../services/local-storage.service';
+import { UsuarioService } from '../../services/usuario.service';
+import { Usuario } from './../../model/Usuario';
 
 @Component({
   selector: 'fincon',
