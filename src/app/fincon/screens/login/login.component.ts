@@ -48,8 +48,9 @@ export class LoginComponent implements OnInit {
     this.formCadastrese = this.formBuilder.group({
       nome: [],
       email: [],
-      login: [],
-      senha: [],
+      username: [],
+      password: [],
+      role: 'ADMIN',
     });
   }
 
@@ -59,23 +60,21 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  onLogin() {
+  async onLogin() {
     this.usuarioAccess = {
       username: this.form.value.login.value,
       password: this.form.value.senha.value,
       token: '',
-      id: ''
+      id: '',
     };
     if (
       this.usuarioAccess.username != null &&
       this.usuarioAccess.password != null
     ) {
-      //load true
       this.load = true;
-      //btn login off
       this.btnLogin = true;
       if (this.usuarioAccess) {
-        this.service.access(this.usuarioAccess).then(
+        await this.service.access(this.usuarioAccess).then(
           (result?) => {
             if (result?.token) {
               this.serviceLS.set('token', result?.token);
@@ -87,20 +86,20 @@ export class LoginComponent implements OnInit {
         );
       }
     }
+    this.load = false;
+    this.btnLogin = false;
   }
 
   onClickCadastrese() {
     this.visibleLogin = false;
   }
 
-  onCadastrese() {
-    //load true
+  async onCadastrese() {
     this.load = true;
-    //btn login off
     this.btnCadastrese = true;
 
     if (this.formCadastrese) {
-      this.service.save(this.formCadastrese.value).then(
+      await this.service.register(this.formCadastrese.value).then(
         (result) => {
           this.onMessage('Usuário criado com sucesso');
         },
@@ -109,6 +108,7 @@ export class LoginComponent implements OnInit {
     }
     this.load = false;
     this.btnCadastrese = false;
+    this.visibleLogin = true;
   }
 
   onClickEsqueciSenha() {
@@ -118,13 +118,26 @@ export class LoginComponent implements OnInit {
       },
     });
 
+    dialogRef.afterOpened().subscribe((result) => {});
+
     dialogRef.afterClosed().subscribe((result) => {
       this.onEsqueciSenha(result);
     });
   }
 
-  onEsqueciSenha(email: string) {
-    this.onMessage('Senha enviada para: ' + email);
+  async onEsqueciSenha(email: string) {
+    this.load = true;
+
+    if (email) {
+      await this.service.esqueciSenha(email).then(
+        (result) => {
+          this.onMessage('Verifique seu email: ' + email);
+        },
+        (error) => this.retornoErro(error)
+      );
+    }
+    this.load = false;
+    this.btnLogin = false;
   }
   onVoltar() {
     this.visibleLogin = true;
@@ -141,15 +154,29 @@ export class LoginComponent implements OnInit {
   }
 
   retornoErro(error: any) {
-    {
-      if (error.status == 500) {
-        this.onMessage(`#${error.status} Falha no sistema`);
-      }
-      if (error.name) {
+    console.log();
+    /*
+    error.error:
+        detail: "Usuário inexistente ou senha inválida"
+        status: 403
+        timestamp: "2024-08-16T20:44:29.5122279-03:00"
+        title: "Acesso negado"
+        type: "https://www.fincon.com.br/acesso-negado"
+        userMessage: "Você não possui permissão para executar essa operação."
+    */
+
+    return this.onMessage(error?.error?.userMessage);
+
+
+    /*if (error.status == 500) {
+      this.onMessage(`#${error.status} Falha no sistema`);
+    }
+    if (error.name) {
         if (error.name == 'TimeoutError') {
           this.retornoErroSemConexao();
         }
       }
+
       if (error.error.message) {
         this.onMessage(error.error.message);
         this.load = false;
@@ -157,7 +184,9 @@ export class LoginComponent implements OnInit {
       } else {
         this.retornoErroSemConexao();
       }
-    }
+      */
+
+    //limpar formulario
   }
   retornoErroSemConexao() {
     this.onMessage('Sem conexão com o servidor');
