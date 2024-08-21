@@ -10,6 +10,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EsqueciSenhaDialogComponent } from 'src/app/shared/components/esqueci-senha-dialog/esqueci-senha-dialog.component';
 import { UsuarioAccessDTO } from '../../model/UsuarioAccessDTO';
+import { UsuarioRegister } from '../../model/UsuarioRegister';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { UsuarioService } from '../../services/usuario.service';
 import { Usuario } from './../../model/Usuario';
@@ -30,7 +31,12 @@ export class LoginComponent implements OnInit {
   senha = new FormControl(null, [Validators.required]);
   usuarioAccess!: UsuarioAccessDTO;
   formCadastrese: FormGroup;
+  nome = new FormControl(null, [Validators.required]);
+  email = new FormControl(null, [Validators.required]);
+  username = new FormControl(null, [Validators.required]);
+  password = new FormControl(null, [Validators.required]);
   visibleLogin: boolean = true;
+  usuarioCadastro!: UsuarioRegister;
 
   constructor(
     private router: Router,
@@ -46,10 +52,10 @@ export class LoginComponent implements OnInit {
       senha: [this.senha],
     });
     this.formCadastrese = this.formBuilder.group({
-      nome: [],
-      email: [],
-      username: [],
-      password: [],
+      nome: [this.nome],
+      email: [this.email],
+      username: [this.username],
+      password: [this.password],
       role: 'ADMIN',
     });
   }
@@ -95,19 +101,45 @@ export class LoginComponent implements OnInit {
   }
 
   async onCadastrese() {
-    this.load = true;
-    this.btnCadastrese = true;
+    this.usuarioCadastro = {
+      nome: this.formCadastrese.value.nome.value,
+      email: this.formCadastrese.value.email.value,
+      username: this.formCadastrese.value.username.value,
+      password: this.formCadastrese.value.password.value,
+      role: 'ADMIN',
+    };
 
-    if (this.formCadastrese) {
-      await this.service.register(this.formCadastrese.value).then(
+    if (
+      this.usuarioCadastro.nome != null &&
+      this.usuarioCadastro.email != null &&
+      this.usuarioCadastro.username != null &&
+      this.usuarioCadastro.password != null
+    ) {
+      this.load = true;
+      this.btnCadastrese = true;
+
+      await this.service.register(this.usuarioCadastro).then(
         (result) => {
           this.onMessage('Usuário criado com sucesso');
+          this.limpaFormCadastro();
         },
         (error) => this.retornoErro(error)
       );
+
+      this.load = false;
+      this.btnCadastrese = false;
     }
-    this.load = false;
-    this.btnCadastrese = false;
+  }
+
+  limpaFormCadastro() {
+    this.formCadastrese = this.formBuilder.group({
+      nome: [null],
+      email: [null],
+      username: [null],
+      password: [null],
+      role: 'ADMIN',
+    });
+    this.form.value.login.value = this.usuarioCadastro.username;
     this.visibleLogin = true;
   }
 
@@ -154,7 +186,6 @@ export class LoginComponent implements OnInit {
   }
 
   retornoErro(error: any) {
-    console.log();
     /*
     error.error:
         detail: "Usuário inexistente ou senha inválida"
@@ -166,7 +197,6 @@ export class LoginComponent implements OnInit {
     */
 
     return this.onMessage(error?.error?.userMessage);
-
 
     /*if (error.status == 500) {
       this.onMessage(`#${error.status} Falha no sistema`);

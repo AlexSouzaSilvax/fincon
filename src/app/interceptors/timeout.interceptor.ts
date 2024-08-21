@@ -10,7 +10,7 @@ import { timeout } from 'rxjs/operators';
 
 @Injectable()
 export class TimeoutInterceptor implements HttpInterceptor {
-  private readonly TIMEOUT = 10000; // Timeout de 10 segundos
+  private readonly TIMEOUT = 30000; // Timeout de 30 segundos
 
   constructor() {}
 

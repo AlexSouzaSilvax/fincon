@@ -23,6 +23,7 @@
   <div style="padding: 16px !important">
     <mat-card-title>Fincon</mat-card-title>
     <mat-card-content>
+      <!-- Login -->
       <form [formGroup]="form" *ngIf="visibleLogin == true; cadastrese">
         <p>
           <mat-form-field
@@ -93,6 +94,7 @@
         #cadastrese
         [formGroup]="formCadastrese"
         *ngIf="visibleLogin == false"
+        (ngSubmit)="onCadastrese()"
       >
         <p>
           <mat-form-field
@@ -103,9 +105,12 @@
             <input
               class="input"
               matInput
-              formControlName="nome"
+              [formControl]="nome"
               placeholder="seu nome"
             />
+            <mat-error *ngIf="nome.hasError('required')">
+              Nome é <strong>obrigatório</strong>
+            </mat-error>
           </mat-form-field>
         </p>
         <p>
@@ -117,9 +122,12 @@
             <input
               class="input"
               matInput
-              formControlName="email"
+              [formControl]="email"
               placeholder="seu email"
             />
+            <mat-error *ngIf="email.hasError('required')">
+              E-mail é <strong>obrigatório</strong>
+            </mat-error>
           </mat-form-field>
         </p>
         <p>
@@ -131,9 +139,12 @@
             <input
               class="input"
               matInput
-              formControlName="username"
+              [formControl]="username"
               placeholder="seu login"
             />
+            <mat-error *ngIf="username.hasError('required')">
+              Login é <strong>obrigatório</strong>
+            </mat-error>
           </mat-form-field>
         </p>
         <p>
@@ -143,15 +154,18 @@
               class="input"
               matInput
               type="password"
-              formControlName="password"
+              [formControl]="password"
               placeholder="sua senha"
             />
+            <mat-error *ngIf="password.hasError('required')">
+              Senha é <strong>obrigatório</strong>
+            </mat-error>
           </mat-form-field>
         </p>
 
         <div class="button">
           <button
-            (click)="onCadastrese()"
+            type="submit"
             [disabled]="btnCadastrese"
             mat-raised-button
             style="background-color: #1461a9; color: white"
