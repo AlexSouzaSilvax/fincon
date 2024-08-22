@@ -1,31 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import {
-  changeData,
-  findTipo,
-  formatDataInput,
-  listaCategorias,
-  listaParcelas,
-  listaTipoLancamentos,
-  listaTipoPagamentos,
-  _formatData,
-  delay,
-  _formatData2,
-} from 'src/app/shared/Util';
-import { ModelComboBox } from '../../model/ModelComboBox';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
 import { Location } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
-import { LancamentoService } from '../../services/lancamento.service';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Lancamento } from '../../model/Lancamento';
+import { ActivatedRoute, Router } from '@angular/router';
+import {
+  _formatData,
+  _formatData2,
+  changeData,
+  formatDataInput,
+} from 'src/app/shared/Util';
 import { LocalStorageService } from '../../services/local-storage.service';
-import { LancamentoEdit } from '../../services/LancamentoEdit.service';
-import { Usuario } from '../../model/Usuario';
 import { UsuarioService } from '../../services/usuario.service';
 
 @Component({
@@ -69,8 +53,8 @@ export class UsuarioComponent implements OnInit {
       nome: [this.usuario.nome],
       email: [this.usuario.email, [Validators.required]],
       celular: [this.usuario.celular],
-      login: [this.usuario.login, [Validators.required]],
-      senha: [this.usuario.senha, [Validators.required]],
+      username: [this.usuario.username, [Validators.required]],
+      password: [this.usuario.password, [Validators.required]],
       data_criacao: [formatDataInput(this.usuario.data_criacao)],
     });
   }
@@ -87,8 +71,8 @@ export class UsuarioComponent implements OnInit {
             nome: [result.nome],
             email: [result.email, [Validators.required]],
             celular: [result.celular],
-            login: [result.login, [Validators.required]],
-            senha: [result.senha, [Validators.required]],
+            username: [result.username, [Validators.required]],
+            password: [result.password, [Validators.required]],
             data_criacao: [formatDataInput(result.data_criacao)],
           });
           this.loadFind = false;
@@ -100,7 +84,7 @@ export class UsuarioComponent implements OnInit {
         } else {
           this.onMessage('Sem conexão com o servidor');
           this.loadFind = false;
-          this.onLogout();
+          this.onVoltar();
         }
       }
     );
@@ -114,11 +98,9 @@ export class UsuarioComponent implements OnInit {
       // salva usuario
       this.usuario = this.form.value;
       this.usuario.data_criacao = changeData(this.usuario.data_criacao);
-      await this.service.save(this.usuario).then(
+      await this.service.update(this.usuario).then(
         async (result) => {
-          if (result) {
-            this.onMessage(`Salvo com sucesso`);
-          }
+          this.onMessage(`Salvo com sucesso`);
         },
         (error) => {
           if (error.status == 500) {
@@ -156,14 +138,14 @@ export class UsuarioComponent implements OnInit {
   }
 
   validaCampos(): boolean {
-    const { email, login, senha } = this.form.value;
+    const { email, username, password } = this.form.value;
     if (
       email != null &&
-      login != null &&
-      senha != null &&
+      username != null &&
+      password != null &&
       email != '' &&
-      login != '' &&
-      senha != ''
+      username != '' &&
+      password != ''
     ) {
       return true;
     }
