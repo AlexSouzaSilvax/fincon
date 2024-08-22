@@ -14,12 +14,8 @@ export class UsuarioService {
 
   findById(idUsuario: string) {
     return this.httpClient
-      .get<Usuario>(`${API.url}/usuario/find-by-id?id=${idUsuario}`)
-      .pipe(
-        first()
-        //delay(1500),
-        //,tap((l) => console.log(l))
-      );
+      .get<Usuario>(`${API.url}/user/find-by-id?id=${idUsuario}`)
+      .pipe(first());
   }
 
   access(record: UsuarioAccessDTO) {
@@ -28,18 +24,10 @@ export class UsuarioService {
       .toPromise();
   }
 
-  save(record: Usuario) {
-    if (record.id) {
-      return this.httpClient
-        .post<Usuario>(`${API.url}/usuario/update`, record)
-        .toPromise();
-      //.pipe(first());
-    } else {
-      return this.httpClient
-        .post<Usuario>(`${API.url}/auth/register`, record)
-        .toPromise();
-      //.pipe(first());
-    }
+  update(record: Usuario) {
+    return this.httpClient
+      .post<Usuario>(`${API.url}/user/update`, record)
+      .toPromise();
   }
 
   register(record: UsuarioRegister) {
@@ -50,7 +38,7 @@ export class UsuarioService {
 
   delete(id: string) {
     return this.httpClient
-      .post<String>(`${API.url}/usuario/delete`, id)
+      .post<String>(`${API.url}/user/delete`, id)
       .pipe(first());
   }
 
