@@ -9,7 +9,7 @@ import { API } from '../../Util';
   styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent implements OnInit {
-  login: string;
+  username: string;
   base: string;
 
   constructor(
@@ -17,7 +17,7 @@ export class HeaderComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute
   ) {
-    this.login = this.serviceLS.get('login');
+    this.username = this.serviceLS.get('username');
     this.base = API.name;
   }
 
