@@ -13,7 +13,6 @@ import { UsuarioAccessDTO } from '../../model/UsuarioAccessDTO';
 import { UsuarioRegister } from '../../model/UsuarioRegister';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { UsuarioService } from '../../services/usuario.service';
-import { Usuario } from './../../model/Usuario';
 
 @Component({
   selector: 'fincon',
@@ -23,7 +22,6 @@ import { Usuario } from './../../model/Usuario';
 export class LoginComponent implements OnInit {
   form: FormGroup;
   actionMessage!: String;
-  usuario!: Usuario;
   load: boolean = false;
   btnLogin: boolean = false;
   btnCadastrese: boolean = false;
@@ -85,6 +83,7 @@ export class LoginComponent implements OnInit {
             if (result?.token) {
               this.serviceLS.set('token', result?.token);
               this.serviceLS.set('id', result?.id);
+              this.serviceLS.set('username', result?.username);
               this.router.navigate(['principal'], { relativeTo: this.route });
             }
           },
@@ -94,6 +93,8 @@ export class LoginComponent implements OnInit {
     }
     this.load = false;
     this.btnLogin = false;
+
+    this.limpaFormLogin();
   }
 
   limpaFormLogin() {
@@ -135,6 +136,8 @@ export class LoginComponent implements OnInit {
       );
       this.load = false;
       this.btnCadastrese = false;
+
+      this._limpaFormCadastro();
     }
   }
 
@@ -147,6 +150,22 @@ export class LoginComponent implements OnInit {
 
   _limpaFormCadastro() {
     this.form.value.login.value = this.usuarioCadastro.username;
+
+    this.formCadastrese = this.formBuilder.group({
+      nome: [null],
+      email: [null],
+      username: [null],
+      password: [null],
+      role: 'ADMIN',
+    });
+
+    this.usuarioCadastro = {
+      nome: '',
+      email: '',
+      username: '',
+      password: '',
+      role: 'ADMIN',
+    };
 
     this.formCadastrese.value.nome.value = null;
     this.formCadastrese.value.email.value = null;
@@ -204,15 +223,11 @@ export class LoginComponent implements OnInit {
     if (error?.status == 0) {
       this.retornoErroSemConexao();
     }
-
-    //limpar formulario
-    this._limpaFormCadastro();
-    this.limpaFormLogin();
   }
+
   retornoErroSemConexao() {
     this.onMessage('Sem conexão com o servidor');
     this.load = false;
-    //    this.btnLogin = false;
     this.onLogout();
   }
 }
