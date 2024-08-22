@@ -11,7 +11,7 @@ const apis = [
   },
   {
     name: 'prod',
-    url: 'https://api-fincon.onrender.com/api',
+    url: 'https://api-fincon-7276.onrender.com/api',
   },
 ];
 
