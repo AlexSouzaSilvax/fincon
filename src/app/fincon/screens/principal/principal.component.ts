@@ -10,6 +10,7 @@ import { FiltroDialogComponent } from 'src/app/shared/components/filtro-dialog/f
 import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialog/confirm-dialog.component';
 import {
   _changeIsPago,
+  _findStringByValue,
   _formatData,
   _formatDia,
   _numberToReal,
@@ -61,7 +62,7 @@ export class PrincipalComponent implements OnInit {
   form: FormGroup;
 
   displayedColumns: string[] = [
-    'id',
+    //'id',
     'categoria',
     'descricao',
     'valor',
@@ -75,6 +76,9 @@ export class PrincipalComponent implements OnInit {
   items: any[] = [];
 
   pesquisa: any = '';
+
+  _listaCategorias = listaCategorias;
+  _listaTipoPagamentos = listaTipoPagamentos;
 
   constructor(
     private lancamentosService: LancamentoService,
@@ -141,10 +145,9 @@ export class PrincipalComponent implements OnInit {
           if (error.status == 500) {
             this.onMessage(`#${error.status} Falha no sistema`);
           } else {
-            console.log(error);
             this.onError('Sem conexão com o servidor');
             this.load = false;
-            this.onLogout();
+            //this.onLogout();
           }
           return [];
         })
@@ -170,22 +173,29 @@ export class PrincipalComponent implements OnInit {
     var somaInvestimentosSaidas: any = 0;
     for (var i = 0; i < lancamentos.length; i++) {
       // if (lancamentos[i].pago) {
-      if (lancamentos[i].tipo_lancamento == 'Saída') {
+      if (lancamentos[i].tipo_lancamento == 1) {
+        //Saída
         somaSaidas += lancamentos[i].valor;
       }
-      if (lancamentos[i].tipo_lancamento == 'Entrada') {
+      if (lancamentos[i].tipo_lancamento == 0) {
+        //Entrada
         somaEntradas += lancamentos[i].valor;
       }
-      if (lancamentos[i].categoria == 'Poupança') {
-        if (lancamentos[i].tipo_lancamento == 'Saída') {
+      if (lancamentos[i].categoria == 21) {
+        //Poupança
+        if (lancamentos[i].tipo_lancamento == 0) {
+          //Saída
           somaPoupancaEntradas += lancamentos[i].valor;
         }
-        if (lancamentos[i].tipo_lancamento == 'Entrada') {
+        if (lancamentos[i].tipo_lancamento == 0) {
+          //Entrada
           somaPoupancaSaidas += lancamentos[i].valor;
         }
       }
-      if (lancamentos[i].categoria == 'Investimentos') {
-        if (lancamentos[i].tipo_lancamento == 'Saída') {
+      if (lancamentos[i].categoria == 10) {
+        //Investimentos
+        if (lancamentos[i].tipo_lancamento == 1) {
+          //Saída
           somaInvestimentosEntradas += lancamentos[i].valor;
         }
       }
@@ -337,7 +347,7 @@ export class PrincipalComponent implements OnInit {
       listaFiltro = listaFiltro.filter(
         (e) =>
           e.tipo_pagamento ==
-          listaTipoPagamentos[this.form.value.tipo_pagamento].valueText
+          listaTipoPagamentos[this.form.value.tipo_pagamento].value
       );
       this.listaLancamentosFiltro = listaFiltro;
     }
@@ -346,15 +356,14 @@ export class PrincipalComponent implements OnInit {
       listaFiltro = listaFiltro.filter(
         (e) =>
           e.tipo_lancamento ==
-          listaTipoLancamentos[this.form.value.tipo_lancamento].valueText
+          listaTipoLancamentos[this.form.value.tipo_lancamento].value
       );
       this.listaLancamentosFiltro = listaFiltro;
     }
     //categoria
     if (listaCategorias[this.form.value.categoria] != null) {
       listaFiltro = listaFiltro.filter(
-        (e) =>
-          e.categoria == listaCategorias[this.form.value.categoria].valueText
+        (e) => e.categoria == listaCategorias[this.form.value.categoria].value
       );
       this.listaLancamentosFiltro = listaFiltro;
     }
@@ -426,4 +435,16 @@ export class PrincipalComponent implements OnInit {
   scrollToTop() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
+
+  findStringByValue(value: Number, pLista: ModelComboBox[]) {
+    return _findStringByValue(value, pLista);
+  }
 }
+
+/*
+//categoria
+    if (listaCategorias[this.form.value.categoria] != null) {
+      listaFiltro = listaFiltro.filter(
+        (e) => e.categoria == listaCategorias[this.form.value.categoria].value
+      );
+       */

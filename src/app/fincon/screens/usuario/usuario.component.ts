@@ -53,7 +53,10 @@ export class UsuarioComponent implements OnInit {
       nome: [this.usuario.nome],
       email: [this.usuario.email, [Validators.required]],
       celular: [this.usuario.celular],
-      username: [this.usuario.username, [Validators.required]],
+      username: [
+        { value: this.usuario.username, disabled: true },
+        [Validators.required],
+      ],
       password: [this.usuario.password, [Validators.required]],
       data_criacao: [formatDataInput(this.usuario.data_criacao)],
     });
@@ -71,7 +74,10 @@ export class UsuarioComponent implements OnInit {
             nome: [result.nome],
             email: [result.email, [Validators.required]],
             celular: [result.celular],
-            username: [result.username, [Validators.required]],
+            username: [
+              { value: result.username, disabled: true },
+              [Validators.required],
+            ],
             password: [result.password, [Validators.required]],
             data_criacao: [formatDataInput(result.data_criacao)],
           });
@@ -138,13 +144,14 @@ export class UsuarioComponent implements OnInit {
   }
 
   validaCampos(): boolean {
-    const { email, username, password } = this.form.value;
+    //const { email, username, password } = this.form.value;
+    const { email, password } = this.form.value;
     if (
       email != null &&
-      username != null &&
+      //username != null &&
       password != null &&
       email != '' &&
-      username != '' &&
+      //username != '' &&
       password != ''
     ) {
       return true;

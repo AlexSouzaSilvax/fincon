@@ -279,13 +279,14 @@
       matSort
       style="background-color: #f1f1f1 !important"
     >
-      <!-- ID Column -->
+      <!-- ID Column
       <ng-container matColumnDef="id">
         <mat-header-cell *matHeaderCellDef> # </mat-header-cell>
         <mat-cell *matCellDef="let lancamento" data-label="id">
           {{ lancamento.id }}
         </mat-cell>
       </ng-container>
+      -->
 
       <!-- Categoria Column -->
       <ng-container matColumnDef="categoria">
@@ -299,7 +300,7 @@
             align-items: center !important;
           "
         >
-          {{ lancamento.categoria }}
+          {{ findStringByValue(lancamento.categoria, _listaCategorias) }}
         </mat-cell>
       </ng-container>
 
@@ -355,7 +356,7 @@
             align-items: center !important;
           "
         >
-          {{ lancamento.tipo_pagamento }}
+          {{ findStringByValue(lancamento.tipo_pagamento, _listaTipoPagamentos) }}
         </mat-cell>
       </ng-container>
 
@@ -455,7 +456,9 @@
         </div>
       </ng-container>
 
+      <!-- -->
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
       <mat-row *matRowDef="let lancamento; columns: displayedColumns">
       </mat-row>
     </mat-table>

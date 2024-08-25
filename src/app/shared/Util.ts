@@ -15,7 +15,7 @@ const apis = [
   },
 ];
 
-export const API = apis[0];
+export const API = apis[2];
 
 export function _numberToReal(n: number) {
   return (
@@ -190,6 +190,16 @@ export function findTipo(valueText: String, lista: ModelComboBox[]) {
   return value;
 }
 
+export function _findStringByValue(pValue: Number, pLista: ModelComboBox[]) {
+  let text;
+  pLista.forEach((e) => {
+    if (e.value == pValue) {
+      text = e.valueText;
+    }
+  });
+  return text;
+}
+
 export function formatDataInput(data: String) {
   if (data) {
     return data.substring(0, 10);
@@ -212,22 +222,22 @@ export function getDataAtual() {
     day = `0${day}`;
   }
   var year = date.getFullYear();
-  return `${year  }-${month}-${day}`;
+  return `${year}-${month}-${day}`;
 }
 
 export function formatTelCel(n: String) {
   var numeroFormatado = n;
   if (n.substr(2, 9).length == 9) {
-      var ddd = n.substr(0, 2);
-      var nove = n.substr(2, 1);
-      var pDigito = n.substr(3, 4);
-      var sDigito = n.substr(7, 4);
-      numeroFormatado = `(${ddd}) ${nove} ${pDigito}-${sDigito}`;
+    var ddd = n.substr(0, 2);
+    var nove = n.substr(2, 1);
+    var pDigito = n.substr(3, 4);
+    var sDigito = n.substr(7, 4);
+    numeroFormatado = `(${ddd}) ${nove} ${pDigito}-${sDigito}`;
   } else {
-      var ddd = n.substr(0, 2);
-      var pDigito = n.substr(2, 4);
-      var sDigito = n.substr(6, 4);
-      numeroFormatado = `(${ddd}) ${pDigito}-${sDigito}`;
+    var ddd = n.substr(0, 2);
+    var pDigito = n.substr(2, 4);
+    var sDigito = n.substr(6, 4);
+    numeroFormatado = `(${ddd}) ${pDigito}-${sDigito}`;
   }
   return numeroFormatado;
-};
+}

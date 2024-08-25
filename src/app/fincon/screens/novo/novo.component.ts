@@ -1,30 +1,28 @@
+import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import {
-  changeData,
-  findTipo,
-  formatDataInput,
-  listaCategorias,
-  listaParcelas,
-  listaTipoLancamentos,
-  listaTipoPagamentos,
-  _formatData,
-  delay,
-  getDataAtual,
-} from 'src/app/shared/Util';
-import { ModelComboBox } from '../../model/ModelComboBox';
 import {
   FormBuilder,
   FormControl,
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { Location } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
-import { LancamentoService } from '../../services/lancamento.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ActivatedRoute, Router } from '@angular/router';
+import {
+  _formatData,
+  changeData,
+  formatDataInput,
+  getDataAtual,
+  listaCategorias,
+  listaParcelas,
+  listaTipoLancamentos,
+  listaTipoPagamentos
+} from 'src/app/shared/Util';
 import { Lancamento } from '../../model/Lancamento';
-import { LocalStorageService } from '../../services/local-storage.service';
+import { ModelComboBox } from '../../model/ModelComboBox';
+import { LancamentoService } from '../../services/lancamento.service';
 import { LancamentoEdit } from '../../services/LancamentoEdit.service';
+import { LocalStorageService } from '../../services/local-storage.service';
 import { MesAnoReferenciaService } from '../../services/mesAnoReferencia.service';
 
 @Component({
@@ -109,20 +107,17 @@ export class NovoComponent implements OnInit {
     this.lancamentoEdit
       .getItems()
       .map((lancamento) => (this.lancamento = lancamento));
+
     if (this.lancamento) {
       this.isLancamento = true;
       this.form = this.formBuilder.group({
         id: [this.lancamento?.id],
         descricao: [this.lancamento?.descricao],
-        categoria: [findTipo(this.lancamento?.categoria, this.categorias)],
+        categoria: [this.lancamento?.categoria],
         valor: [this.lancamento?.valor],
         pago: [this.lancamento?.pago],
-        tipo_lancamento: [
-          findTipo(this.lancamento?.tipo_lancamento, this.lancamentos),
-        ],
-        tipo_pagamento: [
-          findTipo(this.lancamento?.tipo_pagamento, this.tipoPagamentos),
-        ],
+        tipo_lancamento: [this.lancamento?.tipo_lancamento],
+        tipo_pagamento: [this.lancamento?.tipo_pagamento],
         quantidade_parcelas: [this.lancamento?.quantidade_parcelas],
         mensal: [this.lancamento?.mensal],
         mes_referencia: [this.lancamento?.mes_referencia],
@@ -180,21 +175,20 @@ export class NovoComponent implements OnInit {
       this.lancamento.tipo_lancamento = this.lancamento?.tipo_lancamento;
       this.lancamento.tipo_pagamento = this.lancamento?.tipo_pagamento;
 
-      await this.service.save(this.idUsuario, this.lancamento).then(
-        async (result) => {
-          if (result) {
-            this.onMessage(`${this.actionMessage} com sucesso`);
-            await delay(1100); //gambiarra uheuehuheuhe
-            this.router.navigate([''], { relativeTo: this.route });
-          }
+      this.lancamento.usuario = this.idUsuario;
+
+      await this.service.save(this.lancamento).then(
+        async () => {
+          this.onMessage(`${this.actionMessage} com sucesso`);
+          this.router.navigate([''], { relativeTo: this.route });
         },
         (error) => {
           if (error.status == 500) {
             this.onMessage(`#${error.status} Falha no sistema`);
           } else {
             this.onMessage(`Sem conexão com o servidor`);
-            this.onLogout();
           }
+          this.router.navigate([''], { relativeTo: this.route });
         }
       );
 
