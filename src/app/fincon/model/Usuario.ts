@@ -1,9 +1,23 @@
 export interface Usuario {
-  id: Number;
+  id: String;
   nome: String;
   email: String;
   celular: String;
-  login: String;
-  senha: String;
+  username: String;
+  password: String;
+  userRole: 'ADMIN';
+  dataAtualizacao: String;
+  enabled: true;
+  accountNonLocked: true;
+  authorities: [
+    {
+      authority: 'ROLE_ADMIN';
+    },
+    {
+      authority: 'ROLE_USER';
+    }
+  ];
+  accountNonExpired: true;
+  credentialsNonExpired: true;
   data_criacao: String;
 }

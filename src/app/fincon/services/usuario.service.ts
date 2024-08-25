@@ -1,9 +1,10 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { first } from 'rxjs/operators';
 import { API } from '../../shared/Util';
 import { Usuario } from '../model/Usuario';
 import { UsuarioAccessDTO } from '../model/UsuarioAccessDTO';
+import { UsuarioRegister } from '../model/UsuarioRegister';
 
 @Injectable({
   providedIn: 'root',
@@ -13,37 +14,37 @@ export class UsuarioService {
 
   findById(idUsuario: string) {
     return this.httpClient
-      .get<Usuario>(`${API.url}/usuario/find-by-id?id=${idUsuario}`)
-      .pipe(
-        first()
-        //delay(1500),
-        //,tap((l) => console.log(l))
-      );
+      .get<Usuario>(`${API.url}/user/find-by-id?id=${idUsuario}`)
+      .pipe(first());
   }
 
   access(record: UsuarioAccessDTO) {
     return this.httpClient
-      .post<Usuario>(`${API.url}/usuario/access`, record)
-      .pipe(first());
+      .post<UsuarioAccessDTO>(`${API.url}/auth/login`, record)
+      .toPromise();
   }
 
-  save(record: Usuario) {
-    if (record.id) {
-      return this.httpClient
-        .post<Usuario>(`${API.url}/usuario/update`, record)
-        .toPromise();
-      //.pipe(first());
-    } else {
-      return this.httpClient
-        .post<Usuario>(`${API.url}/usuario/create`, record)
-        .toPromise();
-      //.pipe(first());
-    }
+  update(record: Usuario) {
+    return this.httpClient
+      .post<Usuario>(`${API.url}/user/update`, record)
+      .toPromise();
+  }
+
+  register(record: UsuarioRegister) {
+    return this.httpClient
+      .post<UsuarioRegister>(`${API.url}/auth/register`, record)
+      .toPromise();
   }
 
   delete(id: string) {
     return this.httpClient
-      .post<String>(`${API.url}/usuario/delete`, id)
+      .post<String>(`${API.url}/user/delete`, id)
       .pipe(first());
+  }
+
+  esqueciSenha(record: String) {
+    return this.httpClient
+      .post<String>(`${API.url}/user/esqueci-senha`, record)
+      .toPromise();
   }
 }

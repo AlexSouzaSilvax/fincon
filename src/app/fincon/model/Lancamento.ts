@@ -1,22 +1,18 @@
-import { Usuario } from "./Usuario";
-
 export interface Lancamento {
-  id: Number;
-  usuario: Usuario;
+  id: String;
+  categoria: Number;
   descricao: String;
-  categoria: String;
   valor: Number;
-  mensal: Boolean;
   pago: Boolean;
+  mensal: Boolean;
   observacao: String;
-  tipo_lancamento: String;
-  tipo_pagamento: String;
-  quantidade_parcelas: Number;
-  numero_parcela: Number;
+  usuario: String;
+  tipo_pagamento: Number;
+  tipo_lancamento: Number;
+  data_lancamento: String;
   mes_referencia: Number;
   ano_referencia: Number;
-  data_lancamento: String;
   data_vencimento: String;
   data_prevista_pagamento: String;
-  data_pagamento: String;
+  quantidade_parcelas: Number;
 }

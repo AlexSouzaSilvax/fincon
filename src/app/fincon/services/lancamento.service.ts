@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Lancamento } from '../model/Lancamento';
-import { LancamentoListaDTO } from '../model/LancamentoListaDTO';
+import { Injectable } from '@angular/core';
 import { first } from 'rxjs/operators';
 import { API } from '../../shared/Util';
+import { Lancamento } from '../model/Lancamento';
+import { LancamentoListaDTO } from '../model/LancamentoListaDTO';
 
 @Injectable({
   providedIn: 'root',
@@ -23,23 +23,21 @@ export class LancamentoService {
       );
   }
 
-  save(idUsuario: string, record: Lancamento) {
+  save(record: Lancamento) {
     if (record.id) {
       return this.httpClient
         .post<Lancamento>(
-          `${API.url}/lancamentos/update?id_usuario=${idUsuario}`,
+          `${API.url}/lancamentos/create`,
           record
         )
         .toPromise();
-      //.pipe(first());
     } else {
       return this.httpClient
         .post<Lancamento>(
-          `${API.url}/lancamentos/create?id_usuario=${idUsuario}`,
+          `${API.url}/lancamentos/create`,
           record
         )
         .toPromise();
-      //.pipe(first());
     }
   }
 

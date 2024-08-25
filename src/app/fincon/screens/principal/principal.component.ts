@@ -1,32 +1,32 @@
-import { LancamentoEdit } from '../../services/LancamentoEdit.service';
+import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { catchError } from 'rxjs/operators';
-import { Lancamento } from '../../model/Lancamento';
-import { LancamentoListaDTO } from '../../model/LancamentoListaDTO';
-import { LancamentoService } from '../../services/lancamento.service';
+import { catchError, tap } from 'rxjs/operators';
+import { FiltroDialogComponent } from 'src/app/shared/components/filtro-dialog/filtro-dialog.component';
+import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialog/confirm-dialog.component';
 import {
-  _numberToReal,
-  _formatData,
   _changeIsPago,
+  _findStringByValue,
+  _formatData,
+  _formatDia,
+  _numberToReal,
   findTipo,
-  listaMesReferencia,
   listaAnoReferencia,
+  listaCategorias,
+  listaMesReferencia,
   listaTipoLancamentos,
   listaTipoPagamentos,
-  _formatDia,
 } from '../../../shared/Util';
-import { tap } from 'rxjs/operators';
-import { MatDialog } from '@angular/material/dialog';
-import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialog/confirm-dialog.component';
-import { Location } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { LocalStorageService } from '../../services/local-storage.service';
+import { Lancamento } from '../../model/Lancamento';
+import { LancamentoListaDTO } from '../../model/LancamentoListaDTO';
 import { ModelComboBox } from '../../model/ModelComboBox';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { FiltroDialogComponent } from 'src/app/shared/components/filtro-dialog/filtro-dialog.component';
-import { listaCategorias } from '../../../shared/Util';
+import { LancamentoService } from '../../services/lancamento.service';
+import { LancamentoEdit } from '../../services/LancamentoEdit.service';
+import { LocalStorageService } from '../../services/local-storage.service';
 import { MesAnoReferenciaService } from '../../services/mesAnoReferencia.service';
 
 @Component({
@@ -62,7 +62,7 @@ export class PrincipalComponent implements OnInit {
   form: FormGroup;
 
   displayedColumns: string[] = [
-    'id',
+    //'id',
     'categoria',
     'descricao',
     'valor',
@@ -76,6 +76,9 @@ export class PrincipalComponent implements OnInit {
   items: any[] = [];
 
   pesquisa: any = '';
+
+  _listaCategorias = listaCategorias;
+  _listaTipoPagamentos = listaTipoPagamentos;
 
   constructor(
     private lancamentosService: LancamentoService,
@@ -144,7 +147,7 @@ export class PrincipalComponent implements OnInit {
           } else {
             this.onError('Sem conexão com o servidor');
             this.load = false;
-            this.onLogout();
+            //this.onLogout();
           }
           return [];
         })
@@ -170,22 +173,29 @@ export class PrincipalComponent implements OnInit {
     var somaInvestimentosSaidas: any = 0;
     for (var i = 0; i < lancamentos.length; i++) {
       // if (lancamentos[i].pago) {
-      if (lancamentos[i].tipo_lancamento == 'Saída') {
+      if (lancamentos[i].tipo_lancamento == 1) {
+        //Saída
         somaSaidas += lancamentos[i].valor;
       }
-      if (lancamentos[i].tipo_lancamento == 'Entrada') {
+      if (lancamentos[i].tipo_lancamento == 0) {
+        //Entrada
         somaEntradas += lancamentos[i].valor;
       }
-      if (lancamentos[i].categoria == 'Poupança') {
-        if (lancamentos[i].tipo_lancamento == 'Saída') {
+      if (lancamentos[i].categoria == 21) {
+        //Poupança
+        if (lancamentos[i].tipo_lancamento == 0) {
+          //Saída
           somaPoupancaEntradas += lancamentos[i].valor;
         }
-        if (lancamentos[i].tipo_lancamento == 'Entrada') {
+        if (lancamentos[i].tipo_lancamento == 0) {
+          //Entrada
           somaPoupancaSaidas += lancamentos[i].valor;
         }
       }
-      if (lancamentos[i].categoria == 'Investimentos') {
-        if (lancamentos[i].tipo_lancamento == 'Saída') {
+      if (lancamentos[i].categoria == 10) {
+        //Investimentos
+        if (lancamentos[i].tipo_lancamento == 1) {
+          //Saída
           somaInvestimentosEntradas += lancamentos[i].valor;
         }
       }
@@ -255,7 +265,7 @@ export class PrincipalComponent implements OnInit {
 
   onDelete(id: string) {
     this.lancamentosService.delete(id).subscribe(
-      (result) => {       
+      (result) => {
         this.onSuccess('Apagado com sucesso');
       },
       (error) => {
@@ -337,7 +347,7 @@ export class PrincipalComponent implements OnInit {
       listaFiltro = listaFiltro.filter(
         (e) =>
           e.tipo_pagamento ==
-          listaTipoPagamentos[this.form.value.tipo_pagamento].valueText
+          listaTipoPagamentos[this.form.value.tipo_pagamento].value
       );
       this.listaLancamentosFiltro = listaFiltro;
     }
@@ -346,15 +356,14 @@ export class PrincipalComponent implements OnInit {
       listaFiltro = listaFiltro.filter(
         (e) =>
           e.tipo_lancamento ==
-          listaTipoLancamentos[this.form.value.tipo_lancamento].valueText
+          listaTipoLancamentos[this.form.value.tipo_lancamento].value
       );
       this.listaLancamentosFiltro = listaFiltro;
     }
     //categoria
     if (listaCategorias[this.form.value.categoria] != null) {
       listaFiltro = listaFiltro.filter(
-        (e) =>
-          e.categoria == listaCategorias[this.form.value.categoria].valueText
+        (e) => e.categoria == listaCategorias[this.form.value.categoria].value
       );
       this.listaLancamentosFiltro = listaFiltro;
     }
@@ -426,4 +435,16 @@ export class PrincipalComponent implements OnInit {
   scrollToTop() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
+
+  findStringByValue(value: Number, pLista: ModelComboBox[]) {
+    return _findStringByValue(value, pLista);
+  }
 }
+
+/*
+//categoria
+    if (listaCategorias[this.form.value.categoria] != null) {
+      listaFiltro = listaFiltro.filter(
+        (e) => e.categoria == listaCategorias[this.form.value.categoria].value
+      );
+       */

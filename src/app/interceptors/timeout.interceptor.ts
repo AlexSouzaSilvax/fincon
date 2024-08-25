@@ -1,16 +1,16 @@
-import { Injectable } from '@angular/core';
 import {
+  HttpEvent,
+  HttpHandler,
   HttpInterceptor,
   HttpRequest,
-  HttpHandler,
-  HttpEvent,
 } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { timeout, catchError } from 'rxjs/operators';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { timeout } from 'rxjs/operators';
 
 @Injectable()
 export class TimeoutInterceptor implements HttpInterceptor {
-  private readonly TIMEOUT = 5000; // Timeout de 5 segundos
+  private readonly TIMEOUT = 30000; // Timeout de 30 segundos
 
   constructor() {}
 
@@ -19,7 +19,7 @@ export class TimeoutInterceptor implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
     return next.handle(request).pipe(
-      timeout(this.TIMEOUT), // Define o timeout
+      timeout(this.TIMEOUT) // Define o timeout
       /*catchError((error) => {
         // Lógica para lidar com o erro de timeout
         return throwError(error);

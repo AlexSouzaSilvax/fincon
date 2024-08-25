@@ -1,18 +1,18 @@
-import { Usuario } from './../../model/Usuario';
-import { Input, Component, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
-  FormGroup,
-  FormControl,
   FormBuilder,
+  FormControl,
+  FormGroup,
   Validators,
 } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UsuarioService } from '../../services/usuario.service';
-import { LocalStorageService } from '../../services/local-storage.service';
-import { UsuarioAccessDTO } from '../../model/UsuarioAccessDTO';
-import { MatDialog } from '@angular/material/dialog';
 import { EsqueciSenhaDialogComponent } from 'src/app/shared/components/esqueci-senha-dialog/esqueci-senha-dialog.component';
+import { UsuarioAccessDTO } from '../../model/UsuarioAccessDTO';
+import { UsuarioRegister } from '../../model/UsuarioRegister';
+import { LocalStorageService } from '../../services/local-storage.service';
+import { UsuarioService } from '../../services/usuario.service';
 
 @Component({
   selector: 'fincon',
@@ -22,7 +22,6 @@ import { EsqueciSenhaDialogComponent } from 'src/app/shared/components/esqueci-s
 export class LoginComponent implements OnInit {
   form: FormGroup;
   actionMessage!: String;
-  usuario!: Usuario;
   load: boolean = false;
   btnLogin: boolean = false;
   btnCadastrese: boolean = false;
@@ -30,7 +29,12 @@ export class LoginComponent implements OnInit {
   senha = new FormControl(null, [Validators.required]);
   usuarioAccess!: UsuarioAccessDTO;
   formCadastrese: FormGroup;
+  nome = new FormControl(null, [Validators.required]);
+  email = new FormControl(null, [Validators.required]);
+  username = new FormControl(null, [Validators.required]);
+  password = new FormControl(null, [Validators.required]);
   visibleLogin: boolean = true;
+  usuarioCadastro!: UsuarioRegister;
 
   constructor(
     private router: Router,
@@ -46,10 +50,11 @@ export class LoginComponent implements OnInit {
       senha: [this.senha],
     });
     this.formCadastrese = this.formBuilder.group({
-      nome: [],
-      email: [],
-      login: [],
-      senha: [],
+      nome: [this.nome],
+      email: [this.email],
+      username: [this.username],
+      password: [this.password],
+      role: 'ADMIN',
     });
   }
 
@@ -59,51 +64,92 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  onLogin() {
+  async onLogin() {
     this.usuarioAccess = {
-      login: this.form.value.login.value,
-      senha: this.form.value.senha.value,
+      username: this.form.value.login.value,
+      password: this.form.value.senha.value,
+      token: '',
+      id: '',
     };
-    if (this.usuarioAccess.login != null && this.usuarioAccess.senha != null) {
-      //load true
+    if (
+      this._validaCampo(this.usuarioAccess.username) &&
+      this._validaCampo(this.usuarioAccess.password)
+    ) {
       this.load = true;
-      //btn login off
       this.btnLogin = true;
       if (this.usuarioAccess) {
-        this.service.access(this.usuarioAccess).subscribe(
-          (result) => {
-            if (result.id != null) {
-              this.serviceLS.set('id', result.id);
-              this.serviceLS.set('login', result.login);
+        await this.service.access(this.usuarioAccess).then(
+          (result?) => {
+            if (result?.token) {
+              this.serviceLS.set('token', result?.token);
+              this.serviceLS.set('id', result?.id);
+              this.serviceLS.set('username', result?.username);
               this.router.navigate(['principal'], { relativeTo: this.route });
+
+              this.limpaFormLogin();
             }
           },
           (error) => this.retornoErro(error)
         );
       }
     }
+    this.load = false;
+    this.btnLogin = false;
+  }
+
+  limpaFormLogin() {
+    this.senha = new FormControl(null, [Validators.required]);
   }
 
   onClickCadastrese() {
     this.visibleLogin = false;
   }
 
-  onCadastrese() {
-    //load true
-    this.load = true;
-    //btn login off
-    this.btnCadastrese = true;
+  async onCadastrese() {
+    this.usuarioCadastro = {
+      nome: this.formCadastrese.value.nome.value,
+      email: this.formCadastrese.value.email.value,
+      username: this.formCadastrese.value.username.value,
+      password: this.formCadastrese.value.password.value,
+      role: 'ADMIN',
+    };
 
-    if (this.formCadastrese) {
-      this.service.save(this.formCadastrese.value).then(
+    if (
+      this._validaCampo(this.usuarioCadastro.nome) &&
+      this._validaCampo(this.usuarioCadastro.email) &&
+      this._validaCampo(this.usuarioCadastro.username) &&
+      this._validaCampo(this.usuarioCadastro.password)
+    ) {
+      this.load = true;
+      this.btnCadastrese = true;
+
+      await this.service.register(this.usuarioCadastro).then(
         (result) => {
+          this._limpaFormCadastro();
+          this.visibleLogin = true;
           this.onMessage('Usuário criado com sucesso');
         },
         (error) => this.retornoErro(error)
       );
+      this.load = false;
+      this.btnCadastrese = false;
     }
-    this.load = false;
-    this.btnCadastrese = false;
+  }
+
+  _validaCampo(param: String) {
+    if (param != null && param.trim() != '') {
+      return true;
+    }
+    return false;
+  }
+
+  _limpaFormCadastro() {
+    this.form.value.login.value = this.usuarioCadastro.username;
+
+    this.nome = new FormControl(null, [Validators.required]);
+    this.email = new FormControl(null, [Validators.required]);
+    this.username = new FormControl(null, [Validators.required]);
+    this.password = new FormControl(null, [Validators.required]);
   }
 
   onClickEsqueciSenha() {
@@ -113,13 +159,26 @@ export class LoginComponent implements OnInit {
       },
     });
 
+    dialogRef.afterOpened().subscribe((result) => {});
+
     dialogRef.afterClosed().subscribe((result) => {
       this.onEsqueciSenha(result);
     });
   }
 
-  onEsqueciSenha(email: string) {
-    this.onMessage('Senha enviada para: ' + email);
+  async onEsqueciSenha(email: string) {
+    this.load = true;
+
+    if (email) {
+      await this.service.esqueciSenha(email).then(
+        (result) => {
+          this.onMessage('Verifique seu email: ' + email);
+        },
+        (error) => this.retornoErro(error)
+      );
+    }
+    this.load = false;
+    this.btnLogin = false;
   }
   onVoltar() {
     this.visibleLogin = true;
@@ -136,28 +195,18 @@ export class LoginComponent implements OnInit {
   }
 
   retornoErro(error: any) {
-    {
-      if (error.status == 500) {
-        this.onMessage(`#${error.status} Falha no sistema`);
-      }
-      if (error.name) {
-        if (error.name == 'TimeoutError') {
-          this.retornoErroSemConexao();
-        }
-      }
-      if (error.error.message) {
-        this.onMessage(error.error.message);
-        this.load = false;
-        this.btnLogin = false;
-      } else {
-        this.retornoErroSemConexao();
-      }
+    if (error?.error?.userMessage) {
+      return this.onMessage(error?.error?.userMessage);
+    }
+
+    if (error?.status == 0) {
+      this.retornoErroSemConexao();
     }
   }
+
   retornoErroSemConexao() {
     this.onMessage('Sem conexão com o servidor');
     this.load = false;
-    this.btnLogin = false;
     this.onLogout();
   }
 }
