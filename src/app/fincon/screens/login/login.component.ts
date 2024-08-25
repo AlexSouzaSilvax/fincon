@@ -85,6 +85,8 @@ export class LoginComponent implements OnInit {
               this.serviceLS.set('id', result?.id);
               this.serviceLS.set('username', result?.username);
               this.router.navigate(['principal'], { relativeTo: this.route });
+
+              this.limpaFormLogin();
             }
           },
           (error) => this.retornoErro(error)
@@ -93,15 +95,10 @@ export class LoginComponent implements OnInit {
     }
     this.load = false;
     this.btnLogin = false;
-
-    this.limpaFormLogin();
   }
 
   limpaFormLogin() {
-    this.form = this.formBuilder.group({
-      login: [null],
-      senha: [null],
-    });
+    this.senha = new FormControl(null, [Validators.required]);
   }
 
   onClickCadastrese() {
@@ -136,8 +133,6 @@ export class LoginComponent implements OnInit {
       );
       this.load = false;
       this.btnCadastrese = false;
-
-      this._limpaFormCadastro();
     }
   }
 
@@ -151,26 +146,10 @@ export class LoginComponent implements OnInit {
   _limpaFormCadastro() {
     this.form.value.login.value = this.usuarioCadastro.username;
 
-    this.formCadastrese = this.formBuilder.group({
-      nome: [null],
-      email: [null],
-      username: [null],
-      password: [null],
-      role: 'ADMIN',
-    });
-
-    this.usuarioCadastro = {
-      nome: '',
-      email: '',
-      username: '',
-      password: '',
-      role: 'ADMIN',
-    };
-
-    this.formCadastrese.value.nome.value = null;
-    this.formCadastrese.value.email.value = null;
-    this.formCadastrese.value.username.value = null;
-    this.formCadastrese.value.password.value = null;
+    this.nome = new FormControl(null, [Validators.required]);
+    this.email = new FormControl(null, [Validators.required]);
+    this.username = new FormControl(null, [Validators.required]);
+    this.password = new FormControl(null, [Validators.required]);
   }
 
   onClickEsqueciSenha() {
