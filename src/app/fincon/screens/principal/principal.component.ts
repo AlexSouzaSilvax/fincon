@@ -1,8 +1,8 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
@@ -172,34 +172,34 @@ export class PrincipalComponent implements OnInit {
     var somaInvestimentosEntradas: any = 0;
     var somaInvestimentosSaidas: any = 0;
     for (var i = 0; i < lancamentos.length; i++) {
-      // if (lancamentos[i].pago) {
-      if (lancamentos[i].tipo_lancamento == 1) {
-        //Saída
-        somaSaidas += lancamentos[i].valor;
-      }
-      if (lancamentos[i].tipo_lancamento == 0) {
-        //Entrada
-        somaEntradas += lancamentos[i].valor;
-      }
-      if (lancamentos[i].categoria == 21) {
-        //Poupança
-        if (lancamentos[i].tipo_lancamento == 0) {
+      if (lancamentos[i].pago) {
+        if (lancamentos[i].tipo_lancamento == 1) {
           //Saída
-          somaPoupancaEntradas += lancamentos[i].valor;
+          somaSaidas += lancamentos[i].valor;
         }
         if (lancamentos[i].tipo_lancamento == 0) {
           //Entrada
-          somaPoupancaSaidas += lancamentos[i].valor;
+          somaEntradas += lancamentos[i].valor;
+        }
+        if (lancamentos[i].categoria == 21) {
+          //Poupança
+          if (lancamentos[i].tipo_lancamento == 0) {
+            //Saída
+            somaPoupancaEntradas += lancamentos[i].valor;
+          }
+          if (lancamentos[i].tipo_lancamento == 0) {
+            //Entrada
+            somaPoupancaSaidas += lancamentos[i].valor;
+          }
+        }
+        if (lancamentos[i].categoria == 10) {
+          //Investimentos
+          if (lancamentos[i].tipo_lancamento == 1) {
+            //Saída
+            somaInvestimentosEntradas += lancamentos[i].valor;
+          }
         }
       }
-      if (lancamentos[i].categoria == 10) {
-        //Investimentos
-        if (lancamentos[i].tipo_lancamento == 1) {
-          //Saída
-          somaInvestimentosEntradas += lancamentos[i].valor;
-        }
-      }
-      // }
     }
     this.totalEntrada$ = this.numberToReal(somaEntradas);
     this.totalSaida$ = this.numberToReal(somaSaidas);
