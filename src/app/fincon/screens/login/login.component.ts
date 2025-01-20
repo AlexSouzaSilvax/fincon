@@ -1,12 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
-import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
+
+import { MatDialog } from '@angular/material/dialog';
+
+import { MatSnackBar } from '@angular/material/snack-bar';
+
 import { ActivatedRoute, Router } from '@angular/router';
 import { EsqueciSenhaDialogComponent } from 'src/app/shared/components/esqueci-senha-dialog/esqueci-senha-dialog.component';
 import { UsuarioAccessDTO } from '../../model/UsuarioAccessDTO';
@@ -41,7 +44,7 @@ export class LoginComponent implements OnInit {
     private route: ActivatedRoute,
     private service: UsuarioService,
     private serviceLS: LocalStorageService,
-    private snackbar: MatSnackBar,
+
     private formBuilder: FormBuilder,
     public dialog: MatDialog
   ) {
@@ -57,6 +60,8 @@ export class LoginComponent implements OnInit {
       role: 'ADMIN',
     });
   }
+
+  private _snackBar = inject(MatSnackBar);
 
   ngOnInit(): void {
     if (this.serviceLS.get('id') != null) {
@@ -185,10 +190,9 @@ export class LoginComponent implements OnInit {
   }
 
   private onMessage(actionMessage: String) {
-    this.snackbar.open(`${actionMessage}`, '', {
-      duration: 5000,
-    });
+    this._snackBar.open(`${actionMessage}`);
   }
+
   onLogout() {
     this.serviceLS.clear();
     this.router.navigate([''], { relativeTo: this.route });

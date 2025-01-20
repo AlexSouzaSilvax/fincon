@@ -6,7 +6,6 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
   _formatData,
@@ -16,7 +15,7 @@ import {
   listaCategorias,
   listaParcelas,
   listaTipoLancamentos,
-  listaTipoPagamentos
+  listaTipoPagamentos,
 } from 'src/app/shared/Util';
 import { Lancamento } from '../../model/Lancamento';
 import { ModelComboBox } from '../../model/ModelComboBox';
@@ -70,7 +69,6 @@ export class NovoComponent implements OnInit {
     private location: Location,
     private formBuilder: FormBuilder,
     private service: LancamentoService,
-    private snackbar: MatSnackBar,
     private route: ActivatedRoute,
     private serviceLS: LocalStorageService,
     private router: Router,
@@ -199,11 +197,7 @@ export class NovoComponent implements OnInit {
     }
   }
 
-  private onMessage(actionMessage: String) {
-    this.snackbar.open(`${actionMessage}`, '', {
-      duration: 1000,
-    });
-  }
+  private onMessage(actionMessage: String) {}
 
   formatData(data: String) {
     return _formatData(data);

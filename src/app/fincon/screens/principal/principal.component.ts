@@ -1,13 +1,9 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
-import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
-import { FiltroDialogComponent } from 'src/app/shared/components/filtro-dialog/filtro-dialog.component';
-import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialog/confirm-dialog.component';
 import {
   _changeIsPago,
   _findStringByValue,
@@ -82,11 +78,9 @@ export class PrincipalComponent implements OnInit {
 
   constructor(
     private lancamentosService: LancamentoService,
-    public dialog: MatDialog,
     private location: Location,
     private router: Router,
     private route: ActivatedRoute,
-    private snackbar: MatSnackBar,
     private serviceLS: LocalStorageService,
     private formBuilder: FormBuilder,
     private lancamentoEdit: LancamentoEdit,
@@ -220,7 +214,6 @@ export class PrincipalComponent implements OnInit {
 
   onError(errorMsg: string) {
     //this.dialog.open(ErrorDialogComponent, { data: errorMsg });
-    this.snackbar.open(errorMsg, '', { duration: 5000 });
     //this.snackbar.open(errorMsg, '', { duration: 5000 });
     ////this.load = false;
   }
@@ -239,7 +232,6 @@ export class PrincipalComponent implements OnInit {
   }
 
   private onSuccess(actionMessage: string) {
-    this.snackbar.open(actionMessage, '', { duration: 5000 });
     this.onLancamentos(); //  alterar para apenas manipular a lista,  no caso remover o item selecionado
   }
 
@@ -252,15 +244,6 @@ export class PrincipalComponent implements OnInit {
   }
 
   openDialog(pTitle: string, pDescription: string, pOnConfirm: () => {}) {
-    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      data: {
-        title: pTitle,
-        description: pDescription,
-        onConfirm: pOnConfirm,
-      },
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {});
   }
 
   onDelete(id: string) {
@@ -279,22 +262,7 @@ export class PrincipalComponent implements OnInit {
   }
 
   filtrar() {
-    const dialogRef = this.dialog.open(FiltroDialogComponent, {
-      data: {
-        title: 'Filtros',
-        mesReferencia: this.mesReferencia,
-        anoReferencia: this.anoReferencia,
-        categorias: listaCategorias,
-        lancamentos: listaTipoLancamentos,
-        pagamentos: listaTipoPagamentos,
-        form: this.form,
-        mesesReferencia: this.mesesReferencia,
-        anosReferencia: this.anosReferencia,
-        onConfirm: () => this.filtroLista(),
-      },
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {});
+    
   }
 
   filtroLista() {
@@ -333,7 +301,6 @@ export class PrincipalComponent implements OnInit {
     }
     this.somaValores(this.listaLancamentos2);
     this.pesquisa = '';
-    this.dialog.closeAll();
   }
 
   filtroCampos(listaFiltro: LancamentoListaDTO[]) {
@@ -428,9 +395,6 @@ export class PrincipalComponent implements OnInit {
     this.router.navigate([''], { relativeTo: this.route });
   }
   private onMessage(actionMessage: String) {
-    this.snackbar.open(`${actionMessage}`, '', {
-      duration: 1000,
-    });
   }
   scrollToTop() {
     window.scrollTo({ top: 0, behavior: 'smooth' });

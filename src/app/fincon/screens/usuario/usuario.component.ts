@@ -1,7 +1,6 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
   _formatData,
@@ -34,7 +33,6 @@ export class UsuarioComponent implements OnInit {
     private location: Location,
     private formBuilder: FormBuilder,
     private service: UsuarioService,
-    private snackbar: MatSnackBar,
     private route: ActivatedRoute,
     private serviceLS: LocalStorageService,
     private router: Router
@@ -125,11 +123,7 @@ export class UsuarioComponent implements OnInit {
     }
   }
 
-  private onMessage(actionMessage: String) {
-    this.snackbar.open(`${actionMessage}`, '', {
-      duration: 1000,
-    });
-  }
+  private onMessage(actionMessage: String) {}
 
   formatData(data: String) {
     return _formatData(data);

@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MatLegacyDialogRef as MatDialogRef, MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA } from '@angular/material/legacy-dialog';
 import { ConfirmDialogData } from '../../../fincon/model/confirmDialogData';
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-esqueci-senha-dialog',
@@ -10,13 +10,11 @@ import { ConfirmDialogData } from '../../../fincon/model/confirmDialogData';
 export class EsqueciSenhaDialogComponent implements OnInit {
   email!: string;
   constructor(
-    public dialogRef: MatDialogRef<EsqueciSenhaDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: ConfirmDialogData
+    @Inject(ConfirmDialogComponent) public data: ConfirmDialogData
   ) {}
 
   ngOnInit(): void {}
 
   onNoClick(): void {
-    this.dialogRef.close();
   }
 }

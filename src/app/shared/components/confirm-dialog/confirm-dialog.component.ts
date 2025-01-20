@@ -1,6 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { MatLegacyDialogRef as MatDialogRef, MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA } from '@angular/material/legacy-dialog';
-import { ConfirmDialogData } from '../../../fincon/model/confirmDialogData';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-confirm-dialog',
@@ -8,19 +6,16 @@ import { ConfirmDialogData } from '../../../fincon/model/confirmDialogData';
   styleUrls: ['./confirm-dialog.component.scss'],
 })
 export class ConfirmDialogComponent implements OnInit {
-  constructor(
-    public dialogRef: MatDialogRef<ConfirmDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: ConfirmDialogData
-  ) {}
+  constructor() {}
 
   ngOnInit(): void {}
 
   onConfirm() {
-    this.data.onConfirm();
+    //this.data.onConfirm();
     this.onNoClick();
   }
 
   onNoClick(): void {
-    this.dialogRef.close();
+    //this.dialogRef.close();
   }
 }
