@@ -42,3 +42,12 @@ html {
 .mat-progress-bar.mat-accent .mat-progress-bar-buffer {
   background-color: #f1f1f1 !important;
 }
+
+.hidden-mobile {
+}
+
+@media (max-width: 768px) {
+  .hidden-mobile {
+    display: none !important;
+  }
+}

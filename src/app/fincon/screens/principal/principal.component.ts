@@ -233,6 +233,7 @@ export class PrincipalComponent implements OnInit {
   }
 
   onEdit(pLancamento: Lancamento) {
+    console.log(pLancamento)
     this.items.push(pLancamento);
     this.lancamentoEdit.setItems(this.items);
     this.router.navigate(['detalhe'], { relativeTo: this.route });
