@@ -143,12 +143,17 @@ export class PrincipalComponent implements OnInit {
         tap((l) => this.somaValores(l)),
         catchError((error) => {
           if (error.status == 500) {
-            this.onMessage(`#${error.status} Falha no sistema`);
-          } else {
+            this.onMessage(`Falha interna no sistema`);
+          } else if (error.status == 401) {
+            //redirecionar para uma tela de "seu token expirou, faça login novamente"
+            this.onMessage(`Seu tempo acabou`);
+          } else if (error.status == 404) {
             this.onError('Sem conexão com o servidor');
-            this.load = false;
-            //this.onLogout();
+          } else {
+            this.onError('Houve algum problema');
           }
+          this.load = false;
+          this.onLogout();
           return [];
         })
       );
