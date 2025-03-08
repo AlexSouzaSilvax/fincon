@@ -172,34 +172,34 @@ export class PrincipalComponent implements OnInit {
     var somaInvestimentosEntradas: any = 0;
     var somaInvestimentosSaidas: any = 0;
     for (var i = 0; i < lancamentos.length; i++) {
-      // if (lancamentos[i].pago) {
-      if (lancamentos[i].tipo_lancamento == 1) {
-        //Saída
-        somaSaidas += lancamentos[i].valor;
-      }
-      if (lancamentos[i].tipo_lancamento == 0) {
-        //Entrada
-        somaEntradas += lancamentos[i].valor;
-      }
-      if (lancamentos[i].categoria == 21) {
-        //Poupança
-        if (lancamentos[i].tipo_lancamento == 0) {
+      if (lancamentos[i].pago) {
+        if (lancamentos[i].tipo_lancamento == 1) {
           //Saída
-          somaPoupancaEntradas += lancamentos[i].valor;
+          somaSaidas += lancamentos[i].valor;
         }
         if (lancamentos[i].tipo_lancamento == 0) {
           //Entrada
-          somaPoupancaSaidas += lancamentos[i].valor;
+          somaEntradas += lancamentos[i].valor;
+        }
+        if (lancamentos[i].categoria == 21) {
+          //Poupança
+          if (lancamentos[i].tipo_lancamento == 0) {
+            //Saída
+            somaPoupancaEntradas += lancamentos[i].valor;
+          }
+          if (lancamentos[i].tipo_lancamento == 0) {
+            //Entrada
+            somaPoupancaSaidas += lancamentos[i].valor;
+          }
+        }
+        if (lancamentos[i].categoria == 10) {
+          //Investimentos
+          if (lancamentos[i].tipo_lancamento == 1) {
+            //Saída
+            somaInvestimentosEntradas += lancamentos[i].valor;
+          }
         }
       }
-      if (lancamentos[i].categoria == 10) {
-        //Investimentos
-        if (lancamentos[i].tipo_lancamento == 1) {
-          //Saída
-          somaInvestimentosEntradas += lancamentos[i].valor;
-        }
-      }
-      // }
     }
     this.totalEntrada$ = this.numberToReal(somaEntradas);
     this.totalSaida$ = this.numberToReal(somaSaidas);
@@ -233,6 +233,7 @@ export class PrincipalComponent implements OnInit {
   }
 
   onEdit(pLancamento: Lancamento) {
+    console.log(pLancamento)
     this.items.push(pLancamento);
     this.lancamentoEdit.setItems(this.items);
     this.router.navigate(['detalhe'], { relativeTo: this.route });
