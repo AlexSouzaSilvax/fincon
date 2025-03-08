@@ -29,6 +29,8 @@ export class UsuarioComponent implements OnInit {
   idUsuario!: string;
 
   usuario!: any;
+  username!: any;
+  password!: any;
 
   constructor(
     private location: Location,
@@ -57,7 +59,7 @@ export class UsuarioComponent implements OnInit {
         { value: this.usuario.username, disabled: true },
         [Validators.required],
       ],
-      password: [this.usuario.password, [Validators.required]],
+      password: ['', [Validators.required]],
       data_criacao: [formatDataInput(this.usuario.data_criacao)],
     });
   }
@@ -78,9 +80,11 @@ export class UsuarioComponent implements OnInit {
               { value: result.username, disabled: true },
               [Validators.required],
             ],
-            password: [result.password, [Validators.required]],
+            password: ['', [Validators.required]],
             data_criacao: [formatDataInput(result.data_criacao)],
           });
+          this.username = result.username;
+          this.password = result.password;
           this.loadFind = false;
         }
       },
@@ -104,6 +108,7 @@ export class UsuarioComponent implements OnInit {
       // salva usuario
       this.usuario = this.form.value;
       this.usuario.data_criacao = changeData(this.usuario.data_criacao);
+      this.usuario.username = this.username;
       await this.service.update(this.usuario).then(
         async (result) => {
           this.onMessage(`Salvo com sucesso`);

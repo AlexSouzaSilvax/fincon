@@ -1,13 +1,13 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 
-import { FinconRoutingModule } from './fincon-routing.module';
-import { LoginComponent } from './screens/login/login.component';
-import { PrincipalComponent } from './screens/principal/principal.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppMaterialModule } from '../shared/app-material/app-material.module';
 import { SharedModule } from '../shared/shared.module';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FinconRoutingModule } from './fincon-routing.module';
+import { LoginComponent } from './screens/login/login.component';
 import { NovoComponent } from './screens/novo/novo.component';
+import { PrincipalComponent } from './screens/principal/principal.component';
 import { UsuarioComponent } from './screens/usuario/usuario.component';
 
 @NgModule({
@@ -15,7 +15,7 @@ import { UsuarioComponent } from './screens/usuario/usuario.component';
     LoginComponent,
     PrincipalComponent,
     NovoComponent,
-    UsuarioComponent    
+    UsuarioComponent
   ],
   imports: [
     CommonModule,
