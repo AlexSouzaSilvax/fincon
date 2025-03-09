@@ -135,6 +135,10 @@ export class PrincipalComponent implements OnInit {
     this.listaLancamentos2 = [null];
 
     if (this.idUsuario == null) {
+      if (this.serviceLS.get('id') == null) {
+        this.onLogout();
+        this.router.navigate([''], { relativeTo: this.route });
+      }
       this.idUsuario = this.serviceLS.get('id');
     }
     this.lancamentos$ = await this.lancamentosService
