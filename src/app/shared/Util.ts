@@ -13,9 +13,13 @@ const apis = [
     name: 'prod',
     url: 'https://api-fincon-7276.onrender.com/api',
   },
+  {
+    name: 'aws',
+    url: 'http://ec2-3-139-67-161.us-east-2.compute.amazonaws.com:8082/api',
+  },
 ];
 
-export const API = apis[2];
+export const API = apis[3];
 
 export function _numberToReal(n: number) {
   return (
