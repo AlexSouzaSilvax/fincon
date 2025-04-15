@@ -157,7 +157,7 @@ export class PrincipalComponent implements OnInit {
             this.onError('Houve algum problema');
           }
           this.load = false;
-          this.onLogout();
+         // this.onLogout();
           return [];
         })
       );
