@@ -186,9 +186,9 @@ export class NovoComponent implements OnInit {
           if (error.status == 500) {
             this.onMessage(`#${error.status} Falha no sistema`);
           } else {
-            this.onMessage(`Sem conexão com o servidor`);
+            this.onMessage(`#${error.status} Sem conexão com o servidor`);
           }
-          this.router.navigate([''], { relativeTo: this.route });
+          //this.router.navigate([''], { relativeTo: this.route });
         }
       );
 
