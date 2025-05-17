@@ -126,6 +126,15 @@ export class PrincipalComponent implements OnInit {
     if (this.idUsuario == null) {
       this.router.navigate([''], { relativeTo: this.route });
     }
+
+    if (window.innerWidth < 768) {
+      this.displayedColumns = [
+        'descricao',
+        'valor',
+        'pago',
+        'actions',
+      ];
+    }
   }
 
   async onLancamentos() {

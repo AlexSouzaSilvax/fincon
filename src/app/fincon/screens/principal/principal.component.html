@@ -232,7 +232,6 @@
     <mat-form-field
       class="example-full-width"
       appearance="outline"
-      style="height: 30px !important"
     >
       <mat-icon matPrefix style="color: #2b70b1">search</mat-icon>
       <input
@@ -270,7 +269,7 @@
 
   <!-- lista -->
   <div
-    class="mat-elevation-z8"
+    class="mat-elevation-z3"
     *ngIf="
       load == false && listaLancamentos2.length > 0 && listaLancamentos2 != []
     "
@@ -309,18 +308,7 @@
       <!-- Descrição Column -->
       <ng-container matColumnDef="descricao">
         <mat-header-cell *matHeaderCellDef> Descrição </mat-header-cell>
-        <mat-cell
-          *matCellDef="let lancamento"
-          data-label="descricao"
-          style="
-            display: flex !important;
-            justify-content: center !important;
-            align-items: center !important;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-          "
-        >
+        <mat-cell *matCellDef="let lancamento" data-label="descricao" >
           {{ lancamento.descricao }}
         </mat-cell>
       </ng-container>
@@ -336,11 +324,6 @@
               ? 'tdValorEntrada'
               : 'tdValorSaida'
           }}"
-          style="
-            display: flex !important;
-            justify-content: center !important;
-            align-items: center !important;
-          "
         >
           {{ numberToReal(lancamento.valor) }}
         </mat-cell>
@@ -403,20 +386,12 @@
         <mat-header-cell *matHeaderCellDef style="justify-content: center"
           >Pago</mat-header-cell
         >
-        <mat-cell
-          *matCellDef="let lancamento"
-          data-label="pago"
-          style="
-            display: flex !important;
-            justify-content: center !important;
-            align-items: center !important;
-          "
-        >
+        <mat-cell *matCellDef="let lancamento" data-label="pago">
           {{ changeIsPago(lancamento.pago) }}
         </mat-cell>
       </ng-container>
 
-      <ng-container matColumnDef="actions" style="width: 20px">
+      <ng-container matColumnDef="actions" style="width: 10px">
         <th
           mat-header-cell
           *matHeaderCellDef
@@ -429,7 +404,7 @@
           Ações
         </th>
 
-        <div class="actionsColumn" style="width: 20px">
+        <div class="actionsColumn" style="width: 10% !important">
           <mat-cell
             style="
               padding-right: 20px !important;
