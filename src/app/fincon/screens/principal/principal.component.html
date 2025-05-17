@@ -300,6 +300,7 @@
             justify-content: center !important;
             align-items: center !important;
           "
+          (click)="onEdit(lancamento)"
         >
           {{ findStringByValue(lancamento.categoria, _listaCategorias) }}
         </mat-cell>
@@ -308,7 +309,7 @@
       <!-- Descrição Column -->
       <ng-container matColumnDef="descricao">
         <mat-header-cell *matHeaderCellDef> Descrição </mat-header-cell>
-        <mat-cell *matCellDef="let lancamento" data-label="descricao" >
+        <mat-cell *matCellDef="let lancamento" data-label="descricao" (click)="onEdit(lancamento)" >
           {{ lancamento.descricao }}
         </mat-cell>
       </ng-container>
@@ -324,6 +325,7 @@
               ? 'tdValorEntrada'
               : 'tdValorSaida'
           }}"
+          (click)="onEdit(lancamento)"
         >
           {{ numberToReal(lancamento.valor) }}
         </mat-cell>
@@ -340,6 +342,7 @@
             justify-content: center !important;
             align-items: center !important;
           "
+          (click)="onEdit(lancamento)"
         >
           {{ findStringByValue(lancamento.tipo_pagamento, _listaTipoPagamentos) }}
         </mat-cell>
@@ -358,6 +361,7 @@
             justify-content: center !important;
             align-items: center !important;
           "
+          (click)="onEdit(lancamento)"
         >
           {{ formatData(lancamento.data_prevista_pagamento) }}
         </mat-cell>
@@ -376,6 +380,7 @@
             justify-content: center !important;
             align-items: center !important;
           "
+          (click)="onEdit(lancamento)"
         >
           {{ formatData(lancamento.data_vencimento) }}
         </mat-cell>
@@ -386,7 +391,7 @@
         <mat-header-cell *matHeaderCellDef style="justify-content: center"
           >Pago</mat-header-cell
         >
-        <mat-cell *matCellDef="let lancamento" data-label="pago">
+        <mat-cell *matCellDef="let lancamento" data-label="pago" (click)="onEdit(lancamento)">
           {{ changeIsPago(lancamento.pago) }}
         </mat-cell>
       </ng-container>
@@ -401,7 +406,6 @@
             border-bottom-style: none !important;
           "
         >
-          Ações
         </th>
 
         <div class="actionsColumn" style="width: 10% !important">
@@ -413,12 +417,12 @@
             "
             *matCellDef="let lancamento"
           >
-            <button mat-icon-button aria-label="Editar" (click)="onEdit(lancamento)">
+            <!-- button mat-icon-button aria-label="Editar" (click)="onEdit(lancamento)">
               <mat-icon
                 style="color: #4280ba !important"
                 >edit</mat-icon
               >
-            </button>
+            </button -->
 
             <button mat-icon-button aria-label="Remover" (click)="onClickDelete(lancamento.id)">
               <mat-icon
