@@ -159,6 +159,7 @@ export class PrincipalComponent implements OnInit {
             this.onMessage(`Falha interna no sistema`);
           } else if (error.status == 401) {
             //redirecionar para uma tela de "seu token expirou, faça login novamente"
+             this.onLogout();
             this.onMessage(`Seu tempo acabou`);
           } else if (error.status == 404) {
             this.onError('Sem conexão com o servidor');
@@ -190,7 +191,7 @@ export class PrincipalComponent implements OnInit {
     var somaInvestimentosEntradas: any = 0;
     var somaInvestimentosSaidas: any = 0;
     for (var i = 0; i < lancamentos.length; i++) {
-      //if (lancamentos[i].pago) {
+      if (lancamentos[i].pago) {
         if (lancamentos[i].tipo_lancamento == 1) {
           //Saída
           somaSaidas += lancamentos[i].valor;
@@ -217,7 +218,7 @@ export class PrincipalComponent implements OnInit {
             somaInvestimentosEntradas += lancamentos[i].valor;
           }
         }
-      //}
+      }
     }
     this.totalEntrada$ = this.numberToReal(somaEntradas);
     this.totalSaida$ = this.numberToReal(somaSaidas);
