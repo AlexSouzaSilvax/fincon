@@ -191,7 +191,7 @@ export class PrincipalComponent implements OnInit {
     var somaInvestimentosEntradas: any = 0;
     var somaInvestimentosSaidas: any = 0;
     for (var i = 0; i < lancamentos.length; i++) {
-      if (lancamentos[i].pago) {
+     // if (lancamentos[i].pago) {
         if (lancamentos[i].tipo_lancamento == 1) {
           //Saída
           somaSaidas += lancamentos[i].valor;
@@ -218,7 +218,7 @@ export class PrincipalComponent implements OnInit {
             somaInvestimentosEntradas += lancamentos[i].valor;
           }
         }
-      }
+      //}
     }
     this.totalEntrada$ = this.numberToReal(somaEntradas);
     this.totalSaida$ = this.numberToReal(somaSaidas);
